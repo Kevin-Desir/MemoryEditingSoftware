@@ -6,4 +6,4 @@
 #define MEMORYMANIPULATION_API _declspec(dllexport)
 #endif
 
-extern "C" MEMORYMANIPULATION_API int TestMe(const char* Text);
+extern "C" MEMORYMANIPULATION_API int InitLink(const char* TargetProcessName);

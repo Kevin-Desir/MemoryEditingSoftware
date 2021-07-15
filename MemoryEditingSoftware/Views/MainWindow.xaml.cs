@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace MemoryEditingSoftware.Views
@@ -9,7 +10,7 @@ namespace MemoryEditingSoftware.Views
     public partial class MainWindow : Window
     {
         [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int TestMe(string Text);
+        public static extern int InitLink(string TargetProcessName);
 
         public MainWindow()
         {
@@ -18,8 +19,7 @@ namespace MemoryEditingSoftware.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox.Text = TestMe(TextBox.Text).ToString();
-            
+            TextBox.Text = InitLink(TextBox.Text).ToString();
         }
     }
 }

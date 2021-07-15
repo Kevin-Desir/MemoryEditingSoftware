@@ -96,11 +96,5 @@
   <ItemGroup>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MemoryManipulation\MemoryManipulation.vcxproj">
-      <Project>{3808aee5-2a5d-4844-9c7f-7be69a5550b6}</Project>
-      <Name>MemoryManipulation</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
