@@ -3,6 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <TlHelp32.h>
+#include <windows.h>
+#include <memoryapi.h>
+#include <sstream>
 
 // Constants
 
@@ -15,7 +18,7 @@ HANDLE handle;	// handle for the app ?
 * TargetProcessName (input) : name of the process that we want to manipulate memory
 * ErrorCode (output) : to inform why could not retrieve pid
 */
-DWORD GetPid(std::wstring TargetProcessName, int &ErrorCode) {
+DWORD GetPid(std::wstring TargetProcessName, int& ErrorCode) {
 	// variable that will contain the pid to return
 	DWORD pid = 0;
 
@@ -82,9 +85,43 @@ int InitLink(const char* TargetProcessName) {
 	// check if we can retrieve the pid of the target process
 	if ((pid = GetPid(StringToWstring(TargetProcessName), ErrorCode)) > 0) {
 		if ((handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid)) != NULL) {
+
+
+
+
+
+
+
+			intptr_t int_address;
+			{
+				std::stringstream stream;
+				stream << std::hex << "0x0322E71C";
+				stream >> int_address;
+			}
+			void* address = (void*)int_address;
+			float value_float = 1000;
+			int value_int = 1000;
+			int currentValue;
+
+			ReadProcessMemory(handle, address, &currentValue, sizeof(currentValue), 0);
+			WriteProcessMemory(handle, (LPVOID)address, &value_float, sizeof(value_int), 0);
+
+			std::cout << "currentValue = " << currentValue << std::endl;
+
+
+
+
+
+
+
+
+
+
 			return pid;
 		}
 	}
+
+
 
 	return ErrorCode;
 }
