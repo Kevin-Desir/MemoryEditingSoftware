@@ -3,10 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525">
+        xmlns:core="clr-namespace:MemoryEditingSoftware.Core;assembly=MemoryEditingSoftware.Core"
+        Title="{Binding Title}" Height="439.229" Width="915.811">
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        <Button Content="Send" HorizontalAlignment="Left" Margin="257,200,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" />
-        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="134" Margin="72,169,0,0" TextWrapping="Wrap" Text="cmd.exe" VerticalAlignment="Top" Width="120"/>
+        <Menu Height="17" VerticalAlignment="Top">
+            <MenuItem Header="File">
+
+            </MenuItem>
+            <MenuItem Header="Editor">
+
+            </MenuItem>
+            <MenuItem Header="Navigate">
+                <MenuItem Header="Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
+            </MenuItem>
+        </Menu>
+        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" Margin="0,17,0,0" />
     </Grid>
 </Window>

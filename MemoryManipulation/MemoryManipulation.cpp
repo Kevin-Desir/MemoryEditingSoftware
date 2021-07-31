@@ -85,43 +85,93 @@ int InitLink(const char* TargetProcessName) {
 	// check if we can retrieve the pid of the target process
 	if ((pid = GetPid(StringToWstring(TargetProcessName), ErrorCode)) > 0) {
 		if ((handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid)) != NULL) {
-
-
-
-
-
-
-
-			intptr_t int_address;
-			{
-				std::stringstream stream;
-				stream << std::hex << "0x0322E71C";
-				stream >> int_address;
-			}
-			void* address = (void*)int_address;
-			float value_float = 1000;
-			int value_int = 1000;
-			int currentValue;
-
-			ReadProcessMemory(handle, address, &currentValue, sizeof(currentValue), 0);
-			WriteProcessMemory(handle, (LPVOID)address, &value_float, sizeof(value_int), 0);
-
-			std::cout << "currentValue = " << currentValue << std::endl;
-
-
-
-
-
-
-
-
-
-
 			return pid;
 		}
 	}
 
-
-
 	return ErrorCode;
+}
+
+int WriteIntInMemory(const char* memoryAddress, int value) {
+	intptr_t int_address;
+	{
+		std::stringstream stream;
+		stream << std::hex << memoryAddress;
+		stream >> int_address;
+	}
+	void* address = (void*)int_address;
+
+	WriteProcessMemory(handle, (LPVOID)address, &value, sizeof(int), 0);
+
+	return 0;
+}
+
+int WriteFloatInMemory(const char* memoryAddress, float value) {
+	intptr_t int_address;
+	{
+		std::stringstream stream;
+		stream << std::hex << memoryAddress;
+		stream >> int_address;
+	}
+	void* address = (void*)int_address;
+
+	WriteProcessMemory(handle, (LPVOID)address, &value, sizeof(float), 0);
+
+	return 0;
+}
+
+int WriteShortInMemory(const char* memoryAddress, short value) {
+	intptr_t int_address;
+	{
+		std::stringstream stream;
+		stream << std::hex << memoryAddress;
+		stream >> int_address;
+	}
+	void* address = (void*)int_address;
+	
+	WriteProcessMemory(handle, (LPVOID)address, &value, sizeof(short), 0);
+
+	return 0;
+}
+
+int ReadIntFromMemory(const char* memoryAddress, int value) {
+	intptr_t int_address;
+	{
+		std::stringstream stream;
+		stream << std::hex << memoryAddress;
+		stream >> int_address;
+	}
+	void* address = (void*)int_address;
+
+	ReadProcessMemory(handle, (LPVOID)address, &value, sizeof(int), 0);
+
+	return value;
+}
+
+float ReadFloatFromMemory(const char* memoryAddress, float value) {
+	intptr_t int_address;
+	{
+		std::stringstream stream;
+		stream << std::hex << memoryAddress;
+		stream >> int_address;
+	}
+	void* address = (void*)int_address;
+
+	ReadProcessMemory(handle, (LPVOID)address, &value, sizeof(float), 0);
+	
+	return value;
+}
+
+short ReadShortFromMemory(const char* memoryAddress, short value) {
+	intptr_t int_address;
+	{
+		std::stringstream stream;
+		stream << std::hex << memoryAddress;
+		stream >> int_address;
+	}
+	void* address = (void*)int_address;
+
+	ReadProcessMemory(handle, (LPVOID)address, &value, sizeof(short), 0);
+
+	return value;
 }

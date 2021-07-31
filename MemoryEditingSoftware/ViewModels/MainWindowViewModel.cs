@@ -1,19 +1,41 @@
-﻿using Prism.Mvvm;
+﻿using MemoryEditingSoftware.Core;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
+using System;
 
 namespace MemoryEditingSoftware.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "Prism Application";
+        private string title = "Prism Application";
+        private readonly IRegionManager regionManager;
+
         public string Title
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get { return title; }
+            set { SetProperty(ref title, value); }
         }
 
-        public MainWindowViewModel()
-        {
+        public DelegateCommand<string> NavigateCommand { get; private set; }
 
+        public MainWindowViewModel(IRegionManager regionManager)
+        {
+            NavigateCommand = new DelegateCommand<string>(Navigate);
+            this.regionManager = regionManager;
+        }
+
+        private void Navigate(string viewName)
+        {
+            this.regionManager.RequestNavigate(RegionNames.ContentRegion, viewName, Callback);
+        }
+
+        private void Callback(NavigationResult result)
+        {
+            if (result.Error != null)
+            {
+                // TODO: handle error
+            }
         }
     }
 }

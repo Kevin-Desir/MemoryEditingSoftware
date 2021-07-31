@@ -16,10 +16,5 @@ namespace MemoryEditingSoftware.Views
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = InitLink(TextBox.Text).ToString();
-        }
     }
 }

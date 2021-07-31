@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="MemoryEditingSoftware.Editor.Views.EditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MemoryEditingSoftware.Editor.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="604" Height="359.333" >
+    <Grid>
+        <ListView x:Name="listOfEditItem" ItemsSource="{Binding EditItemList}" SelectedItem="{Binding SelectedEditItem}" HorizontalAlignment="Left" Margin="10,10,0,83" Width="135" SelectionMode="Single" />
+        <Button Content="=&gt;" Command="{Binding EditItemSelectedCommand}" HorizontalAlignment="Left" Width="31" Height="41" VerticalAlignment="Bottom" Margin="178,0,0,92" />
+
+        <Grid Margin="0,10,10,10" HorizontalAlignment="Right" Width="350" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="ID:" Grid.Column="0" Grid.Row="0" Margin="5" />
+            <TextBlock Text="{Binding ID}" Grid.Column="1" Grid.Row="0" Margin="5" />
+
+            <TextBlock Text="Name:" Grid.Column="0" Grid.Row="1" Margin="5" />
+            <TextBox Text="{Binding Name}" Grid.Column="1" Grid.Row="1" Margin="5" />
+
+            <TextBlock Text="Address:" Grid.Column="0" Grid.Row="2" Margin="5" />
+            <TextBox Text="{Binding Address}" Grid.Column="1" Grid.Row="2" Margin="5" />
+
+            <TextBlock Text="Read or write:" Grid.Column="0" Grid.Row="3" Margin="5" />
+            <ComboBox ItemsSource="{Binding ReadWriteCollection}" SelectedValue="{Binding ReadWrite}" Grid.Column="1" Grid.Row="3" Margin="5" />
+
+            <TextBlock Text="Value:" Grid.Column="0" Grid.Row="4" Margin="5" />
+            <TextBox Text="{Binding Val}" Grid.Column="1" Grid.Row="4" Margin="5" />
+
+            <TextBlock Text="One time or Looping:" Grid.Column="0" Grid.Row="5" Margin="5" />
+            <ComboBox ItemsSource="{Binding LoopingCollection}" SelectedValue="{Binding Looping}" Grid.Column="1" Grid.Row="5" Margin="5" />
+
+            <TextBlock Text="Will enter a value in execution:" Grid.Column="0" Grid.Row="6" Margin="5" />
+            <ComboBox ItemsSource="{Binding EnterValueCollection}" SelectedValue="{Binding EnterValue}" Grid.Column="1" Grid.Row="6" Margin="5" />
+
+            <Button Content="Update" Command="{Binding UpdateCommand}" Grid.Column="1" Grid.Row="8" CommandParameter="{Binding SelectedItem, ElementName=listOfEditItem}" />
+            <Button Content="Clear" Command="{Binding ClearCommand}" Grid.Column="0" Grid.Row="8" Background="Red" Foreground="White" />
+
+            <Button Content="Remove" Command="{Binding RemoveCommand}" Grid.Column="0" Grid.Row="9" Background="Red" Foreground="White" />
+            <Button Content="Create new" Command="{Binding CreateNewCommand}" Grid.Column="1" Grid.Row="9" />
+        </Grid>
+    </Grid>
+</UserControl>

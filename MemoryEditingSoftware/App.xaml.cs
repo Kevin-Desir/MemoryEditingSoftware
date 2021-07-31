@@ -1,4 +1,5 @@
-﻿using MemoryEditingSoftware.Views;
+﻿using MemoryEditingSoftware.Editor;
+using MemoryEditingSoftware.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
@@ -18,6 +19,11 @@ namespace MemoryEditingSoftware
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
 
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<EditorModule>();
         }
     }
 }
