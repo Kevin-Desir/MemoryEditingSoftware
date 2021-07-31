@@ -3,19 +3,25 @@
 This application enables user to 
 
 ## Progress : just started
-[__________] 5 %
+[██        ] 20 %
 
 ## MemoryEditingSoftware : main application
--> C#, Prism MVVM
+-> C#, Prism MVVM WPF
 
 ## MemoryManipulation : DLL
 -> C++
+Contains the code that allows to access and edit the memory of any application on Windows
 
-## Prism Modules : comming soon
-One module will be made for the part in charge of actually writing and reading logic 
+## MemoryEditingSoftware.Core
+-> C#, Prism MVVM WPF Module
+Contains code that is used across the whole application by several modules
 
-Another module will be made for the editor
+## MemoryEditingSoftware.Editor 
+-> C#, Prism MVVM WPF Module
+This module contains the editor to create new MES projects
+For now ui based but a text edition version will be added
 
-Both of these modules will communicate with each other to update in real time to changes.
-
-The application also needs to be thread safe which remain to be implemented.
+## MemoryEditingSoftware.Executer (not started yet)
+-> C#, Prism MVVM WPF Module
+This module will be the graphical user interface between the user and the C++ DLL
+It will be thread safe, which remains to be implemented
