@@ -58,5 +58,7 @@
             <Button Content="Remove" Command="{Binding RemoveCommand}" Grid.Column="0" Grid.Row="9" Background="Red" Foreground="White" />
             <Button Content="Create new" Command="{Binding CreateNewCommand}" Grid.Column="1" Grid.Row="9" />
         </Grid>
+        <Button Content="Up" Command="{Binding UpCommand}" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="52"/>
+        <Button Content="Down" Command="{Binding DownCommand}" HorizontalAlignment="Left" Margin="93,329,0,0" VerticalAlignment="Top" Width="52"/>
     </Grid>
 </UserControl>

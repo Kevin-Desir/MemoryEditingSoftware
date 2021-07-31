@@ -102,6 +102,8 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         public DelegateCommand<EditItem> UpdateCommand { get; set; }
         public DelegateCommand CreateNewCommand { get; set; }
         public DelegateCommand RemoveCommand { get; set; }
+        public DelegateCommand UpCommand { get; set; }
+        public DelegateCommand DownCommand { get; set; }
 
         public EditorViewModel()
         {
@@ -110,6 +112,8 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             UpdateCommand = new DelegateCommand<EditItem>(Update);
             CreateNewCommand = new DelegateCommand(Create);
             RemoveCommand = new DelegateCommand(Remove);
+            UpCommand = new DelegateCommand(Up);
+            DownCommand = new DelegateCommand(Down);
 
             EditItemList = new ObservableCollection<EditItem>();
 
@@ -158,6 +162,36 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
             Clear();
 
+        }
+
+        private void Down()
+        {
+            if (SelectedEditItem != null && SelectedEditItem.ID > 0)
+            {
+                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID -1);
+                high.ID -= 1;
+                low.ID += 1;
+                EditItemList.RemoveAt(high.ID);
+                EditItemList.Insert(high.ID, high);
+                EditItemList.RemoveAt(low.ID);
+                EditItemList.Insert(low.ID, low);
+            }
+        }
+
+        private void Up()
+        {
+            if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() -1)
+            {
+                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID +1);
+                low.ID += 1;
+                high.ID -= 1;
+                EditItemList.RemoveAt(low.ID);
+                EditItemList.Insert(low.ID, low);
+                EditItemList.RemoveAt(high.ID);
+                EditItemList.Insert(high.ID, high);
+            }
         }
 
         private void Remove()
