@@ -3,7 +3,7 @@
 This application enables user to 
 
 ## Progress : just started
-[██        ] 20 %
+[██_______] 20 %
 
 ## MemoryEditingSoftware : main application
 -> C#, Prism MVVM WPF
