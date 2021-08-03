@@ -1,6 +1,6 @@
 # MemoryEditingSoftware
 
-This application enables user to 
+This application enables user to edit the memory of any application on Windows
 
 ## Progress : just started
 [██_______] 20 %
