@@ -1,4 +1,5 @@
 ﻿using MemoryEditingSoftware.Editor;
+using MemoryEditingSoftware.ProjectSettings;
 using MemoryEditingSoftware.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -24,6 +25,7 @@ namespace MemoryEditingSoftware
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<EditorModule>();
+            moduleCatalog.AddModule<ProjectSettingsModule>();
         }
     }
 }

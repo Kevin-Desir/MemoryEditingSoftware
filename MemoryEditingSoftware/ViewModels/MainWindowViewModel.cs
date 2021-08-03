@@ -1,15 +1,18 @@
 ﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 
 namespace MemoryEditingSoftware.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string title = "Prism Application";
+        private string title = "Memory Editing Software";
         private readonly IRegionManager regionManager;
+        private readonly IDialogService dialogService;
 
         public string Title
         {
@@ -18,11 +21,47 @@ namespace MemoryEditingSoftware.ViewModels
         }
 
         public DelegateCommand<string> NavigateCommand { get; private set; }
+        public DelegateCommand ShowProjectSettingsDialogCommand{ get; set; }
+        public DelegateCommand ShowNewProjectDialogCommand { get; set; }
 
-        public MainWindowViewModel(IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
-            NavigateCommand = new DelegateCommand<string>(Navigate);
             this.regionManager = regionManager;
+            this.dialogService = dialogService;
+
+            NavigateCommand = new DelegateCommand<string>(Navigate);
+            ShowNewProjectDialogCommand = new DelegateCommand(ShowNewProjectDialog);
+            ShowProjectSettingsDialogCommand = new DelegateCommand(ShowProjectSettingsDialog);
+        }
+
+        private void ShowNewProjectDialog()
+        {
+            dialogService.ShowDialog(DialogNames.NewProjectDialog, r =>
+            {
+                if (r.Result == ButtonResult.OK)
+                {
+                    // TODO:
+                }
+                else
+                {
+                    // TODO:
+                }
+            });
+        }
+
+        private void ShowProjectSettingsDialog()
+        {
+            dialogService.ShowDialog(DialogNames.ProjectSettingsDialog, r =>
+            {
+                if (r.Result == ButtonResult.OK)
+                {
+                    // TODO:
+                }
+                else
+                {
+                    // TODO:
+                }
+            });
         }
 
         private void Navigate(string viewName)

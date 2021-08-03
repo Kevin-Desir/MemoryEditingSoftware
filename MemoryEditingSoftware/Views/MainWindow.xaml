@@ -8,13 +8,28 @@
     <Grid>
         <Menu Height="17" VerticalAlignment="Top">
             <MenuItem Header="File">
-
+                <MenuItem Header="New Project" Command="{Binding ShowNewProjectDialogCommand}" />
+                <MenuItem Header="Open Project" />
+                <MenuItem Header="Recent Projects" >
+                    <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
+                    <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
+                    <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Save Project" />
+                <MenuItem Header="Save Project As" />
+                <Separator />
+                <MenuItem Header="Project Settings" Command="{Binding ShowProjectSettingsDialogCommand}" />
+                <Separator />
+                <MenuItem Header="Quit" />
             </MenuItem>
             <MenuItem Header="Editor">
-
+                <MenuItem Header="Show Editor (GUI Mode)" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
+                <MenuItem Header="Show Editor (Text Mode)" />
             </MenuItem>
             <MenuItem Header="Navigate">
                 <MenuItem Header="Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
+                <MenuItem Header="Run" />
             </MenuItem>
         </Menu>
         <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" Margin="0,17,0,0" />
