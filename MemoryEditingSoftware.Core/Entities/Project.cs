@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MemoryEditingSoftware.Core.Entities
 {
@@ -20,9 +17,44 @@ namespace MemoryEditingSoftware.Core.Entities
         public DateTime LastUpdateDate { get; set; }
         public ICollection<EditItem> EditItems { get; set; }
 
+        public Project() { }
+
         public override string ToString()
         {
             return $"{ProjectName}";
+        }
+
+        private static Project instance;
+
+        private static readonly object _lock = new object();
+
+        public static Project CreateInstance(string projectName, string description, string version, string creator, string programName, string exeName, DateTime creationDate, DateTime lastUpdateTime, ICollection<EditItem> editItems)
+        {
+            if (instance == null)
+            {
+                lock (_lock)
+                {
+                    instance = new Project()
+                    {
+                        ProjectName = projectName,
+                        Description = description,
+                        Version = version,
+                        Creator = creator,
+                        ProgramName = programName,
+                        ExeName = exeName,
+                        CreationDate = creationDate,
+                        LastUpdateDate = lastUpdateTime,
+                        EditItems = editItems
+                    };
+                }
+            }
+
+            return instance;
+        }
+
+        public static Project GetInstance()
+        {
+            return instance;
         }
     }
 }

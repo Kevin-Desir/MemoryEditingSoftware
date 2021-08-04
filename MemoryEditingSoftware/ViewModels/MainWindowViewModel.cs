@@ -1,5 +1,6 @@
 ﻿using MemoryEditingSoftware.Core;
 using MemoryEditingSoftware.Core.Dialogs;
+using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -41,10 +42,12 @@ namespace MemoryEditingSoftware.ViewModels
                 if (r.Result == ButtonResult.OK)
                 {
                     // TODO:
+                    Console.WriteLine("OK:" + Project.GetInstance());
                 }
                 else
                 {
                     // TODO:
+                    Console.WriteLine("CANCEL: " + Project.GetInstance());
                 }
             });
         }
