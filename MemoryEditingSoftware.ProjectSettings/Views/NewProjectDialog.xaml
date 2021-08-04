@@ -49,9 +49,9 @@
             <TextBox Text="{Binding Creator}" Grid.Column="1" Grid.Row="3" Margin="5" Padding="4" />
             <Label Content="Program Name:" Grid.Row="4" Grid.Column="0" Margin="5" />
             <TextBox Text="{Binding ProgramName}" Grid.Row="4" Grid.Column="1" Margin="5" Padding="4" />
-            <Label Content="Name of .exe" Grid.Row="5" Grid.Column="0" Margin="5" />
+            <Label Content="Name of .exe:" Grid.Row="5" Grid.Column="0" Margin="5" />
             <TextBox Text="{Binding ExeName}" Grid.Column="1" Grid.Row="5" Margin="5" Padding="4" />
-            <Label Content="Creation Date" Grid.Row="6" Grid.Column="0" Margin="5" />
+            <Label Content="Creation Date:" Grid.Row="6" Grid.Column="0" Margin="5" />
             <DatePicker SelectedDate="{Binding CreationDate}" Grid.Column="1" Grid.Row="6" Margin="5" IsEnabled="False" />
 
             <Grid Grid.Column="1" Grid.Row="7">

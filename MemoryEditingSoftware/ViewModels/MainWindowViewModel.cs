@@ -42,12 +42,12 @@ namespace MemoryEditingSoftware.ViewModels
                 if (r.Result == ButtonResult.OK)
                 {
                     // TODO:
-                    Console.WriteLine("OK:" + Project.GetInstance());
+                    Console.WriteLine("New project OK:" + Project.GetInstance());
                 }
                 else
                 {
                     // TODO:
-                    Console.WriteLine("CANCEL: " + Project.GetInstance());
+                    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
                 }
             });
         }
@@ -59,10 +59,12 @@ namespace MemoryEditingSoftware.ViewModels
                 if (r.Result == ButtonResult.OK)
                 {
                     // TODO:
+                    Console.WriteLine("Update project OK:" + Project.GetInstance());
                 }
                 else
                 {
                     // TODO:
+                    Console.WriteLine("Update project CANCEL: " + Project.GetInstance());
                 }
             });
         }
