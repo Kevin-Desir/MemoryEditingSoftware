@@ -83,14 +83,21 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
             UpdateProjectCommand = new DelegateCommand(UpdateProject);
 
             this.project = Project.GetInstance();
-            ProjectName = project.ProjectName;
-            Description = project.Description;
-            Version = project.Version;
-            Creator = project.Creator;
-            ProgramName = project.ProgramName;
-            ExeName = project.ExeName;
-            CreationDate = project.CreationDate;
-            LastUpdate = project.LastUpdateDate;
+            if (this.project != null)
+            {
+                ProjectName = project.ProjectName;
+                Description = project.Description;
+                Version = project.Version;
+                Creator = project.Creator;
+                ProgramName = project.ProgramName;
+                ExeName = project.ExeName;
+                CreationDate = project.CreationDate;
+                LastUpdate = project.LastUpdateDate;
+            }
+            else
+            {
+                // TODO: Handle user trying to change settings of project when none is initialized
+            }
         }
 
         private void UpdateProject()
@@ -118,12 +125,12 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
 
         public void OnDialogClosed()
         {
-            
+
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            
+
         }
     }
 }

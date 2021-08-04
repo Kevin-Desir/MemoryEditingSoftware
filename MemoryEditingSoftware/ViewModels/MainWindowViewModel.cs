@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Windows;
 
 namespace MemoryEditingSoftware.ViewModels
 {
@@ -22,8 +23,9 @@ namespace MemoryEditingSoftware.ViewModels
         }
 
         public DelegateCommand<string> NavigateCommand { get; private set; }
-        public DelegateCommand ShowProjectSettingsDialogCommand{ get; set; }
-        public DelegateCommand ShowNewProjectDialogCommand { get; set; }
+        public DelegateCommand ShowProjectSettingsDialogCommand{ get; private set; }
+        public DelegateCommand ShowNewProjectDialogCommand { get; private set; }
+        public DelegateCommand<Window> QuitCommand { get; private set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -33,6 +35,15 @@ namespace MemoryEditingSoftware.ViewModels
             NavigateCommand = new DelegateCommand<string>(Navigate);
             ShowNewProjectDialogCommand = new DelegateCommand(ShowNewProjectDialog);
             ShowProjectSettingsDialogCommand = new DelegateCommand(ShowProjectSettingsDialog);
+            QuitCommand = new DelegateCommand<Window>(Quit);
+        }
+
+        private void Quit(Window window)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
 
         private void ShowNewProjectDialog()

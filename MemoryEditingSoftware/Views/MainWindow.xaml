@@ -21,7 +21,7 @@
                 <Separator />
                 <MenuItem Header="Project Settings" Command="{Binding ShowProjectSettingsDialogCommand}" />
                 <Separator />
-                <MenuItem Header="Quit" />
+                <MenuItem Header="Quit" Command="{Binding QuitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
             </MenuItem>
             <MenuItem Header="Editor">
                 <MenuItem Header="Show Editor (GUI Mode)" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
