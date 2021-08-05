@@ -166,46 +166,34 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
         private void Down()
         {
-            throw new NotImplementedException();
-            //if (SelectedEditItem != null && SelectedEditItem.ID > 0)
-            //{
-            //    EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-            //    EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID - 1);
-            //    high.ID -= 1;
-            //    low.ID += 1;
-            //    //EditItemList.RemoveAt(high.ID);
-            //    //EditItemList.Insert(high.ID, high);
-            //    //EditItemList.RemoveAt(low.ID);
-            //    //EditItemList.Insert(low.ID, low);
-
-            //    EditItem ei = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).Copy(low);
-            //    EditItem lowProject = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID);
-            //    EditItem highProject = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == high.ID);
-            //    lowProject.UpdateEditItem(high);
-            //    highProject.UpdateEditItem(ei);
-            //}
+            // TODO: fix this, it doesn't work very well
+            if (SelectedEditItem != null && SelectedEditItem.ID > 0)
+            {
+                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID - 1);
+                high.ID -= 1;
+                low.ID += 1;
+                EditItemList.RemoveAt(high.ID);
+                EditItemList.Insert(high.ID, high);
+                EditItemList.RemoveAt(low.ID);
+                EditItemList.Insert(low.ID, low);
+            }
         }
 
         private void Up()
         {
-            throw new NotImplementedException();
-            //if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() - 1)
-            //{
-            //    EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-            //    EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID + 1);
-            //    low.ID += 1;
-            //    high.ID -= 1;
-            //    EditItemList.RemoveAt(low.ID);
-            //    EditItemList.Insert(low.ID, low);
-            //    EditItemList.RemoveAt(high.ID);
-            //    EditItemList.Insert(high.ID, high);
-
-            //    EditItem ei = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).Copy(low);
-            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).UpdateEditItem(high);
-            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == high.ID).UpdateEditItem(ei);
-            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).ID -= 1;
-            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == high.ID).ID += 1;
-            //}
+            // TODO: fix this, it doesn't work very well
+            if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() - 1)
+            {
+                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID + 1);
+                low.ID += 1;
+                high.ID -= 1;
+                EditItemList.RemoveAt(low.ID);
+                EditItemList.Insert(low.ID, low);
+                EditItemList.RemoveAt(high.ID);
+                EditItemList.Insert(high.ID, high);
+            }
         }
 
         private void Remove()
