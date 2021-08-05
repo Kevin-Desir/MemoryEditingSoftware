@@ -83,6 +83,7 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
                 ExeName,
                 CreationDate,
                 CreationDate,
+                null,
                 null
                 );
 

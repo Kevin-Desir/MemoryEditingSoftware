@@ -16,8 +16,8 @@
                     <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Save Project" />
-                <MenuItem Header="Save Project As" />
+                <MenuItem Header="Save Project" Command="{Binding SaveProjectCommand}" />
+                <MenuItem Header="Save Project As" Command="{Binding SaveProjectAsCommand}" />
                 <Separator />
                 <MenuItem Header="Project Settings" Command="{Binding ShowProjectSettingsDialogCommand}" />
                 <Separator />

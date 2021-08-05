@@ -1,4 +1,5 @@
 ﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Business;
 using MemoryEditingSoftware.Core.Dialogs;
 using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
@@ -23,9 +24,11 @@ namespace MemoryEditingSoftware.ViewModels
         }
 
         public DelegateCommand<string> NavigateCommand { get; private set; }
-        public DelegateCommand ShowProjectSettingsDialogCommand{ get; private set; }
+        public DelegateCommand ShowProjectSettingsDialogCommand { get; private set; }
         public DelegateCommand ShowNewProjectDialogCommand { get; private set; }
         public DelegateCommand<Window> QuitCommand { get; private set; }
+        public DelegateCommand SaveProjectCommand { get; private set; }
+        public DelegateCommand SaveProjectAsCommand { get; private set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -36,6 +39,57 @@ namespace MemoryEditingSoftware.ViewModels
             ShowNewProjectDialogCommand = new DelegateCommand(ShowNewProjectDialog);
             ShowProjectSettingsDialogCommand = new DelegateCommand(ShowProjectSettingsDialog);
             QuitCommand = new DelegateCommand<Window>(Quit);
+            SaveProjectCommand = new DelegateCommand(SaveProject);
+            SaveProjectAsCommand = new DelegateCommand(SaveProjectAs);
+        }
+
+        private void SaveProjectAs()
+        {
+            Project project = Project.GetInstance();
+
+            if (project != null)
+            {
+                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+                saveFileDialog.Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*";
+
+                if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (saveFileDialog.FileName != null)
+                    {
+                        ProjectService.SaveProject(project, saveFileDialog.FileName);
+                        Console.WriteLine(saveFileDialog.FileName);
+                        project.Path = saveFileDialog.FileName;
+                    }
+                }
+            }
+        }
+
+        private void SaveProject()
+        {
+            Project project = Project.GetInstance();
+
+            if (project != null)
+            {
+                if (project.Path != null && !string.IsNullOrWhiteSpace(project.Path) && !string.IsNullOrEmpty(project.Path))
+                {
+                    ProjectService.SaveProject(project, project.Path);
+                }
+                else
+                {
+                    System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+                    saveFileDialog.Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*";
+
+                    if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        if (saveFileDialog.FileName != null)
+                        {
+                            ProjectService.SaveProject(project, saveFileDialog.FileName);
+                            Console.WriteLine(saveFileDialog.FileName);
+                            project.Path = saveFileDialog.FileName;
+                        }
+                    }
+                }
+            }
         }
 
         private void Quit(Window window)
@@ -52,13 +106,13 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                    // TODO:
-                    Console.WriteLine("New project OK:" + Project.GetInstance());
+                        // TODO:
+                        Console.WriteLine("New project OK:" + Project.GetInstance());
                 }
                 else
                 {
-                    // TODO:
-                    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
+                        // TODO:
+                        Console.WriteLine("New project CANCEL: " + Project.GetInstance());
                 }
             });
         }
@@ -69,13 +123,13 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                    // TODO:
-                    Console.WriteLine("Update project OK:" + Project.GetInstance());
+                        // TODO:
+                        Console.WriteLine("Update project OK:" + Project.GetInstance());
                 }
                 else
                 {
-                    // TODO:
-                    Console.WriteLine("Update project CANCEL: " + Project.GetInstance());
+                        // TODO:
+                        Console.WriteLine("Update project CANCEL: " + Project.GetInstance());
                 }
             });
         }

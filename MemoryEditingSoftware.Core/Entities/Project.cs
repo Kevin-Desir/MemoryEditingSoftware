@@ -16,6 +16,7 @@ namespace MemoryEditingSoftware.Core.Entities
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
         public ICollection<EditItem> EditItems { get; set; }
+        public string Path { get; set; }
 
         public Project() { }
 
@@ -28,7 +29,7 @@ namespace MemoryEditingSoftware.Core.Entities
 
         private static readonly object _lock = new object();
 
-        public static Project CreateInstance(string projectName, string description, string version, string creator, string programName, string exeName, DateTime creationDate, DateTime lastUpdateTime, ICollection<EditItem> editItems)
+        public static Project CreateInstance(string projectName, string description, string version, string creator, string programName, string exeName, DateTime creationDate, DateTime lastUpdateTime, ICollection<EditItem> editItems, string path)
         {
             if (instance == null)
             {
@@ -44,7 +45,8 @@ namespace MemoryEditingSoftware.Core.Entities
                         ExeName = exeName,
                         CreationDate = creationDate,
                         LastUpdateDate = lastUpdateTime,
-                        EditItems = editItems
+                        EditItems = editItems,
+                        Path = path
                     };
                 }
             }
