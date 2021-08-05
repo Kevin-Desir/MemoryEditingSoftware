@@ -1,4 +1,5 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MemoryEditingSoftware.Core.Business
@@ -35,5 +36,6 @@ namespace MemoryEditingSoftware.Core.Business
 
             return 0;
         }
+
     }
 }

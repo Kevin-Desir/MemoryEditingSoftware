@@ -38,14 +38,20 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         public string Name
         {
             get { return name; }
-            set { SetProperty(ref name, value); }
+            set
+            {
+                SetProperty(ref name, value);
+            }
         }
 
         private string address;
         public string Address
         {
             get { return address; }
-            set { SetProperty(ref address, value); }
+            set
+            {
+                SetProperty(ref address, value);
+            }
         }
 
         private ObservableCollection<string> readWriteCollection;
@@ -59,14 +65,20 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         public string ReadWrite
         {
             get { return readWrite; }
-            set { SetProperty(ref readWrite, value); }
+            set
+            {
+                SetProperty(ref readWrite, value);
+            }
         }
 
         private string val;
         public string Val
         {
             get { return val; }
-            set { SetProperty(ref val, value); }
+            set
+            {
+                SetProperty(ref val, value);
+            }
         }
 
         private ObservableCollection<string> loopingCollection;
@@ -80,7 +92,10 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         public string Looping
         {
             get { return looping; }
-            set { SetProperty(ref looping, value); }
+            set
+            {
+                SetProperty(ref looping, value);
+            }
         }
 
         private ObservableCollection<string> enterValueCollection;
@@ -94,7 +109,10 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         public string EnterValue
         {
             get { return enterValue; }
-            set { SetProperty(ref enterValue, value); }
+            set
+            {
+                SetProperty(ref enterValue, value);
+            }
         }
 
         public DelegateCommand EditItemSelectedCommand { get; set; }
@@ -117,37 +135,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
             EditItemList = new ObservableCollection<EditItem>();
 
-            // Only for testing
-            for (int i = 0; i < 10; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    EditItemList.Add(new EditItem()
-                    {
-                        ID = i,
-                        Address = "0x00123254",
-                        IsEnterValue = false,
-                        IsLoop = true,
-                        IsRead = true,
-                        Name = "Edit item",
-                        Value = "3000",
-                    });
-                }
-                else
-                {
-                    EditItemList.Add(new EditItem()
-                    {
-                        ID = i,
-                        Address = "0x00999999",
-                        IsEnterValue = true,
-                        IsLoop = false,
-                        IsRead = false,
-                        Name = "Edit item iii",
-                        Value = "6000",
-                    });
-                }
-            }
-
             ReadWriteCollection = new ObservableCollection<string>();
             ReadWriteCollection.Add("Read");
             ReadWriteCollection.Add("Write");
@@ -160,38 +147,65 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             EnterValueCollection.Add("Yes");
             EnterValueCollection.Add("No");
 
+            if (Project.GetInstance().EditItems != null)
+            {
+                foreach (EditItem ei in Project.GetInstance().EditItems)
+                {
+                    EditItemList.Add(ei);
+                }
+            }
+            else
+            {
+                Project.GetInstance().EditItems = new Collection<EditItem>();
+            }
+
+
             Clear();
 
         }
 
         private void Down()
         {
-            if (SelectedEditItem != null && SelectedEditItem.ID > 0)
-            {
-                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID -1);
-                high.ID -= 1;
-                low.ID += 1;
-                EditItemList.RemoveAt(high.ID);
-                EditItemList.Insert(high.ID, high);
-                EditItemList.RemoveAt(low.ID);
-                EditItemList.Insert(low.ID, low);
-            }
+            throw new NotImplementedException();
+            //if (SelectedEditItem != null && SelectedEditItem.ID > 0)
+            //{
+            //    EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+            //    EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID - 1);
+            //    high.ID -= 1;
+            //    low.ID += 1;
+            //    //EditItemList.RemoveAt(high.ID);
+            //    //EditItemList.Insert(high.ID, high);
+            //    //EditItemList.RemoveAt(low.ID);
+            //    //EditItemList.Insert(low.ID, low);
+
+            //    EditItem ei = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).Copy(low);
+            //    EditItem lowProject = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID);
+            //    EditItem highProject = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == high.ID);
+            //    lowProject.UpdateEditItem(high);
+            //    highProject.UpdateEditItem(ei);
+            //}
         }
 
         private void Up()
         {
-            if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() -1)
-            {
-                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID +1);
-                low.ID += 1;
-                high.ID -= 1;
-                EditItemList.RemoveAt(low.ID);
-                EditItemList.Insert(low.ID, low);
-                EditItemList.RemoveAt(high.ID);
-                EditItemList.Insert(high.ID, high);
-            }
+            throw new NotImplementedException();
+            //if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() - 1)
+            //{
+            //    EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+            //    EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID + 1);
+            //    low.ID += 1;
+            //    high.ID -= 1;
+            //    EditItemList.RemoveAt(low.ID);
+            //    EditItemList.Insert(low.ID, low);
+            //    EditItemList.RemoveAt(high.ID);
+            //    EditItemList.Insert(high.ID, high);
+
+            //    EditItem ei = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).Copy(low);
+            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).UpdateEditItem(high);
+            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == high.ID).UpdateEditItem(ei);
+            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == low.ID).ID -= 1;
+            //    Project.GetInstance().EditItems.First<EditItem>(i => i.ID == high.ID).ID += 1;
+            //}
         }
 
         private void Remove()
@@ -208,7 +222,19 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                     EditItemList.Insert(i, eitem);
                 }
 
-                editItemList.Remove(SelectedEditItem);
+                EditItem ei = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == SelectedEditItem.ID);
+                Project.GetInstance().EditItems.Remove(ei);
+
+                EditItemList.Remove(SelectedEditItem);
+
+                if (EditItemList.Count > 0)
+                {
+                    this.ID = EditItemList.Last().ID + 1;
+                }
+                else
+                {
+                    this.ID = 0;
+                }
             }
 
         }
@@ -220,7 +246,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 this.ID = EditItemList.Count();
             }
 
-            EditItemList.Add(new EditItem()
+            EditItem ei = new EditItem()
             {
                 ID = this.ID,
                 Address = this.Address,
@@ -229,11 +255,18 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 IsRead = ReadWrite.Equals("Read"),
                 IsEnterValue = EnterValue.Equals("Yes"),
                 IsLoop = Looping.Equals("Loop"),
-            });
+            };
+
+            EditItemList.Add(ei);
+
+            Project.GetInstance().EditItems.Add(ei);
+
+            this.ID++;
         }
 
         private void Update(EditItem editItem)
         {
+            // NOTE: needs to be improved with new UpdateEditItem method
             if (this.ID < EditItemList.Count())
             {
                 EditItem eitem = EditItemList.First<EditItem>(i => i.ID == this.ID);
@@ -248,12 +281,22 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 EditItemList.RemoveAt(this.ID);
 
                 EditItemList.Insert(eitem.ID, eitem);
+
+                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).Address = this.Address;
+                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).Name = this.Name;
+                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).Value = this.Val;
+                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).IsRead = ReadWrite.Equals("Read");
+                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).IsEnterValue = EnterValue.Equals("Yes");
+                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).IsLoop = Looping.Equals("Loop");
             }
         }
 
         private void Clear()
         {
-            this.ID = EditItemList.Last().ID + 1;
+            if (editItemList.Count > 0)
+                this.ID = EditItemList.Last().ID + 1;
+            else
+                this.ID = 0;
             this.Name = "";
             this.Val = "";
             this.Address = "0x";
