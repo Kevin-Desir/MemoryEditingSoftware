@@ -68,7 +68,7 @@
                 </Grid.RowDefinitions>
 
                 <Button Command="{Binding CancelProjectCommand}" Content="Cancel" Grid.Column="0" Grid.Row="1" Margin="5" Width="100" Background="Red" Foreground="White" />
-                <Button Command="{Binding UpdateProjectCommand}" Content="Create Project" Grid.Column="1" Grid.Row="1" Margin="5" Width="100" />
+                <Button Command="{Binding UpdateProjectCommand}" Content="Update Project" Grid.Column="1" Grid.Row="1" Margin="5" Width="100" />
             </Grid>
         </Grid>
     </Grid>
