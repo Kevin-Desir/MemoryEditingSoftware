@@ -1,6 +1,7 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -115,6 +116,13 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             }
         }
 
+        private bool isGridEnabled;
+        public bool IsGridEnabled
+        {
+            get { return isGridEnabled; }
+            set { SetProperty(ref isGridEnabled, value); }
+        }
+
         public DelegateCommand EditItemSelectedCommand { get; set; }
         public DelegateCommand ClearCommand { get; set; }
         public DelegateCommand<EditItem> UpdateCommand { get; set; }
@@ -125,43 +133,51 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
         public EditorViewModel()
         {
-            EditItemSelectedCommand = new DelegateCommand(EditItemSelected);
-            ClearCommand = new DelegateCommand(Clear);
-            UpdateCommand = new DelegateCommand<EditItem>(Update);
-            CreateNewCommand = new DelegateCommand(Create);
-            RemoveCommand = new DelegateCommand(Remove);
-            UpCommand = new DelegateCommand(Up);
-            DownCommand = new DelegateCommand(Down);
-
-            EditItemList = new ObservableCollection<EditItem>();
-
-            ReadWriteCollection = new ObservableCollection<string>();
-            ReadWriteCollection.Add("Read");
-            ReadWriteCollection.Add("Write");
-
-            LoopingCollection = new ObservableCollection<string>();
-            LoopingCollection.Add("One time");
-            LoopingCollection.Add("Loop");
-
-            EnterValueCollection = new ObservableCollection<string>();
-            EnterValueCollection.Add("Yes");
-            EnterValueCollection.Add("No");
-
-            if (Project.GetInstance().EditItems != null)
+            if (Project.GetInstance() != null)
             {
-                foreach (EditItem ei in Project.GetInstance().EditItems)
+                EditItemList = new ObservableCollection<EditItem>();
+
+                if (Project.GetInstance().EditItems != null)
                 {
-                    EditItemList.Add(ei);
+                    foreach (EditItem ei in Project.GetInstance().EditItems)
+                    {
+                        EditItemList.Add(ei);
+                    }
                 }
+                else
+                {
+                    Project.GetInstance().EditItems = new Collection<EditItem>();
+                }
+
+                EditItemSelectedCommand = new DelegateCommand(EditItemSelected);
+                ClearCommand = new DelegateCommand(Clear);
+                UpdateCommand = new DelegateCommand<EditItem>(Update);
+                CreateNewCommand = new DelegateCommand(Create);
+                RemoveCommand = new DelegateCommand(Remove);
+                UpCommand = new DelegateCommand(Up);
+                DownCommand = new DelegateCommand(Down);
+
+
+                ReadWriteCollection = new ObservableCollection<string>();
+                ReadWriteCollection.Add("Read");
+                ReadWriteCollection.Add("Write");
+
+                LoopingCollection = new ObservableCollection<string>();
+                LoopingCollection.Add("One time");
+                LoopingCollection.Add("Loop");
+
+                EnterValueCollection = new ObservableCollection<string>();
+                EnterValueCollection.Add("Yes");
+                EnterValueCollection.Add("No");
+
+                Clear();
+
+                IsGridEnabled = true;
             }
             else
             {
-                Project.GetInstance().EditItems = new Collection<EditItem>();
+                IsGridEnabled = false;
             }
-
-
-            Clear();
-
         }
 
         private void Down()

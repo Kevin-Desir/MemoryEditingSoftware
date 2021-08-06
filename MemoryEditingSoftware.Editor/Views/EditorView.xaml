@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="604" Height="359.333" >
-    <Grid>
+    <Grid IsEnabled="{Binding IsGridEnabled}">
         <ListView x:Name="listOfEditItem" ItemsSource="{Binding EditItemList}" SelectedItem="{Binding SelectedEditItem}" HorizontalAlignment="Left" Margin="10,10,0,83" Width="135" SelectionMode="Single" />
         <Button Content="=&gt;" Command="{Binding EditItemSelectedCommand}" HorizontalAlignment="Left" Width="31" Height="41" VerticalAlignment="Bottom" Margin="178,0,0,92" />
 
