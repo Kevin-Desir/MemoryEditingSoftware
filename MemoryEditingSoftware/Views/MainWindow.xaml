@@ -9,7 +9,7 @@
         <Menu Height="17" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New Project" Command="{Binding ShowNewProjectDialogCommand}" />
-                <MenuItem Header="Open Project" />
+                <MenuItem Header="Open Project" Command="{Binding OpenProjectDialogCommand}" />
                 <MenuItem Header="Recent Projects" >
                     <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
                     <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />

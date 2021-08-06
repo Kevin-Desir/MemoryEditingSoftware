@@ -8,6 +8,7 @@ using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace MemoryEditingSoftware.ViewModels
 {
@@ -29,6 +30,7 @@ namespace MemoryEditingSoftware.ViewModels
         public DelegateCommand<Window> QuitCommand { get; private set; }
         public DelegateCommand SaveProjectCommand { get; private set; }
         public DelegateCommand SaveProjectAsCommand { get; private set; }
+        public DelegateCommand OpenProjectDialogCommand { get; private set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -41,6 +43,23 @@ namespace MemoryEditingSoftware.ViewModels
             QuitCommand = new DelegateCommand<Window>(Quit);
             SaveProjectCommand = new DelegateCommand(SaveProject);
             SaveProjectAsCommand = new DelegateCommand(SaveProjectAs);
+            OpenProjectDialogCommand = new DelegateCommand(OpenProjectDialog);
+        }
+
+        private void OpenProjectDialog()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (openFileDialog.FileName != null)
+                {
+                    ProjectService.LoadProject(openFileDialog.FileName);
+                    Console.WriteLine(Project.GetInstance().Path);
+                    this.regionManager.Regions[RegionNames.ContentRegion].RemoveAll();
+                }
+            }
         }
 
         private void SaveProjectAs()
