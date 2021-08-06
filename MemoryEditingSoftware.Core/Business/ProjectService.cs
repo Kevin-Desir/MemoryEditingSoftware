@@ -8,6 +8,7 @@ namespace MemoryEditingSoftware.Core.Business
 {
     public static class ProjectService
     {
+        // save all the current project content/properties in a file
         public static int SaveProject(Project project, string path)
         {
             StringBuilder sb = new StringBuilder();
@@ -34,13 +35,16 @@ namespace MemoryEditingSoftware.Core.Business
                 }
             }
 
+            // write all the stringbuilder once it's complete
             System.IO.File.WriteAllText(path, sb.ToString());
 
             return 0;
         }
 
+        // read inside a file to retrieve all the project's content
         public static int LoadProject(string path)
         {
+            // need to check if a project was previously loaded or not
             if (Project.GetInstance() == null)
             {
                 Project.CreateInstance(path);
@@ -53,6 +57,7 @@ namespace MemoryEditingSoftware.Core.Business
             IEnumerable<string> lines = System.IO.File.ReadLines(path);
             EditItem ei = null;
 
+            // just read all lines, detecting the name of each property
             foreach (string line in lines)
             {
                 string[] split = line.Split('*');
@@ -92,6 +97,7 @@ namespace MemoryEditingSoftware.Core.Business
                         Console.WriteLine(Project.GetInstance().CreationDate);
                         break;
                     default:
+                        // check if there is a digit in the begining of the line, meaning it's a EditItem property
                         if (IsDigitsOnly(split[0]))
                         {
                             switch (split[1])
@@ -99,7 +105,7 @@ namespace MemoryEditingSoftware.Core.Business
                                 case "Name":
                                     ei = new EditItem();
                                     ei.Name = split[2];
-                                    ei.ID = int.Parse(split[0]); // TODO:
+                                    ei.ID = int.Parse(split[0]); // TODO: exception handling
                                     break;
                                 case "Address":
                                     ei.Address = split[2];
@@ -115,6 +121,8 @@ namespace MemoryEditingSoftware.Core.Business
                                     break;
                                 case "IsEnterValue":
                                     ei.IsEnterValue = split[2].Equals("True");
+
+                                    // check if it's the first EditItem to instantiate the collection
                                     if (Project.GetInstance().EditItems == null)
                                     {
                                         Project.GetInstance().EditItems = new Collection<EditItem>();
@@ -126,6 +134,7 @@ namespace MemoryEditingSoftware.Core.Business
                         }
                         else
                         {
+                            // error
                             return -1;
                         }
                         break;
@@ -135,6 +144,7 @@ namespace MemoryEditingSoftware.Core.Business
             return 0;
         }
 
+        // check if the string passed as parameter only contains digits
         private static bool IsDigitsOnly(string str)
         {
             foreach (char c in str)
