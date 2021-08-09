@@ -31,6 +31,7 @@ namespace MemoryEditingSoftware.ViewModels
         public DelegateCommand SaveProjectCommand { get; private set; }
         public DelegateCommand SaveProjectAsCommand { get; private set; }
         public DelegateCommand OpenProjectDialogCommand { get; private set; }
+        public DelegateCommand RunDialogCommand { get; private set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -44,6 +45,24 @@ namespace MemoryEditingSoftware.ViewModels
             SaveProjectCommand = new DelegateCommand(SaveProject);
             SaveProjectAsCommand = new DelegateCommand(SaveProjectAs);
             OpenProjectDialogCommand = new DelegateCommand(OpenProjectDialog);
+            RunDialogCommand = new DelegateCommand(Run);
+        }
+
+        private void Run()
+        {
+            dialogService.ShowDialog(DialogNames.RunDialog, r =>
+            {
+                //if (r.Result == ButtonResult.OK)
+                //{
+                //TODO:
+                //    Console.WriteLine("New project OK:" + Project.GetInstance());
+                //}
+                //else
+                //{
+                //TODO:
+                //    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
+                //}
+            });
         }
 
         private void OpenProjectDialog()

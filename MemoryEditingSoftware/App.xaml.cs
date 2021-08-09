@@ -1,5 +1,6 @@
 ﻿using MemoryEditingSoftware.Editor;
 using MemoryEditingSoftware.ProjectSettings;
+using MemoryEditingSoftware.Run;
 using MemoryEditingSoftware.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -26,6 +27,7 @@ namespace MemoryEditingSoftware
         {
             moduleCatalog.AddModule<EditorModule>();
             moduleCatalog.AddModule<ProjectSettingsModule>();
+            moduleCatalog.AddModule<RunModule>();
         }
     }
 }

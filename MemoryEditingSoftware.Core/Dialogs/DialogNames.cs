@@ -4,5 +4,6 @@
     {
         public static string NewProjectDialog = "NewProjectDialog";
         public static string ProjectSettingsDialog = "ProjectSettingsDialog";
+        public static string RunDialog = "RunDialog";
     }
 }

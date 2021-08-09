@@ -29,7 +29,7 @@
             </MenuItem>
             <MenuItem Header="Navigate">
                 <MenuItem Header="Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
-                <MenuItem Header="Run" />
+                <MenuItem Header="Run" Command="{Binding RunDialogCommand}" />
             </MenuItem>
         </Menu>
         <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" Margin="0,17,0,0" />
