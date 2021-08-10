@@ -3,6 +3,7 @@ using MemoryEditingSoftware.Run.ViewModels;
 using MemoryEditingSoftware.Run.Views;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Mvvm;
 
 namespace MemoryEditingSoftware.Run
 {

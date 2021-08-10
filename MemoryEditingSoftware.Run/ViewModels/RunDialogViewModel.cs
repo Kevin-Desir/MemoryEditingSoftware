@@ -1,7 +1,11 @@
-﻿using Prism.Commands;
+﻿using MemoryEditingSoftware.Run.Views;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace MemoryEditingSoftware.Run.ViewModels
 {
@@ -10,6 +14,14 @@ namespace MemoryEditingSoftware.Run.ViewModels
         public string Title => "Run Project";
 
         public DelegateCommand CloseCommand { get; private set; }
+
+        private ObservableCollection<ReadItem> readItems;
+
+        public ObservableCollection<ReadItem> ReadItems
+        {
+            get { return readItems; }
+            set { SetProperty(ref readItems, value); }
+        }
 
         public event Action<IDialogResult> RequestClose;
 

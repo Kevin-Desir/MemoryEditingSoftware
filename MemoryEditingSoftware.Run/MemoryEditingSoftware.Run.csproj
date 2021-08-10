@@ -64,6 +64,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\RunDialogViewModel.cs" />
+    <Compile Include="Views\ReadItem.xaml.cs">
+      <DependentUpon>ReadItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RunDialog.xaml.cs">
       <DependentUpon>RunDialog.xaml</DependentUpon>
     </Compile>
@@ -87,6 +90,10 @@
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ReadItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RunDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

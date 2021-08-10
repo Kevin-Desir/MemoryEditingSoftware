@@ -30,7 +30,7 @@
         </Grid>
 
         <Grid x:Name="MainGrid" Grid.Row="1">
-            
+            <StackPanel x:Name="ItemsStackPanel" />
         </Grid>
 
         <Grid Grid.Row="2">

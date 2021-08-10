@@ -1,5 +1,4 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,27 +17,16 @@ using System.Windows.Shapes;
 namespace MemoryEditingSoftware.Run.Views
 {
     /// <summary>
-    /// Interaction logic for RunDialog.xaml
+    /// Interaction logic for ReadItem.xaml
     /// </summary>
-    public partial class RunDialog : UserControl
+    public partial class ReadItem : UserControl
     {
-        public RunDialog()
+        public ReadItem(EditItem editItem)
         {
             InitializeComponent();
 
-            ICollection<EditItem> editItems = Project.GetInstance().EditItems;
-
-            foreach (var ei in editItems)
-            {
-                if (ei.IsRead)
-                {
-                    ItemsStackPanel.Children.Add(new ReadItem(ei));
-                }
-                else
-                {
-                    // TODO:
-                }
-            }
+            name.Text = editItem.Name;
+            val.Text = editItem.Value;
         }
     }
 }
