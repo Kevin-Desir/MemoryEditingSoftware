@@ -1,19 +1,8 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Runtime.InteropServices;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MemoryEditingSoftware.Run.Views
 {
@@ -22,22 +11,35 @@ namespace MemoryEditingSoftware.Run.Views
     /// </summary>
     public partial class RunDialog : UserControl
     {
+        [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int InitLink(string TargetProcessName);
+
         public RunDialog()
         {
             InitializeComponent();
 
-            ICollection<EditItem> editItems = Project.GetInstance().EditItems;
+            int errorCode;
 
-            foreach (var ei in editItems)
+            if ((errorCode = InitLink(Project.GetInstance().ExeName)) > 0)
             {
-                if (ei.IsRead)
+                ICollection<EditItem> editItems = Project.GetInstance().EditItems;
+
+                foreach (var ei in editItems)
                 {
-                    ItemsStackPanel.Children.Add(new ReadItem(ei));
+                    if (ei.IsRead)
+                    {
+                        ItemsStackPanel.Children.Add(new ReadItem(ei));
+                    }
+                    else
+                    {
+                        ItemsStackPanel.Children.Add(new WriteItem(ei));
+                    }
                 }
-                else
-                {
-                    // TODO:
-                }
+            }
+            else
+            {
+                // TODO: handle error if cannot connect to process
+                Console.WriteLine(errorCode);
             }
         }
     }

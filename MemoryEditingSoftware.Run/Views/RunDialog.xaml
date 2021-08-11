@@ -28,9 +28,10 @@
         <Grid Grid.Row="0" >
             <Label Content="Run Project" Margin="5" FontSize="32" />
         </Grid>
-
         <Grid x:Name="MainGrid" Grid.Row="1">
-            <StackPanel x:Name="ItemsStackPanel" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="ItemsStackPanel" />
+            </ScrollViewer>
         </Grid>
 
         <Grid Grid.Row="2">

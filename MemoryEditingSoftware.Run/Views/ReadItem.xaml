@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MemoryEditingSoftware.Run.Views"
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="250">
-    <Grid>
+    <Grid Margin="0 0 0 20" Background="SkyBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />

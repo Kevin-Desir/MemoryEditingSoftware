@@ -50,8 +50,10 @@ namespace MemoryEditingSoftware.ViewModels
 
         private void Run()
         {
-            dialogService.ShowDialog(DialogNames.RunDialog, r =>
+            if (Project.GetInstance() != null)
             {
+                dialogService.ShowDialog(DialogNames.RunDialog, r =>
+                {
                 //if (r.Result == ButtonResult.OK)
                 //{
                 //TODO:
@@ -62,7 +64,8 @@ namespace MemoryEditingSoftware.ViewModels
                 //TODO:
                 //    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
                 //}
-            });
+                });
+            }
         }
 
         private void OpenProjectDialog()
@@ -144,13 +147,13 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                        // TODO:
-                        Console.WriteLine("New project OK:" + Project.GetInstance());
+                    // TODO:
+                    Console.WriteLine("New project OK:" + Project.GetInstance());
                 }
                 else
                 {
-                        // TODO:
-                        Console.WriteLine("New project CANCEL: " + Project.GetInstance());
+                    // TODO:
+                    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
                 }
             });
         }
@@ -161,13 +164,13 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                        // TODO:
-                        Console.WriteLine("Update project OK:" + Project.GetInstance());
+                    // TODO:
+                    Console.WriteLine("Update project OK:" + Project.GetInstance());
                 }
                 else
                 {
-                        // TODO:
-                        Console.WriteLine("Update project CANCEL: " + Project.GetInstance());
+                    // TODO:
+                    Console.WriteLine("Update project CANCEL: " + Project.GetInstance());
                 }
             });
         }

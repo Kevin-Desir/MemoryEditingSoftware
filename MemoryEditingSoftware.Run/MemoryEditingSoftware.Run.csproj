@@ -70,6 +70,9 @@
     <Compile Include="Views\RunDialog.xaml.cs">
       <DependentUpon>RunDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WriteItem.xaml.cs">
+      <DependentUpon>WriteItem.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -95,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RunDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WriteItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
