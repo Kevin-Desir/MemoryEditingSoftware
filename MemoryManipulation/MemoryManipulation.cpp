@@ -134,7 +134,9 @@ int WriteShortInMemory(const char* memoryAddress, short value) {
 	return 0;
 }
 
-int ReadIntFromMemory(const char* memoryAddress, int value) {
+int ReadIntFromMemory(const char* memoryAddress) {
+	int value;
+
 	intptr_t int_address;
 	{
 		std::stringstream stream;
@@ -148,7 +150,9 @@ int ReadIntFromMemory(const char* memoryAddress, int value) {
 	return value;
 }
 
-double ReadDoubleFromMemory(const char* memoryAddress, double value) {
+double ReadDoubleFromMemory(const char* memoryAddress) {
+	double value;
+
 	intptr_t int_address;
 	{
 		std::stringstream stream;
@@ -162,7 +166,9 @@ double ReadDoubleFromMemory(const char* memoryAddress, double value) {
 	return value;
 }
 
-short ReadShortFromMemory(const char* memoryAddress, short value) {
+short ReadShortFromMemory(const char* memoryAddress) {
+	short value;
+	
 	intptr_t int_address;
 	{
 		std::stringstream stream;
