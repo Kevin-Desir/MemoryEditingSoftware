@@ -106,7 +106,7 @@ int WriteIntInMemory(const char* memoryAddress, int value) {
 	return 0;
 }
 
-int WriteFloatInMemory(const char* memoryAddress, float value) {
+int WriteDoubleInMemory(const char* memoryAddress, double value) {
 	intptr_t int_address;
 	{
 		std::stringstream stream;
@@ -115,7 +115,7 @@ int WriteFloatInMemory(const char* memoryAddress, float value) {
 	}
 	void* address = (void*)int_address;
 
-	WriteProcessMemory(handle, (LPVOID)address, &value, sizeof(float), 0);
+	WriteProcessMemory(handle, (LPVOID)address, &value, sizeof(double), 0);
 
 	return 0;
 }
@@ -148,7 +148,7 @@ int ReadIntFromMemory(const char* memoryAddress, int value) {
 	return value;
 }
 
-float ReadFloatFromMemory(const char* memoryAddress, float value) {
+double ReadDoubleFromMemory(const char* memoryAddress, double value) {
 	intptr_t int_address;
 	{
 		std::stringstream stream;
@@ -157,7 +157,7 @@ float ReadFloatFromMemory(const char* memoryAddress, float value) {
 	}
 	void* address = (void*)int_address;
 
-	ReadProcessMemory(handle, (LPVOID)address, &value, sizeof(float), 0);
+	ReadProcessMemory(handle, (LPVOID)address, &value, sizeof(double), 0);
 	
 	return value;
 }
