@@ -13,6 +13,6 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock x:Name="name" Grid.Column="0" Margin="5" VerticalAlignment="Center" />
-        <TextBox x:Name="val" IsReadOnly="True" Grid.Column="1" Margin="5" Padding="4" VerticalAlignment="Center" />
+        <TextBox x:Name="val" IsReadOnly="True" Grid.Column="1" Margin="5" Padding="4" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="150" />
     </Grid>
 </UserControl>

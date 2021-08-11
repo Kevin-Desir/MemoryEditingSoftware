@@ -123,6 +123,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             set { SetProperty(ref isGridEnabled, value); }
         }
 
+        // TODO: Activate EditItemSelectedCommand on DoubleClick (interactivity)
         public DelegateCommand EditItemSelectedCommand { get; set; }
         public DelegateCommand ClearCommand { get; set; }
         public DelegateCommand<EditItem> UpdateCommand { get; set; }
