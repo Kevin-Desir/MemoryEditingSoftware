@@ -100,14 +100,17 @@ namespace MemoryEditingSoftware.Run.Views
                         if (Val.Text.Contains("."))
                         {
                             this.stop = false;
-                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopDouble(double.Parse(Val.Text)));
+                            // had to declare a variable v to prevent "The calling thread cannot access this object because a different thread owns it".
+                            double v = double.Parse(Val.Text);
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopDouble(v));
                             ActivateButton.Content = "Disable";
                             Val.IsEnabled = false;
                         }
                         else
                         {
                             this.stop = false;
-                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopInt(int.Parse(Val.Text)));
+                            int v = int.Parse(Val.Text);
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopInt(v));
                             ActivateButton.Content = "Disable";
                             Val.IsEnabled = false;
                         }
@@ -155,7 +158,7 @@ namespace MemoryEditingSoftware.Run.Views
                 // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
                 Thread.Sleep(100);
 
-                WriteDoubleInMemory(editItem.Address, val);
+                WriteIntInMemory(editItem.Address, val);
             }
 
             return false;

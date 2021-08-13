@@ -26,18 +26,18 @@ namespace MemoryEditingSoftware.Run.Views
             val.Text = "No value received / Wrong format, please check address via editor";
 
             // DEBUG ONLY, to be uncommented before commit
-            //try
-            //{
-            //    if (val.Text.Contains("."))
-            //    {
-            //        ThreadPool.QueueUserWorkItem(_ => StartReadingDouble(val, editItem.Address));
-            //    }
-            //    else
-            //    {
-            //        ThreadPool.QueueUserWorkItem(_ => StartReadingInt(val, editItem.Address));
-            //    }
-            //}
-            //catch (Exception) { }
+            try
+            {
+                if (val.Text.Contains("."))
+                {
+                    ThreadPool.QueueUserWorkItem(_ => StartReadingDouble(val, editItem.Address));
+                }
+                else
+                {
+                    ThreadPool.QueueUserWorkItem(_ => StartReadingInt(val, editItem.Address));
+                }
+            }
+            catch (Exception) { }
 
 
 
