@@ -1,6 +1,7 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace MemoryEditingSoftware.Run.Views
@@ -11,6 +12,8 @@ namespace MemoryEditingSoftware.Run.Views
     public partial class WriteItem : UserControl
     {
         private readonly EditItem editItem;
+        private bool stop = true;
+        private int debugcpt = 0;
 
         [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int WriteDoubleInMemory(string address, double value);
@@ -22,7 +25,7 @@ namespace MemoryEditingSoftware.Run.Views
         {
             InitializeComponent();
 
-            Name.Text = editItem.Name;
+            NameTextBlock.Text = editItem.Name;
             if (editItem.IsLoop)
                 ActivateButton.Content = "Enable";
             else
@@ -53,13 +56,13 @@ namespace MemoryEditingSoftware.Run.Views
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (double.Parse(Val.Text)).ToString());
-                            //WriteDoubleInMemory(editItem.Address, double.Parse(Val.Text));
+                            WriteDoubleInMemory(editItem.Address, double.Parse(Val.Text));
                         }
                         else
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (int.Parse(Val.Text)).ToString());
-                            //WriteIntInMemory(editItem.Address, int.Parse(Val.Text));
+                            WriteIntInMemory(editItem.Address, int.Parse(Val.Text));
                         }
                     }
                 }
@@ -74,25 +77,104 @@ namespace MemoryEditingSoftware.Run.Views
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (double.Parse(editItem.Value)).ToString());
-                            //WriteDoubleInMemory(editItem.Address, double.Parse(editItem.Value));
+                            WriteDoubleInMemory(editItem.Address, double.Parse(editItem.Value));
                         }
                         else
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (int.Parse(editItem.Value)).ToString());
-                            //WriteIntInMemory(editItem.Address, int.Parse(editItem.Value));
+                            WriteIntInMemory(editItem.Address, int.Parse(editItem.Value));
                         }
                     }
                 }
             }
             else if (ActivateButton.Content.ToString() == "Enable")
             {
-                throw new NotImplementedException();
+                // check if input from the gui (or from the editItem instance)
+                if (editItem.IsEnterValue)
+                {
+                    // check that the string only contains numbers / digits
+                    if (IsDigitsOnly(Val.Text))
+                    {
+                        // check if double or int
+                        if (Val.Text.Contains("."))
+                        {
+                            this.stop = false;
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopDouble(double.Parse(Val.Text)));
+                            ActivateButton.Content = "Disable";
+                            Val.IsEnabled = false;
+                        }
+                        else
+                        {
+                            this.stop = false;
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopInt(int.Parse(Val.Text)));
+                            ActivateButton.Content = "Disable";
+                            Val.IsEnabled = false;
+                        }
+                    }
+                }
+                // use the value from the editItem instance
+                else
+                {
+                    // check that the string only contains numbers / digits
+                    if (IsDigitsOnly(editItem.Value))
+                    {
+                        // check if double or int 
+                        if (editItem.Value.Contains("."))
+                        {
+                            this.stop = false;
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopDouble(double.Parse(editItem.Value)));
+                            ActivateButton.Content = "Disable";
+                            Val.IsEnabled = false;
+                        }
+                        else
+                        {
+                            this.stop = false;
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopInt(int.Parse(editItem.Value)));
+                            ActivateButton.Content = "Disable";
+                            Val.IsEnabled = false;
+                        }
+                    }
+                }
             }
             else if (ActivateButton.Content.ToString() == "Disable")
             {
-                throw new NotImplementedException();
+                this.stop = true;
+                ActivateButton.Content = "Enable";
+                Val.IsEnabled = true;
             }
+        }
+
+        private bool EnableWrintingLoopInt(int val)
+        {
+            while (!stop)
+            {
+                // DEBUG ONLY
+                Console.WriteLine(editItem.Address + ": " + val.ToString() + "[" + debugcpt++ + "]");
+
+                // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
+                Thread.Sleep(100);
+
+                WriteDoubleInMemory(editItem.Address, val);
+            }
+
+            return false;
+        }
+
+        private bool EnableWrintingLoopDouble(double val)
+        {
+            while (!stop)
+            {
+                // DEBUG ONLY
+                Console.WriteLine(editItem.Address + ": " + val.ToString() + "[" + debugcpt++ + "]");
+
+                // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
+                Thread.Sleep(100);
+
+                WriteDoubleInMemory(editItem.Address, val);
+            }
+
+            return false;
         }
 
         // TODO: put this in Core

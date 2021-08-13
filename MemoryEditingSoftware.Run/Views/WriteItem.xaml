@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="Name" Text="Name" Grid.Column="0" Grid.Row="0" Margin="5" VerticalAlignment="Center" />
+        <TextBlock x:Name="NameTextBlock" Text="Edit item Name" Grid.Column="0" Grid.Row="0" Margin="5" VerticalAlignment="Center" />
         <Button x:Name="ActivateButton" Grid.Column="1" Grid.Row="0" Content="Activate" Padding="5" Margin="5" Width="80" Click="ActivateButton_Click" />
         <Label Content="Value:" Grid.Column="0" Grid.Row="1" Margin="5" VerticalAlignment="Center" />
         <TextBox x:Name="Val" Text="1000000" Grid.Column="1" Grid.Row="1" Margin="5" Padding="4" MaxWidth="150" />
