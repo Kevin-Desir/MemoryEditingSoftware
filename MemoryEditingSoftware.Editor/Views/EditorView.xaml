@@ -63,14 +63,14 @@
             <TextBlock Text="Read or write:" Grid.Column="0" Grid.Row="3" Margin="5" />
             <ComboBox ItemsSource="{Binding ReadWriteCollection}" SelectedValue="{Binding ReadWrite}" Grid.Column="1" Grid.Row="3" Margin="5" />
 
-            <TextBlock Text="Value:" Grid.Column="0" Grid.Row="4" Margin="5" />
-            <TextBox Text="{Binding Val}" Grid.Column="1" Grid.Row="4" Margin="5" />
+            <TextBlock Visibility="{Binding ReadWriteVisibility}" Text="Value:" Grid.Column="0" Grid.Row="4" Margin="5" />
+            <TextBox Visibility="{Binding ReadWriteVisibility}" Text="{Binding Val}" Grid.Column="1" Grid.Row="4" Margin="5" />
 
-            <TextBlock Text="One time or Looping:" Grid.Column="0" Grid.Row="5" Margin="5" />
-            <ComboBox ItemsSource="{Binding LoopingCollection}" SelectedValue="{Binding Looping}" Grid.Column="1" Grid.Row="5" Margin="5" />
+            <TextBlock Visibility="{Binding ReadWriteVisibility}" Text="One time or Looping:" Grid.Column="0" Grid.Row="5" Margin="5" />
+            <ComboBox Visibility="{Binding ReadWriteVisibility}" ItemsSource="{Binding LoopingCollection}" SelectedValue="{Binding Looping}" Grid.Column="1" Grid.Row="5" Margin="5" />
 
-            <TextBlock Text="Will enter a value in execution:" Grid.Column="0" Grid.Row="6" Margin="5" />
-            <ComboBox ItemsSource="{Binding EnterValueCollection}" SelectedValue="{Binding EnterValue}" Grid.Column="1" Grid.Row="6" Margin="5" />
+            <TextBlock Visibility="{Binding ReadWriteVisibility}" Text="Will enter a value in execution:" Grid.Column="0" Grid.Row="6" Margin="5" />
+            <ComboBox Visibility="{Binding ReadWriteVisibility}" ItemsSource="{Binding EnterValueCollection}" SelectedValue="{Binding EnterValue}" Grid.Column="1" Grid.Row="6" Margin="5" />
 
             <Grid Grid.Row="8" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>

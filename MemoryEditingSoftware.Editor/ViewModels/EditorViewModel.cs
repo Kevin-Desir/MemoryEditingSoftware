@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MemoryEditingSoftware.Editor.ViewModels
 {
@@ -69,6 +70,19 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             set
             {
                 SetProperty(ref readWrite, value);
+                OnReadWriteChanged(readWrite);
+            }
+        }
+
+        private void OnReadWriteChanged(string readWrite)
+        {
+            if (readWrite == "Read")
+            {
+                ReadWriteVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ReadWriteVisibility = Visibility.Visible;
             }
         }
 
@@ -121,6 +135,13 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         {
             get { return isGridEnabled; }
             set { SetProperty(ref isGridEnabled, value); }
+        }
+
+        private Visibility readWriteVisibility;
+        public Visibility ReadWriteVisibility
+        {
+            get { return readWriteVisibility; }
+            set { SetProperty(ref readWriteVisibility, value); }
         }
 
         // TODO: Activate EditItemSelectedCommand on DoubleClick (interactivity)
