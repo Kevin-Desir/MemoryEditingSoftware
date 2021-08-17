@@ -12,6 +12,8 @@ namespace MemoryEditingSoftware.Views
         public MainWindow()
         {
             InitializeComponent();
+
+
         }
     }
 }

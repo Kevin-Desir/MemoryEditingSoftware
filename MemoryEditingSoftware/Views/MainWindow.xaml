@@ -10,10 +10,8 @@
             <MenuItem Header="File">
                 <MenuItem Header="New Project" Command="{Binding ShowNewProjectDialogCommand}" />
                 <MenuItem Header="Open Project" Command="{Binding OpenProjectDialogCommand}" />
-                <MenuItem Header="Recent Projects" >
-                    <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
-                    <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
-                    <MenuItem Header="C:\\User\DumbUser\MES_Projects\random-project-1.mes" />
+                <MenuItem Header="Recent Projects" ItemsSource="{Binding RecentProjects}" >
+                    
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Save Project" Command="{Binding SaveProjectCommand}" />
@@ -25,7 +23,7 @@
             </MenuItem>
             <MenuItem Header="Editor">
                 <MenuItem Header="Show Editor (GUI Mode)" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
-                <MenuItem Header="Show Editor (Text Mode)" />
+                <MenuItem Header="Show Editor (Text Mode)" IsEnabled="False" />
             </MenuItem>
             <MenuItem Header="Navigate">
                 <MenuItem Header="Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />

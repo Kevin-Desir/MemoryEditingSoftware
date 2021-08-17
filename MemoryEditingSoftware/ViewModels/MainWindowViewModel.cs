@@ -7,6 +7,8 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -14,6 +16,8 @@ namespace MemoryEditingSoftware.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        private const string RECENT_PROJECTS_FILENAME = "RecentProjects.con";
+
         private string title = "Memory Editing Software";
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
@@ -22,6 +26,13 @@ namespace MemoryEditingSoftware.ViewModels
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+
+        private ObservableCollection<string> recentProjects;
+        public ObservableCollection<string> RecentProjects
+        {
+            get { return recentProjects; }
+            set { SetProperty(ref recentProjects, value); }
         }
 
         public DelegateCommand<string> NavigateCommand { get; private set; }
@@ -46,6 +57,25 @@ namespace MemoryEditingSoftware.ViewModels
             SaveProjectAsCommand = new DelegateCommand(SaveProjectAs);
             OpenProjectDialogCommand = new DelegateCommand(OpenProjectDialog);
             RunDialogCommand = new DelegateCommand(Run);
+
+            RecentProjects = new ObservableCollection<string>();
+
+            if (File.Exists(RECENT_PROJECTS_FILENAME))
+            {
+                string[] lines = File.ReadAllLines(RECENT_PROJECTS_FILENAME);
+
+                for (int i = lines.Length - 1; i > lines.Length - 11 && i > -1; i--)
+                {
+                    if (File.Exists(lines[i]) && !RecentProjects.Contains(lines[i]))
+                    {
+                        RecentProjects.Add(lines[i]);
+                    }
+                }
+            }
+            else
+            {
+                File.Create(RECENT_PROJECTS_FILENAME);
+            }
         }
 
         private void Run()
@@ -54,16 +84,16 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 dialogService.ShowDialog(DialogNames.RunDialog, r =>
                 {
-                //if (r.Result == ButtonResult.OK)
-                //{
-                //TODO:
-                //    Console.WriteLine("New project OK:" + Project.GetInstance());
-                //}
-                //else
-                //{
-                //TODO:
-                //    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
-                //}
+                    //if (r.Result == ButtonResult.OK)
+                    //{
+                    //TODO:
+                    //    Console.WriteLine("New project OK:" + Project.GetInstance());
+                    //}
+                    //else
+                    //{
+                    //TODO:
+                    //    Console.WriteLine("New project CANCEL: " + Project.GetInstance());
+                    //}
                 });
             }
         }
@@ -80,6 +110,8 @@ namespace MemoryEditingSoftware.ViewModels
                     ProjectService.LoadProject(openFileDialog.FileName);
                     Console.WriteLine(Project.GetInstance().Path);
                     this.regionManager.Regions[RegionNames.ContentRegion].RemoveAll();
+
+                    File.AppendAllText(RECENT_PROJECTS_FILENAME, $"{openFileDialog.FileName}\n");
                 }
             }
         }
@@ -100,6 +132,8 @@ namespace MemoryEditingSoftware.ViewModels
                         ProjectService.SaveProject(project, saveFileDialog.FileName);
                         Console.WriteLine(saveFileDialog.FileName);
                         project.Path = saveFileDialog.FileName;
+
+                        File.AppendAllText(RECENT_PROJECTS_FILENAME, $"{saveFileDialog.FileName}\n");
                     }
                 }
             }
@@ -127,6 +161,8 @@ namespace MemoryEditingSoftware.ViewModels
                             ProjectService.SaveProject(project, saveFileDialog.FileName);
                             Console.WriteLine(saveFileDialog.FileName);
                             project.Path = saveFileDialog.FileName;
+
+                            File.AppendAllText(RECENT_PROJECTS_FILENAME, $"{saveFileDialog.FileName}\n");
                         }
                     }
                 }
