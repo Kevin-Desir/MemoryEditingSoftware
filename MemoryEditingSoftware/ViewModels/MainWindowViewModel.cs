@@ -43,6 +43,7 @@ namespace MemoryEditingSoftware.ViewModels
         public DelegateCommand SaveProjectAsCommand { get; private set; }
         public DelegateCommand OpenProjectDialogCommand { get; private set; }
         public DelegateCommand RunDialogCommand { get; private set; }
+        public DelegateCommand<string> OpenRecentProjectCommand { get; private set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -57,6 +58,7 @@ namespace MemoryEditingSoftware.ViewModels
             SaveProjectAsCommand = new DelegateCommand(SaveProjectAs);
             OpenProjectDialogCommand = new DelegateCommand(OpenProjectDialog);
             RunDialogCommand = new DelegateCommand(Run);
+            OpenRecentProjectCommand = new DelegateCommand<string>(OpenRecentProject);
 
             RecentProjects = new ObservableCollection<string>();
 
@@ -75,6 +77,18 @@ namespace MemoryEditingSoftware.ViewModels
             else
             {
                 File.Create(RECENT_PROJECTS_FILENAME);
+            }
+        }
+
+        private void OpenRecentProject(string path)
+        {
+            if (path != null && !string.IsNullOrWhiteSpace(path))
+            {
+                ProjectService.LoadProject(path);
+                Console.WriteLine(Project.GetInstance().Path);
+                this.regionManager.Regions[RegionNames.ContentRegion].RemoveAll();
+
+                File.AppendAllText(RECENT_PROJECTS_FILENAME, $"{path}\n");
             }
         }
 

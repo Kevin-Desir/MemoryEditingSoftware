@@ -11,7 +11,12 @@
                 <MenuItem Header="New Project" Command="{Binding ShowNewProjectDialogCommand}" />
                 <MenuItem Header="Open Project" Command="{Binding OpenProjectDialogCommand}" />
                 <MenuItem Header="Recent Projects" ItemsSource="{Binding RecentProjects}" >
-                    
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem" >
+                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}, Path=DataContext.OpenRecentProjectCommand}"></Setter>
+                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self},  Path=Header}"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Save Project" Command="{Binding SaveProjectCommand}" />
