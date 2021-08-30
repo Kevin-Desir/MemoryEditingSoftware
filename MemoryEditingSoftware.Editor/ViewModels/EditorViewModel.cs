@@ -1,14 +1,9 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MemoryEditingSoftware.Editor.ViewModels
@@ -204,7 +199,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
         private void Down()
         {
-            // TODO: fix this, it doesn't work very well
             if (SelectedEditItem != null && SelectedEditItem.ID > 0)
             {
                 EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
@@ -215,12 +209,19 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 EditItemList.Insert(high.ID, high);
                 EditItemList.RemoveAt(low.ID);
                 EditItemList.Insert(low.ID, low);
+
+                UpdateEditItemCollection();
+
+                foreach (EditItem editItem in Project.GetInstance().EditItems)
+                {
+                    Console.WriteLine($"{editItem.ID}:{editItem.Name}");
+                }
+                Console.WriteLine('\n');
             }
         }
 
         private void Up()
         {
-            // TODO: fix this, it doesn't work very well
             if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() - 1)
             {
                 EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
@@ -231,6 +232,24 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 EditItemList.Insert(low.ID, low);
                 EditItemList.RemoveAt(high.ID);
                 EditItemList.Insert(high.ID, high);
+
+                UpdateEditItemCollection();
+
+                foreach (EditItem editItem in Project.GetInstance().EditItems)
+                {
+                    Console.WriteLine($"{editItem.ID}:{editItem.Name}");
+                }
+                Console.WriteLine('\n');
+            }
+        }
+
+        private void UpdateEditItemCollection()
+        {
+            Project.GetInstance().EditItems = new Collection<EditItem>();
+
+            foreach (EditItem ei in EditItemList)
+            {
+                Project.GetInstance().EditItems.Add(ei);
             }
         }
 

@@ -83,7 +83,7 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
                 ExeName,
                 CreationDate,
                 CreationDate,
-                null,
+                null, // TODO: handle date of creation and last updated
                 null
                 );
 

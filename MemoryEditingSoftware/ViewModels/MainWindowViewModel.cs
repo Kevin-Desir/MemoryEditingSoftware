@@ -66,7 +66,7 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 string[] lines = File.ReadAllLines(RECENT_PROJECTS_FILENAME);
 
-                for (int i = lines.Length - 1; i > lines.Length - 11 && i > -1; i--)
+                for (int i = lines.Length - 1; i > lines.Length - 11 && i > -1; i--) // TODO: fix: should not test the 10 lines but the actual 10 last project paths (same path can exist multiple times)
                 {
                     if (File.Exists(lines[i]) && !RecentProjects.Contains(lines[i]))
                     {
