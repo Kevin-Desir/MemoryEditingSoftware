@@ -93,8 +93,8 @@ namespace MemoryEditingSoftware.Core.Business
                         break;
 
                     case "LastUpdate":
-                        Project.GetInstance().CreationDate = DateTime.Parse(split[1]);
-                        Console.WriteLine(Project.GetInstance().CreationDate);
+                        Project.GetInstance().LastUpdateDate = DateTime.Parse(split[1]);
+                        Console.WriteLine(Project.GetInstance().LastUpdateDate);
                         break;
                     default:
                         // check if there is a digit in the begining of the line, meaning it's a EditItem property

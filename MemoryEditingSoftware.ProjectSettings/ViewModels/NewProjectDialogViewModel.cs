@@ -69,10 +69,14 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
         {
             CancelProjectCommand = new DelegateCommand(CancelProject);
             CreateProjectCommand = new DelegateCommand(CreateProject);
+
+            CreationDate = DateTime.Now;
         }
 
         private void CreateProject()
-        {
+        {   
+            // TODO: fix: doesn't create a new project when one is already loaded 
+
             // Create an instance of the singletone project class to use it across the application
             Project.CreateInstance(
                 ProjectName,
@@ -83,7 +87,7 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
                 ExeName,
                 CreationDate,
                 CreationDate,
-                null, // TODO: handle date of creation and last updated
+                null,
                 null
                 );
 
