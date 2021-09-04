@@ -108,7 +108,7 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
             project.Creator = Creator;
             project.ProgramName = ProgramName;
             project.ExeName = ExeName;
-            project.LastUpdateDate = DateTime.Now; // TODO: handle date of creation and last updated
+            project.LastUpdateDate = DateTime.Now;
 
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }
