@@ -88,5 +88,13 @@ namespace MemoryEditingSoftware.Core.Entities
         {
             return instance;
         }
+
+        public static void CloseProject()
+        {
+            lock (_lock)
+            {
+                instance = null;
+            }
+        }
     }
 }

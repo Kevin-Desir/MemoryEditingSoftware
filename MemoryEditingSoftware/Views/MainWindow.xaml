@@ -21,6 +21,7 @@
                 <Separator />
                 <MenuItem Header="Save Project" Command="{Binding SaveProjectCommand}" />
                 <MenuItem Header="Save Project As" Command="{Binding SaveProjectAsCommand}" />
+                <MenuItem Header="Close Project" Command="{Binding CloseProjectCommand}" />
                 <Separator />
                 <MenuItem Header="Project Settings" Command="{Binding ShowProjectSettingsDialogCommand}" />
                 <Separator />

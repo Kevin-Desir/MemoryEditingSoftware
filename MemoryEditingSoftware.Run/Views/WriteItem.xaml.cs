@@ -1,4 +1,5 @@
-﻿using MemoryEditingSoftware.Core.Entities;
+﻿using MemoryEditingSoftware.Core.Business;
+using MemoryEditingSoftware.Core.Entities;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -49,7 +50,7 @@ namespace MemoryEditingSoftware.Run.Views
                 if (editItem.IsEnterValue)
                 {
                     // check that the string only contains numbers / digits
-                    if (IsDigitsOnly(Val.Text))
+                    if (Utilities.IsDigitsOnly(Val.Text))
                     {
                         // check if double or int
                         if (Val.Text.Contains("."))
@@ -70,7 +71,7 @@ namespace MemoryEditingSoftware.Run.Views
                 else
                 {
                     // check that the string only contains numbers / digits
-                    if (IsDigitsOnly(editItem.Value))
+                    if (Utilities.IsDigitsOnly(editItem.Value))
                     {
                         // check if double or int
                         if (editItem.Value.Contains("."))
@@ -94,7 +95,7 @@ namespace MemoryEditingSoftware.Run.Views
                 if (editItem.IsEnterValue)
                 {
                     // check that the string only contains numbers / digits
-                    if (IsDigitsOnly(Val.Text))
+                    if (Utilities.IsDigitsOnly(Val.Text))
                     {
                         // check if double or int
                         if (Val.Text.Contains("."))
@@ -120,7 +121,7 @@ namespace MemoryEditingSoftware.Run.Views
                 else
                 {
                     // check that the string only contains numbers / digits
-                    if (IsDigitsOnly(editItem.Value))
+                    if (Utilities.IsDigitsOnly(editItem.Value))
                     {
                         // check if double or int 
                         if (editItem.Value.Contains("."))
@@ -180,16 +181,5 @@ namespace MemoryEditingSoftware.Run.Views
             return false;
         }
 
-        // TODO: put this in Core
-        bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
-        }
     }
 }

@@ -74,8 +74,8 @@ namespace MemoryEditingSoftware.ProjectSettings.ViewModels
         }
 
         private void CreateProject()
-        {   
-            // TODO: fix: doesn't create a new project when one is already loaded 
+        {
+            Project.CloseProject();
 
             // Create an instance of the singletone project class to use it across the application
             Project.CreateInstance(

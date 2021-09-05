@@ -8,7 +8,15 @@ This application cannot be used to find memory addresses, it can only read or wr
 
 ## Progress : [█████████_] 90 % until first version
 
-Remaining: some minor improvements and issues need to be fixed but the application is working correctly. Eg: Date of creation of a project, handle error if process not found, etc...
+Remaining: some minor improvements and issues need to be fixed but the application is working correctly. 
+
+-> handle errors (eg: error if process not found) using an information window to show the user.
+
+-> improvement of the graphical interface (visuals + some interactivity features).
+
+-> tests.
+
+-> documentation (probably a word document) describing how the application was made, how to use it and how to improve it.
 
 Has not been tested enough to ensure a correct functionning.
 

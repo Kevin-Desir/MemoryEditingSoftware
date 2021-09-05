@@ -44,7 +44,7 @@ namespace MemoryEditingSoftware.ViewModels
         public DelegateCommand OpenProjectDialogCommand { get; private set; }
         public DelegateCommand RunDialogCommand { get; private set; }
         public DelegateCommand<string> OpenRecentProjectCommand { get; private set; }
-        // TODO: Close project command 
+        public DelegateCommand CloseProjectCommand { get; private set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -60,6 +60,7 @@ namespace MemoryEditingSoftware.ViewModels
             OpenProjectDialogCommand = new DelegateCommand(OpenProjectDialog);
             RunDialogCommand = new DelegateCommand(Run);
             OpenRecentProjectCommand = new DelegateCommand<string>(OpenRecentProject);
+            CloseProjectCommand = new DelegateCommand(CloseProject);
 
             RecentProjects = new ObservableCollection<string>();
 
@@ -78,6 +79,14 @@ namespace MemoryEditingSoftware.ViewModels
             else
             {
                 File.Create(RECENT_PROJECTS_FILENAME);
+            }
+        }
+
+        private void CloseProject()
+        {
+            if (Project.GetInstance() != null)
+            {
+                Project.CloseProject();
             }
         }
 

@@ -98,7 +98,7 @@ namespace MemoryEditingSoftware.Core.Business
                         break;
                     default:
                         // check if there is a digit in the begining of the line, meaning it's a EditItem property
-                        if (IsDigitsOnly(split[0]))
+                        if (Utilities.IsDigitsOnly(split[0]))
                         {
                             switch (split[1])
                             {
@@ -143,20 +143,5 @@ namespace MemoryEditingSoftware.Core.Business
 
             return 0;
         }
-
-        // check if the string passed as parameter only contains digits
-        private static bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
     }
 }
