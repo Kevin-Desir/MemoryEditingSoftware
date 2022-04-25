@@ -50,6 +50,8 @@ It is thread safe.
 
 ## footnote
 
+I made this application entirely by myself.
+
 This application was initially made two years ago in C++ using Qt creator but I was not reallt happy with the result.
 
 As I was learning Prism MVVM, I found remaking it a good idea to train with a project that really uses Prism potential.
