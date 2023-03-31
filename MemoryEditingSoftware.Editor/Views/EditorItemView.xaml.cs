@@ -64,7 +64,7 @@ namespace MemoryEditingSoftware.Editor.Views
         /// </summary>
         private void Validate_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _editItem.ID = int.Parse(IdTextBlock.Text);
+            //_editItem.ID = IdTextBlock.Text;
             _editItem.Name = NameTextBox.Text;
             _editItem.Address = AddressTextBox.Text;
             _editItem.IsRead = ReadWriteCollectionComboBox.SelectedItem.Equals("Read");

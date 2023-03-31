@@ -105,7 +105,7 @@ namespace MemoryEditingSoftware.Core.Business
                                 case "Name":
                                     ei = new EditItem();
                                     ei.Name = split[2];
-                                    ei.ID = int.Parse(split[0]); // TODO: exception handling
+                                    ei.ID = split[0]; // TODO: exception handling
                                     break;
                                 case "Address":
                                     ei.Address = split[2];

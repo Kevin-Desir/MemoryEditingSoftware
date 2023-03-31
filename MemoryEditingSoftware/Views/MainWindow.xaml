@@ -4,7 +4,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:core="clr-namespace:MemoryEditingSoftware.Core;assembly=MemoryEditingSoftware.Core"
-        Title="{Binding Title}" Height="439.229" Width="915.811">
+        Title="{Binding Title}" Height="600" Width="415">
     <Grid>
         <Menu Height="17" VerticalAlignment="Top">
             <MenuItem Header="File">

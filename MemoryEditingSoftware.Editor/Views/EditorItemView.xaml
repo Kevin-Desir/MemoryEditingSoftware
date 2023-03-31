@@ -49,7 +49,7 @@
                 <TextBlock x:Name="IdTextBlock" Grid.Column="1" Grid.Row="0" Margin="5" />
 
                 <TextBlock Text="Name:" Grid.Column="0" Grid.Row="1" Margin="5" />
-                <TextBox x:Name="NameTextBox" PreviewTextInput="ForceIntTextChanged" Grid.Column="1" Grid.Row="1" Margin="5" />
+                <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="1" Margin="5" />
 
                 <TextBlock Text="Address:" Grid.Column="0" Grid.Row="2" Margin="5" />
                 <TextBox x:Name="AddressTextBox" Grid.Column="1" Grid.Row="2" Margin="5" />

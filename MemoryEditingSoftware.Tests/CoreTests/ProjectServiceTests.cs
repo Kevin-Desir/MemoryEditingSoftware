@@ -15,7 +15,7 @@ namespace MemoryEditingSoftware.Tests.CoreTests
             EditItem editItem1 = new EditItem()
             {
                 Address = "0x00000001",
-                ID = 1,
+                ID = Guid.NewGuid().ToString(),
                 IsEnterValue = true,
                 IsLoop = true,
                 IsRead = true,
@@ -26,7 +26,7 @@ namespace MemoryEditingSoftware.Tests.CoreTests
             EditItem editItem2 = new EditItem()
             {
                 Address = "0x00000002",
-                ID = 2,
+                ID = Guid.NewGuid().ToString(),
                 IsEnterValue = false,
                 IsLoop = false,
                 IsRead = false,
@@ -67,7 +67,7 @@ namespace MemoryEditingSoftware.Tests.CoreTests
             EditItem editItem1 = new EditItem()
             {
                 Address = "0x00000001",
-                ID = 1,
+                ID = Guid.NewGuid().ToString(),
                 IsEnterValue = true,
                 IsLoop = true,
                 IsRead = true,
@@ -78,7 +78,7 @@ namespace MemoryEditingSoftware.Tests.CoreTests
             EditItem editItem2 = new EditItem()
             {
                 Address = "0x00000002",
-                ID = 2,
+                ID = Guid.NewGuid().ToString(),
                 IsEnterValue = false,
                 IsLoop = false,
                 IsRead = false,

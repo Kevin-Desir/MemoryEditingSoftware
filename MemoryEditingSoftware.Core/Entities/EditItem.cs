@@ -1,20 +1,22 @@
-﻿namespace MemoryEditingSoftware.Core.Entities
+﻿using System;
+
+namespace MemoryEditingSoftware.Core.Entities
 {
     public class EditItem
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public bool IsRead { get; set; }
-        public string Value { get; set; }
-        public bool IsLoop { get; set; }
-        public bool IsEnterValue { get; set; }
+        public string ID { get; set; } = Guid.NewGuid().ToString();
+        public string Name { get; set; } = "";
+        public string Address { get; set; } = "0x";
+        public bool IsRead { get; set; } = false;
+        public string Value { get; set; } = "";
+        public bool IsLoop { get; set; } = false;
+        public bool IsEnterValue { get; set; } = false;
 
         public int UpdateEditItem(EditItem newItem)
         {
             this.Address = newItem.Address;
             this.IsEnterValue = newItem.IsEnterValue;
-            this.ID = newItem.ID;
+            //this.ID = newItem.ID;
             this.IsLoop = newItem.IsLoop;
             this.Name = newItem.Name;
             this.Value = newItem.Value;
@@ -28,7 +30,7 @@
             return new EditItem()
             {
                 Address = ei.Address,
-                ID = ei.ID,
+                //ID = ei.ID,
                 IsEnterValue = ei.IsEnterValue,
                 IsLoop = ei.IsLoop,
                 IsRead = ei.IsRead,

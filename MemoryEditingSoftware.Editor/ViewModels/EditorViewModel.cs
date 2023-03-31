@@ -182,6 +182,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
                 RemoveCommand = new DelegateCommand<EditorItemView>(Remove);
                 ApplyChangesToAnItemCommand = new DelegateCommand<EditorItemView>(ApplyChangesToAnItem);
+                CreateNewCommand = new DelegateCommand(Create);
 
                 if (Project.GetInstance().EditItems != null)
                 {
@@ -196,13 +197,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                     Project.GetInstance().EditItems = new Collection<EditItem>();
                 }
 
-                EditItemSelectedCommand = new DelegateCommand(EditItemSelected);
-                ClearCommand = new DelegateCommand(Clear);
-                UpdateCommand = new DelegateCommand<EditItem>(Update);
-                CreateNewCommand = new DelegateCommand(Create);
-
-                Clear();
-
                 IsGridEnabled = true;
             }
             else
@@ -214,6 +208,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         private void ApplyChangesToAnItem(EditorItemView editorItemView)
         {
             editItemList.Where(x => x.ID == editorItemView._editItem.ID).Single().UpdateEditItem(editorItemView._editItem);
+
         }
 
         #endregion
@@ -231,106 +226,12 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             Project.GetInstance().EditItems.Remove(editorItemViewToRemove._editItem);
         }
 
-        private void UpdateEditItemCollection()
-        {
-            Project.GetInstance().EditItems = new Collection<EditItem>();
-
-            foreach (EditItem ei in EditItemList)
-            {
-                Project.GetInstance().EditItems.Add(ei);
-            }
-        }
-
         private void Create()
         {
-            if (ID < EditItemList.Count())
-            {
-                this.ID = EditItemList.Count();
-            }
-
-            EditItem ei = new EditItem()
-            {
-                ID = this.ID,
-                Address = this.Address,
-                Name = this.Name,
-                Value = this.Val,
-                IsRead = ReadWrite.Equals("Read"),
-                IsEnterValue = EnterValue.Equals("Yes"),
-                IsLoop = Looping.Equals("Loop"),
-            };
-
-            EditItemList.Add(ei);
-
-            Project.GetInstance().EditItems.Add(ei);
-
-            this.ID++;
-        }
-
-        private void Update(EditItem editItem)
-        {
-            // NOTE: needs to be improved with new UpdateEditItem method
-            if (this.ID < EditItemList.Count())
-            {
-                EditItem eitem = EditItemList.First<EditItem>(i => i.ID == this.ID);
-                eitem.ID = this.ID;
-                eitem.Address = this.Address;
-                eitem.Name = this.Name;
-                eitem.Value = this.Val;
-                eitem.IsRead = ReadWrite.Equals("Read");
-                eitem.IsEnterValue = EnterValue.Equals("Yes");
-                eitem.IsLoop = Looping.Equals("Loop");
-
-                EditItemList.RemoveAt(this.ID);
-
-                EditItemList.Insert(eitem.ID, eitem);
-
-                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).Address = this.Address;
-                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).Name = this.Name;
-                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).Value = this.Val;
-                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).IsRead = ReadWrite.Equals("Read");
-                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).IsEnterValue = EnterValue.Equals("Yes");
-                Project.GetInstance().EditItems.First<EditItem>(i => i.ID == this.ID).IsLoop = Looping.Equals("Loop");
-            }
-        }
-
-        private void Clear()
-        {
-            if (editItemList.Count > 0)
-                this.ID = EditItemList.Last().ID + 1;
-            else
-                this.ID = 0;
-            this.Name = "";
-            this.Val = "";
-            this.Address = "0x";
-            this.ReadWrite = "Write";
-            this.Looping = "One time";
-            this.EnterValue = "No";
-        }
-
-        private void EditItemSelected()
-        {
-            if (SelectedEditItem == null)
-            {
-                return;
-            }
-
-            ID = SelectedEditItem.ID;
-            Name = SelectedEditItem.Name;
-            Address = SelectedEditItem.Address;
-            if (SelectedEditItem.IsRead)
-                ReadWrite = "Read";
-            else
-                ReadWrite = "Write";
-            Val = SelectedEditItem.Value;
-            if (SelectedEditItem.IsLoop)
-                Looping = "Loop";
-            else
-                Looping = "One time";
-            if (SelectedEditItem.IsEnterValue)
-                EnterValue = "Yes";
-            else
-                EnterValue = "No";
-
+            EditItem editItem = new EditItem();
+            editItemList.Add(editItem);
+            EditorItemViews.Add(new EditorItemView(editItem, ApplyChangesToAnItemCommand, RemoveCommand));
+            Project.GetInstance().EditItems.Add(editItem);
         }
 
         #endregion
