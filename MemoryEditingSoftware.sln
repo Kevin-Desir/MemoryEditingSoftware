@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware", "MemoryEditingSoftware\MemoryEditingSoftware.csproj", "{715F403E-2948-47E7-8F2C-4D71F710DF1D}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware.Run", "MemoryEditingSoftware.Run\MemoryEditingSoftware.Run.csproj", "{93DC4028-9737-484D-A879-A6FDC36952DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware.Tests", "MemoryEditingSoftware.Tests\MemoryEditingSoftware.Tests.csproj", "{2810F31F-4B15-459E-9434-5C715F523034}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware.ErrorHandling", "MemoryEditingSoftware.ErrorHandling\MemoryEditingSoftware.ErrorHandling.csproj", "{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,18 @@ Global
 		{2810F31F-4B15-459E-9434-5C715F523034}.Release|x64.Build.0 = Release|Any CPU
 		{2810F31F-4B15-459E-9434-5C715F523034}.Release|x86.ActiveCfg = Release|Any CPU
 		{2810F31F-4B15-459E-9434-5C715F523034}.Release|x86.Build.0 = Release|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Debug|x64.Build.0 = Debug|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Debug|x86.Build.0 = Debug|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Release|x64.ActiveCfg = Release|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Release|x64.Build.0 = Release|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Release|x86.ActiveCfg = Release|Any CPU
+		{84D9D6B2-E06E-42B5-A2D8-A068A8DF360D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

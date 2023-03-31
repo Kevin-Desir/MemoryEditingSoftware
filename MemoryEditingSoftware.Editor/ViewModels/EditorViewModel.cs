@@ -1,15 +1,28 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
+using MemoryEditingSoftware.Editor.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MemoryEditingSoftware.Editor.ViewModels
 {
     public class EditorViewModel : BindableBase
     {
+        #region Properties
+
+        private ObservableCollection<EditorItemView> editorItemViews;
+        public ObservableCollection<EditorItemView> EditorItemViews
+        {
+            get { return editorItemViews; }
+            set { SetProperty(ref editorItemViews, value); }
+        }
+
         private ObservableCollection<EditItem> editItemList;
         public ObservableCollection<EditItem> EditItemList
         {
@@ -139,26 +152,43 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             set { SetProperty(ref readWriteVisibility, value); }
         }
 
-        // TODO: Activate EditItemSelectedCommand on DoubleClick (interactivity)
+        #endregion
+
+        #region Commands
+
         public DelegateCommand EditItemSelectedCommand { get; set; }
         public DelegateCommand ClearCommand { get; set; }
         public DelegateCommand<EditItem> UpdateCommand { get; set; }
         public DelegateCommand CreateNewCommand { get; set; }
-        public DelegateCommand RemoveCommand { get; set; }
-        public DelegateCommand UpCommand { get; set; }
-        public DelegateCommand DownCommand { get; set; }
+        /// <summary>
+        /// Remove the edit item chosen by the user from everywhere.
+        /// </summary>
+        public DelegateCommand<EditorItemView> RemoveCommand { get; set; }
+        /// <summary>
+        /// Apply the modifications the user has made to an edit item.
+        /// </summary>
+        public DelegateCommand<EditorItemView> ApplyChangesToAnItemCommand { get; set; }
+
+        #endregion
+
+        #region Constructor
 
         public EditorViewModel()
         {
             if (Project.GetInstance() != null)
             {
                 EditItemList = new ObservableCollection<EditItem>();
+                EditorItemViews = new ObservableCollection<EditorItemView>();
+
+                RemoveCommand = new DelegateCommand<EditorItemView>(Remove);
+                ApplyChangesToAnItemCommand = new DelegateCommand<EditorItemView>(ApplyChangesToAnItem);
 
                 if (Project.GetInstance().EditItems != null)
                 {
                     foreach (EditItem ei in Project.GetInstance().EditItems)
                     {
                         EditItemList.Add(ei);
+                        EditorItemViews.Add(new EditorItemView(ei, ApplyChangesToAnItemCommand, RemoveCommand));
                     }
                 }
                 else
@@ -170,22 +200,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 ClearCommand = new DelegateCommand(Clear);
                 UpdateCommand = new DelegateCommand<EditItem>(Update);
                 CreateNewCommand = new DelegateCommand(Create);
-                RemoveCommand = new DelegateCommand(Remove);
-                UpCommand = new DelegateCommand(Up);
-                DownCommand = new DelegateCommand(Down);
-
-
-                ReadWriteCollection = new ObservableCollection<string>();
-                ReadWriteCollection.Add("Read");
-                ReadWriteCollection.Add("Write");
-
-                LoopingCollection = new ObservableCollection<string>();
-                LoopingCollection.Add("One time");
-                LoopingCollection.Add("Loop");
-
-                EnterValueCollection = new ObservableCollection<string>();
-                EnterValueCollection.Add("Yes");
-                EnterValueCollection.Add("No");
 
                 Clear();
 
@@ -197,50 +211,24 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             }
         }
 
-        private void Down()
+        private void ApplyChangesToAnItem(EditorItemView editorItemView)
         {
-            if (SelectedEditItem != null && SelectedEditItem.ID > 0)
-            {
-                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID - 1);
-                high.ID -= 1;
-                low.ID += 1;
-                EditItemList.RemoveAt(high.ID);
-                EditItemList.Insert(high.ID, high);
-                EditItemList.RemoveAt(low.ID);
-                EditItemList.Insert(low.ID, low);
-
-                UpdateEditItemCollection();
-
-                foreach (EditItem editItem in Project.GetInstance().EditItems)
-                {
-                    Console.WriteLine($"{editItem.ID}:{editItem.Name}");
-                }
-                Console.WriteLine('\n');
-            }
+            editItemList.Where(x => x.ID == editorItemView._editItem.ID).Single().UpdateEditItem(editorItemView._editItem);
         }
 
-        private void Up()
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Remove an EditItem from the ListView, the collection of EditItems and in the Project.
+        /// </summary>
+        /// <param name="editorItemViewToRemove"></param>
+        private void Remove(EditorItemView editorItemViewToRemove)
         {
-            if (SelectedEditItem != null && SelectedEditItem.ID < EditItemList.Count() - 1)
-            {
-                EditItem low = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-                EditItem high = EditItemList.First<EditItem>(i => i.ID == SelectedEditItem.ID + 1);
-                low.ID += 1;
-                high.ID -= 1;
-                EditItemList.RemoveAt(low.ID);
-                EditItemList.Insert(low.ID, low);
-                EditItemList.RemoveAt(high.ID);
-                EditItemList.Insert(high.ID, high);
-
-                UpdateEditItemCollection();
-
-                foreach (EditItem editItem in Project.GetInstance().EditItems)
-                {
-                    Console.WriteLine($"{editItem.ID}:{editItem.Name}");
-                }
-                Console.WriteLine('\n');
-            }
+            EditItemList.Remove(editorItemViewToRemove._editItem);
+            EditorItemViews.Remove(editorItemViewToRemove);
+            Project.GetInstance().EditItems.Remove(editorItemViewToRemove._editItem);
         }
 
         private void UpdateEditItemCollection()
@@ -251,37 +239,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             {
                 Project.GetInstance().EditItems.Add(ei);
             }
-        }
-
-        private void Remove()
-        {
-            if (selectedEditItem != null)
-            {
-                for (int i = SelectedEditItem.ID + 1; i < EditItemList.Count(); i++)
-                {
-                    EditItem eitem = EditItemList.ElementAt(i);
-                    eitem.ID -= 1;
-
-                    EditItemList.RemoveAt(i);
-
-                    EditItemList.Insert(i, eitem);
-                }
-
-                EditItem ei = Project.GetInstance().EditItems.First<EditItem>(i => i.ID == SelectedEditItem.ID);
-                Project.GetInstance().EditItems.Remove(ei);
-
-                EditItemList.Remove(SelectedEditItem);
-
-                if (EditItemList.Count > 0)
-                {
-                    this.ID = EditItemList.Last().ID + 1;
-                }
-                else
-                {
-                    this.ID = 0;
-                }
-            }
-
         }
 
         private void Create()
@@ -375,5 +332,12 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 EnterValue = "No";
 
         }
+
+        #endregion
+
+        #region Public Methods
+
+        #endregion
+
     }
 }

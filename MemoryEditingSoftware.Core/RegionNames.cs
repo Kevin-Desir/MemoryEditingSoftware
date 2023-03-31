@@ -1,7 +1,7 @@
 ﻿namespace MemoryEditingSoftware.Core
 {
-    public static class RegionNames
+    public enum RegionNames
     {
-        public static string ContentRegion = "ContentRegion";
+        ContentRegion
     }
 }

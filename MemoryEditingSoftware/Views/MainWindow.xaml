@@ -36,6 +36,6 @@
                 <MenuItem Header="Run" Command="{Binding RunDialogCommand}" />
             </MenuItem>
         </Menu>
-        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" Margin="5 22 5 5" />
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5 22 5 5" />
     </Grid>
 </Window>

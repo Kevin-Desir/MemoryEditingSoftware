@@ -17,7 +17,6 @@ namespace MemoryEditingSoftware.Editor
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             ViewModelLocationProvider.Register<EditorView, EditorViewModel>();
-
             containerRegistry.RegisterForNavigation<EditorView>();
         }
     }

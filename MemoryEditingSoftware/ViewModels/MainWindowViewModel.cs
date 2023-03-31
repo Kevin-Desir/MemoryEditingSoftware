@@ -2,7 +2,9 @@
 using MemoryEditingSoftware.Core.Business;
 using MemoryEditingSoftware.Core.Dialogs;
 using MemoryEditingSoftware.Core.Entities;
+using MemoryEditingSoftware.Core.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
@@ -21,6 +23,7 @@ namespace MemoryEditingSoftware.ViewModels
         private string title = "Memory Editing Software";
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
+        private readonly IEventAggregator eventAggregator;
 
         public string Title
         {
@@ -46,10 +49,11 @@ namespace MemoryEditingSoftware.ViewModels
         public DelegateCommand<string> OpenRecentProjectCommand { get; private set; }
         public DelegateCommand CloseProjectCommand { get; private set; }
 
-        public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
+        public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService, IEventAggregator eventAggregator)
         {
             this.regionManager = regionManager;
             this.dialogService = dialogService;
+            this.eventAggregator = eventAggregator;
 
             NavigateCommand = new DelegateCommand<string>(Navigate);
             ShowNewProjectDialogCommand = new DelegateCommand(ShowNewProjectDialog);
@@ -61,6 +65,8 @@ namespace MemoryEditingSoftware.ViewModels
             RunDialogCommand = new DelegateCommand(Run);
             OpenRecentProjectCommand = new DelegateCommand<string>(OpenRecentProject);
             CloseProjectCommand = new DelegateCommand(CloseProject);
+
+            eventAggregator.GetEvent<ShowErrorMessageEvent>().Subscribe(OnShowErrorMessageEventReceived);
 
             RecentProjects = new ObservableCollection<string>();
 
@@ -82,6 +88,11 @@ namespace MemoryEditingSoftware.ViewModels
             }
         }
 
+        private void OnShowErrorMessageEventReceived(string errorMessage)
+        {
+            this.dialogService.ShowDialog(DialogNames.ErrorDialog, new DialogParameters($"message={errorMessage}"), null);
+        }
+
         private void CloseProject()
         {
             if (Project.GetInstance() != null)
@@ -96,7 +107,7 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 ProjectService.LoadProject(path);
                 Console.WriteLine(Project.GetInstance().Path);
-                this.regionManager.Regions[RegionNames.ContentRegion].RemoveAll();
+                this.regionManager.Regions[RegionNames.ContentRegion.ToString()].RemoveAll();
 
                 File.AppendAllText(RECENT_PROJECTS_FILENAME, $"{path}\n");
             }
@@ -133,7 +144,7 @@ namespace MemoryEditingSoftware.ViewModels
                 {
                     ProjectService.LoadProject(openFileDialog.FileName);
                     Console.WriteLine(Project.GetInstance().Path);
-                    this.regionManager.Regions[RegionNames.ContentRegion].RemoveAll();
+                    this.regionManager.Regions[RegionNames.ContentRegion.ToString()].RemoveAll();
 
                     File.AppendAllText(RECENT_PROJECTS_FILENAME, $"{openFileDialog.FileName}\n");
                 }
@@ -237,7 +248,7 @@ namespace MemoryEditingSoftware.ViewModels
 
         private void Navigate(string viewName)
         {
-            this.regionManager.RequestNavigate(RegionNames.ContentRegion, viewName, Callback);
+            this.regionManager.RequestNavigate(RegionNames.ContentRegion.ToString(), viewName, Callback);
         }
 
         private void Callback(NavigationResult result)

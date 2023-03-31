@@ -82,9 +82,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MemoryEditingSoftware.Core\MemoryEditingSoftware.Core.csproj">
       <Project>{C0EEF17D-9D2D-4F68-818D-EB3B9C310882}</Project>
       <Name>MemoryEditingSoftware.Core</Name>
@@ -99,6 +96,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Wpf">
+      <Version>8.1.97</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
