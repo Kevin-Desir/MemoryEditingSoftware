@@ -54,6 +54,14 @@ namespace MemoryEditingSoftware.Core.Entities
             return instance;
         }
 
+        public static void UpdateProject(Project project)
+        {
+            lock (_lock)
+            {
+                instance = project;
+            }
+        }
+
         public static Project CreateInstance(string path)
         {
             if (instance == null)

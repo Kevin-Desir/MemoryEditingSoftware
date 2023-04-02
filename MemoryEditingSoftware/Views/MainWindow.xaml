@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:core="clr-namespace:MemoryEditingSoftware.Core;assembly=MemoryEditingSoftware.Core"
         Title="{Binding Title}" Height="600" Width="415">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Menu Height="17" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New Project" Command="{Binding ShowNewProjectDialogCommand}" />
@@ -27,15 +33,36 @@
                 <Separator />
                 <MenuItem Header="Quit" Command="{Binding QuitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
             </MenuItem>
-            <MenuItem Header="Editor">
-                <MenuItem Header="Show Editor (GUI Mode)" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
-                <MenuItem Header="Show Editor (Text Mode)" IsEnabled="False" />
-            </MenuItem>
             <MenuItem Header="Navigate">
                 <MenuItem Header="Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
                 <MenuItem Header="Run" Command="{Binding RunDialogCommand}" />
             </MenuItem>
         </Menu>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5 22 5 5" />
+        <ToolBar Grid.Row="1" Height="40" >
+            <Button Command="{Binding ShowNewProjectDialogCommand}">
+                <fa:FontAwesome FontSize="20" Icon="File" />
+            </Button>
+            <Button Command="{Binding OpenProjectDialogCommand}">
+                <fa:FontAwesome FontSize="20" Icon="FolderOpen" />
+            </Button>
+            <Separator/>
+            <Button  Command="{Binding SaveProjectCommand}">
+                <fa:FontAwesome FontSize="20" Icon="FloppyOutline" />
+            </Button>
+            <Button Command="{Binding CloseProjectCommand}">
+                <fa:FontAwesome FontSize="20" Icon="Close" />
+            </Button>
+            <Button Command="{Binding ShowProjectSettingsDialogCommand}">
+                <fa:FontAwesome FontSize="20" Icon="Gear" />
+            </Button>
+            <Separator/>
+            <Button Command="{Binding NavigateCommand}" CommandParameter="EditorView" >
+                <fa:FontAwesome FontSize="20" Icon="Code" />
+            </Button>
+            <Button Command="{Binding RunDialogCommand}" >
+                <fa:FontAwesome FontSize="20" Icon="WindowRestore" />
+            </Button>
+        </ToolBar>
+        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="ContentRegion" Margin="5 22 5 5" />
     </Grid>
 </Window>
