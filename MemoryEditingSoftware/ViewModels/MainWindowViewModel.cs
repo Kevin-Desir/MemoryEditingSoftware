@@ -18,7 +18,7 @@ namespace MemoryEditingSoftware.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private const string RECENT_PROJECTS_FILENAME = "RecentProjects.con";
+        private const string RECENT_PROJECTS_FILENAME = @"C:\ProgramData\PUMA\RecentProjects.con";
 
         private string title = "Memory Editing Software";
         private readonly IRegionManager regionManager;
@@ -135,8 +135,10 @@ namespace MemoryEditingSoftware.ViewModels
 
         private void OpenProjectDialog()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*"
+            };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -157,8 +159,10 @@ namespace MemoryEditingSoftware.ViewModels
 
             if (project != null)
             {
-                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-                saveFileDialog.Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*";
+                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog
+                {
+                    Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*"
+                };
 
                 if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -186,8 +190,10 @@ namespace MemoryEditingSoftware.ViewModels
                 }
                 else
                 {
-                    System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-                    saveFileDialog.Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*";
+                    System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog
+                    {
+                        Filter = "mes files (*.mes)|*.mes|All files (*.*)|*.*"
+                    };
 
                     if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
@@ -206,10 +212,7 @@ namespace MemoryEditingSoftware.ViewModels
 
         private void Quit(Window window)
         {
-            if (window != null)
-            {
-                window.Close();
-            }
+            window?.Close();
         }
 
         private void ShowNewProjectDialog()
