@@ -66,8 +66,6 @@ namespace MemoryEditingSoftware.ViewModels
             OpenRecentProjectCommand = new DelegateCommand<string>(OpenRecentProject);
             CloseProjectCommand = new DelegateCommand(CloseProject);
 
-            eventAggregator.GetEvent<ShowErrorMessageEvent>().Subscribe(OnShowErrorMessageEventReceived);
-
             RecentProjects = new ObservableCollection<string>();
 
             if (File.Exists(RECENT_PROJECTS_FILENAME))
@@ -86,11 +84,6 @@ namespace MemoryEditingSoftware.ViewModels
             {
                 File.Create(RECENT_PROJECTS_FILENAME);
             }
-        }
-
-        private void OnShowErrorMessageEventReceived(string errorMessage)
-        {
-            this.dialogService.ShowDialog(DialogNames.ErrorDialog, new DialogParameters($"message={errorMessage}"), null);
         }
 
         private void CloseProject()
@@ -258,7 +251,7 @@ namespace MemoryEditingSoftware.ViewModels
         {
             if (result.Error != null)
             {
-                // TODO: handle error
+                dialogService.ShowSimpleDialog("Error encountered while trying to load a view from a module.\nIt means the module cannot be loaded correctly.\nRestart the application. If the problem persists, reinstall the module or the application.", DialogTypes.Error, null);
             }
         }
     }

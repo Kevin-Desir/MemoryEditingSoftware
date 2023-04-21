@@ -1,4 +1,5 @@
-﻿using MemoryEditingSoftware.Editor;
+﻿using MemoryEditingSoftware.Core.Dialogs;
+using MemoryEditingSoftware.Editor;
 using MemoryEditingSoftware.ProjectSettings;
 using MemoryEditingSoftware.Run;
 using MemoryEditingSoftware.Views;
@@ -20,7 +21,7 @@ namespace MemoryEditingSoftware
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterDialog<SimpleDialogView, SimpleDialogViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

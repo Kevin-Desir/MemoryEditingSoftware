@@ -80,6 +80,7 @@
     <Compile Include="Converters\DialogTypesToVisibilityConverter.cs" />
     <Compile Include="Dialogs\DialogNames.cs" />
     <Compile Include="Dialogs\DialogTypes.cs" />
+    <Compile Include="Dialogs\IDialogServiceExtensions.cs" />
     <Compile Include="Dialogs\SimpleDialogView.xaml.cs">
       <DependentUpon>SimpleDialogView.xaml</DependentUpon>
     </Compile>

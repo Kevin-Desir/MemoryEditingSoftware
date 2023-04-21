@@ -55,7 +55,7 @@
                 <TextBox x:Name="AddressTextBox" Grid.Column="1" Grid.Row="2" Margin="5" />
 
                 <TextBlock Text="Read or write:" Grid.Column="0" Grid.Row="3" Margin="5" />
-                <ComboBox x:Name="ReadWriteCollectionComboBox" Grid.Column="1" Grid.Row="3" Margin="5" />
+                <ComboBox x:Name="ReadWriteCollectionComboBox" SelectionChanged="ReadWriteCollectionComboBox_SelectionChanged" Grid.Column="1" Grid.Row="3" Margin="5" />
 
                 <Grid x:Name="EditItemGrid" Grid.Row="4" Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>

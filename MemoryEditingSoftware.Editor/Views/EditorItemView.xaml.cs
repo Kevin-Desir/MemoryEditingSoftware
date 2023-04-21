@@ -45,7 +45,16 @@ namespace MemoryEditingSoftware.Editor.Views
             AddressTextBox.Text = editItem.Address.ToString();
             ReadWriteCollectionComboBox.Items.Add("Read");
             ReadWriteCollectionComboBox.Items.Add("Write");
-            ReadWriteCollectionComboBox.SelectedItem = editItem.IsRead ? "Read" : "Write";
+            if (editItem.IsRead)
+            {
+                ReadWriteCollectionComboBox.SelectedItem = "Read"; 
+                EditItemGrid.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                ReadWriteCollectionComboBox.SelectedItem = "Write";
+                EditItemGrid.Visibility= System.Windows.Visibility.Visible;
+            }
             ValueTextBox.Text = editItem.Value.ToString();
             LoopingCollectionComboBox.Items.Add("One time");
             LoopingCollectionComboBox.Items.Add("Loop");
@@ -83,7 +92,16 @@ namespace MemoryEditingSoftware.Editor.Views
             IdTextBlock.Text = _editItem.ID.ToString();
             NameTextBox.Text = _editItem.Name.ToString();
             AddressTextBox.Text = _editItem.Address.ToString();
-            ReadWriteCollectionComboBox.SelectedItem = _editItem.IsRead ? "Read" : "Write";
+            if (_editItem.IsRead)
+            {
+                ReadWriteCollectionComboBox.SelectedItem = "Read";
+                EditItemGrid.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                ReadWriteCollectionComboBox.SelectedItem = "Write";
+                EditItemGrid.Visibility = System.Windows.Visibility.Visible;
+            }
             ValueTextBox.Text = _editItem.Value.ToString();
             LoopingCollectionComboBox.SelectedItem = _editItem.IsLoop ? "Loop" : "One time";
             EnterValueCollectionComboBox.SelectedItem = _editItem.IsEnterValue ? "Yes" : "No";
@@ -112,6 +130,22 @@ namespace MemoryEditingSoftware.Editor.Views
             if (!char.IsDigit(e.Text[0]))
             {
                 e.Handled = true; // Ignore non-numeric input
+            }
+        }
+
+        /// <summary>
+        /// To change the visibility of the EditItemGrid, depending on the Read/Write setting.
+        /// </summary>
+        private void ReadWriteCollectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (ReadWriteCollectionComboBox.SelectedItem.ToString())
+            {
+                case "Read":
+                    EditItemGrid.Visibility = System.Windows.Visibility.Collapsed;
+                    break;
+                case "Write":
+                    EditItemGrid.Visibility = System.Windows.Visibility.Visible;
+                    break;
             }
         }
     }

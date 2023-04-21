@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MemoryEditingSoftware.Run.Views
@@ -22,6 +23,7 @@ namespace MemoryEditingSoftware.Run.Views
 
             if ((errorCode = InitLink(Project.GetInstance().ExeName)) > 0)
             {
+
                 ICollection<EditItem> editItems = Project.GetInstance().EditItems;
 
                 foreach (var ei in editItems)

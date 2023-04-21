@@ -10,9 +10,35 @@ namespace MemoryEditingSoftware.Core.Business
         // save all the current project content/properties in a file
         public static int SaveProject(Project project, string path)
         {
-            string projectJson = JsonConvert.SerializeObject(project);
+            try
+            {
+                string projectJson = JsonConvert.SerializeObject(project); // add check --> The project is corrupted
+                File.WriteAllText(path, projectJson);
+            }
+            catch (PathTooLongException ex) 
+            {
 
-            System.IO.File.WriteAllText(path, projectJson);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+
+            }
+            catch (IOException ex)
+            {
+
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+
+            }
+            catch (NotSupportedException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                // unhandled exception
+            }
 
             return 0;
         }
