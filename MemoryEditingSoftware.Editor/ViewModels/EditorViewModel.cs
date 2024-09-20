@@ -207,7 +207,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
         private void ApplyChangesToAnItem(EditorItemView editorItemView)
         {
-            editItemList.Where(x => x.ID == editorItemView._editItem.ID).Single().UpdateEditItem(editorItemView._editItem);
+            editItemList.Where(x => x.ID == editorItemView._editItem.ID).Single().Update(editorItemView._editItem);
 
         }
 

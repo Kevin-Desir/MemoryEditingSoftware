@@ -58,10 +58,10 @@ namespace MemoryEditingSoftware.Editor.Views
             ValueTextBox.Text = editItem.Value.ToString();
             LoopingCollectionComboBox.Items.Add("One time");
             LoopingCollectionComboBox.Items.Add("Loop");
-            LoopingCollectionComboBox.SelectedItem = editItem.IsLoop ? "Loop" : "One time";
+            //LoopingCollectionComboBox.SelectedItem = editItem.IsLoop ? "Loop" : "One time";
             EnterValueCollectionComboBox.Items.Add("Yes");
             EnterValueCollectionComboBox.Items.Add("No");
-            EnterValueCollectionComboBox.SelectedItem = editItem.IsEnterValue ? "Yes" : "No";
+            //EnterValueCollectionComboBox.SelectedItem = editItem.IsEnterValue ? "Yes" : "No";
         }
 
         #endregion
@@ -78,8 +78,8 @@ namespace MemoryEditingSoftware.Editor.Views
             _editItem.Address = AddressTextBox.Text;
             _editItem.IsRead = ReadWriteCollectionComboBox.SelectedItem.Equals("Read");
             _editItem.Value = ValueTextBox.Text;
-            _editItem.IsLoop = LoopingCollectionComboBox.SelectedItem.Equals("Loop");
-            _editItem.IsEnterValue = EnterValueCollectionComboBox.SelectedItem.Equals("Yes");
+            //_editItem.IsLoop = LoopingCollectionComboBox.SelectedItem.Equals("Loop");
+            //_editItem.IsEnterValue = EnterValueCollectionComboBox.SelectedItem.Equals("Yes");
 
             ApplyChangesToAnItemCommand.Execute(this);
         }
@@ -103,8 +103,8 @@ namespace MemoryEditingSoftware.Editor.Views
                 EditItemGrid.Visibility = System.Windows.Visibility.Visible;
             }
             ValueTextBox.Text = _editItem.Value.ToString();
-            LoopingCollectionComboBox.SelectedItem = _editItem.IsLoop ? "Loop" : "One time";
-            EnterValueCollectionComboBox.SelectedItem = _editItem.IsEnterValue ? "Yes" : "No";
+            //LoopingCollectionComboBox.SelectedItem = _editItem.IsLoop ? "Loop" : "One time";
+            //EnterValueCollectionComboBox.SelectedItem = _editItem.IsEnterValue ? "Yes" : "No";
         }
 
         /// <summary>

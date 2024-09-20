@@ -1,4 +1,5 @@
-﻿using MemoryEditingSoftware.Core.Business;
+﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Business;
 using MemoryEditingSoftware.Core.Entities;
 using System;
 using System.Runtime.InteropServices;
@@ -12,17 +13,11 @@ namespace MemoryEditingSoftware.Run.Views
     /// </summary>
     public partial class WriteItem : UserControl
     {
-        private readonly EditItem editItem;
+        private readonly SimpleWriter editItem;
         private bool stop = true;
         private int debugcpt = 0;
 
-        [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int WriteDoubleInMemory(string address, double value);
-
-        [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int WriteIntInMemory(string address, int value);
-
-        public WriteItem(EditItem editItem)
+        public WriteItem(SimpleWriter editItem)
         {
             InitializeComponent();
 
@@ -57,13 +52,13 @@ namespace MemoryEditingSoftware.Run.Views
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (double.Parse(Val.Text)).ToString());
-                            WriteDoubleInMemory(editItem.Address, double.Parse(Val.Text));
+                            MemoryAccess.WriteDoubleInMemory(editItem.Address, double.Parse(Val.Text));
                         }
                         else
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (int.Parse(Val.Text)).ToString());
-                            WriteIntInMemory(editItem.Address, int.Parse(Val.Text));
+                            MemoryAccess.WriteIntInMemory(editItem.Address, int.Parse(Val.Text));
                         }
                     }
                 }
@@ -78,13 +73,13 @@ namespace MemoryEditingSoftware.Run.Views
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (double.Parse(editItem.Value)).ToString());
-                            WriteDoubleInMemory(editItem.Address, double.Parse(editItem.Value));
+                            MemoryAccess.WriteDoubleInMemory(editItem.Address, double.Parse(editItem.Value));
                         }
                         else
                         {
                             // DEBUG ONLY
                             Console.WriteLine(editItem.Address + ": " + (int.Parse(editItem.Value)).ToString());
-                            WriteIntInMemory(editItem.Address, int.Parse(editItem.Value));
+                            MemoryAccess.WriteIntInMemory(editItem.Address, int.Parse(editItem.Value));
                         }
                     }
                 }
@@ -159,7 +154,7 @@ namespace MemoryEditingSoftware.Run.Views
                 // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
                 Thread.Sleep(100);
 
-                WriteIntInMemory(editItem.Address, val);
+                MemoryAccess.WriteIntInMemory(editItem.Address, val);
             }
 
             return false;
@@ -175,7 +170,7 @@ namespace MemoryEditingSoftware.Run.Views
                 // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
                 Thread.Sleep(100);
 
-                WriteDoubleInMemory(editItem.Address, val);
+                MemoryAccess.WriteDoubleInMemory(editItem.Address, val);
             }
 
             return false;

@@ -1,4 +1,5 @@
-﻿using MemoryEditingSoftware.Core.Entities;
+﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Entities;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -12,12 +13,6 @@ namespace MemoryEditingSoftware.Run.Views
     /// </summary>
     public partial class ReadItem : UserControl
     {
-        [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern double ReadDoubleFromMemory(string address);
-
-        [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int ReadIntFromMemory(string address);
-
         public ReadItem(EditItem editItem)
         {
             InitializeComponent();
@@ -50,7 +45,7 @@ namespace MemoryEditingSoftware.Run.Views
             string oldValue = "No value received / Wrong format, please check address via editor";
             while (true)
             {
-                string newValue = ReadDoubleFromMemory(address).ToString();
+                string newValue = MemoryAccess.ReadDoubleFromMemory(address).ToString();
 
                 if (newValue != oldValue)
                 {
@@ -70,7 +65,7 @@ namespace MemoryEditingSoftware.Run.Views
             string oldValue = "No value received / Wrong format, please check address via editor";
             while (true)
             {
-                string newValue = ReadIntFromMemory(address).ToString();
+                string newValue = MemoryAccess.ReadIntFromMemory(address).ToString();
 
                 if (newValue != oldValue)
                 {

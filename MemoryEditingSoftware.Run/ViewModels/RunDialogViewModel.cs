@@ -15,14 +15,6 @@ namespace MemoryEditingSoftware.Run.ViewModels
 
         public DelegateCommand CloseCommand { get; private set; }
 
-        private ObservableCollection<ReadItem> readItems;
-
-        public ObservableCollection<ReadItem> ReadItems
-        {
-            get { return readItems; }
-            set { SetProperty(ref readItems, value); }
-        }
-
         public event Action<IDialogResult> RequestClose;
 
         public RunDialogViewModel()

@@ -1,4 +1,5 @@
-﻿using MemoryEditingSoftware.Core.Entities;
+﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -12,30 +13,35 @@ namespace MemoryEditingSoftware.Run.Views
     /// </summary>
     public partial class RunDialog : UserControl
     {
-        [DllImport(@"MemoryManipulation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int InitLink(string TargetProcessName);
-
         public RunDialog()
         {
             InitializeComponent();
 
             int errorCode;
 
-            if ((errorCode = InitLink(Project.GetInstance().ExeName)) > 0)
+            if ((errorCode = MemoryAccess.InitLink(Project.GetInstance().ExeName)) > 0)
             {
 
                 ICollection<EditItem> editItems = Project.GetInstance().EditItems;
+
+                List<UserControl> components = new List<UserControl>();
 
                 foreach (var ei in editItems)
                 {
                     if (ei.IsRead)
                     {
-                        ItemsStackPanel.Children.Add(new ReadItem(ei));
+                        components.Add(new ReadItem(ei));
                     }
                     else
                     {
-                        ItemsStackPanel.Children.Add(new WriteItem(ei));
+                        if (ei is SimpleWriter simpleWriter)
+                        components.Add(new WriteItem(simpleWriter));
                     }
+                }
+
+                foreach (var component in components)
+                {
+                    ItemsStackPanel.Children.Add(component);
                 }
             }
             else

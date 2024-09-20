@@ -126,5 +126,8 @@
       <Version>8.1.97</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

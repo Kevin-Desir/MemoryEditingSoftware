@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace MemoryEditingSoftware.Core.Entities
 {
@@ -9,15 +10,23 @@ namespace MemoryEditingSoftware.Core.Entities
         public string Address { get; set; } = "0x";
         public bool IsRead { get; set; } = false;
         public string Value { get; set; } = "";
-        public bool IsLoop { get; set; } = false;
-        public bool IsEnterValue { get; set; } = false;
 
-        public int UpdateEditItem(EditItem newItem)
+        public EditItem()
+        {
+
+        }
+
+        public EditItem(string address, string name, string value, bool isRead)
+        {
+            this.Address = address;
+            this.Name = name;
+            this.Value = value;
+            this.IsRead = isRead;
+        }
+
+        public virtual int Update(EditItem newItem)
         {
             this.Address = newItem.Address;
-            this.IsEnterValue = newItem.IsEnterValue;
-            //this.ID = newItem.ID;
-            this.IsLoop = newItem.IsLoop;
             this.Name = newItem.Name;
             this.Value = newItem.Value;
             this.IsRead = newItem.IsRead;
@@ -25,23 +34,14 @@ namespace MemoryEditingSoftware.Core.Entities
             return 0;
         }
 
-        public EditItem Copy(EditItem ei)
+        public virtual EditItem Copy(EditItem itemToCopy)
         {
-            return new EditItem()
-            {
-                Address = ei.Address,
-                //ID = ei.ID,
-                IsEnterValue = ei.IsEnterValue,
-                IsLoop = ei.IsLoop,
-                IsRead = ei.IsRead,
-                Name = ei.Name,
-                Value = ei.Value
-            };
+            return new EditItem(itemToCopy.Address, itemToCopy.Name, itemToCopy.Value, itemToCopy.IsRead);
         }
 
         public override string ToString()
         {
-            return $"{ID}: {Name}";
+            return $"{Address}: {Name}";
         }
 
     }
