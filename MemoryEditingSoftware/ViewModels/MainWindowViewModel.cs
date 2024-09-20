@@ -18,7 +18,7 @@ namespace MemoryEditingSoftware.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private const string RECENT_PROJECTS_FILENAME = @"C:\ProgramData\PUMA\RecentProjects.con";
+        private const string RECENT_PROJECTS_FILENAME = @"C:\ProgramData\MES\RecentProjects.con";
 
         private string title = "Memory Editing Software";
         private readonly IRegionManager regionManager;

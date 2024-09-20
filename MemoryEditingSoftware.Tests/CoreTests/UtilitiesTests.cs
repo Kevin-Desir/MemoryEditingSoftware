@@ -31,5 +31,18 @@ namespace MemoryEditingSoftware.Tests.CoreTests
             // ASSERT
             Assert.AreEqual(false, isDigits);
         }
+
+        [TestMethod]
+        public void StringIsEmpty()
+        {
+            // ARRANGE
+
+
+            // ACT
+            bool isDigits = Utilities.IsDigitsOnly("");
+
+            // ASSERT
+            Assert.AreEqual(false, isDigits);
+        }
     }
 }
