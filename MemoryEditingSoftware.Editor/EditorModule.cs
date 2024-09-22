@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Xml;
 
 namespace MemoryEditingSoftware.Editor
 {
@@ -11,7 +12,7 @@ namespace MemoryEditingSoftware.Editor
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
- 
+
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

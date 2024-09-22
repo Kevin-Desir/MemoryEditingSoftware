@@ -9,37 +9,29 @@
              mc:Ignorable="d" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid IsEnabled="{Binding IsGridEnabled}" Background="white">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
-            <StackPanel>
-                <ListView HorizontalAlignment="Center" BorderThickness="0" HorizontalContentAlignment="Center" ItemsSource="{Binding EditorItemViews}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Focusable" Value="false"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-                <Button Command="{Binding CreateNewCommand}" BorderThickness="2" BorderBrush="Black" Background="LightGray" Padding="0" Margin="10" Height="50" Width="50" >
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border BorderThickness="{TemplateBinding BorderThickness}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    Background="{TemplateBinding Background}"
-                    CornerRadius="20">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Grid Width="30" Height="30">
-                        <Line X1="0" Y1="15" X2="30" Y2="15" Stroke="Black" StrokeThickness="2"/>
-                        <Line X1="15" Y1="0" X2="15" Y2="30" Stroke="Black" StrokeThickness="2"/>
-                    </Grid>
+    <Grid Background="white">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-
-
-                </Button>
-
+        <Grid Background="LightCoral" Grid.Column="0">
+            <StackPanel Margin="5" >
+                <Label Content="Components" />
+                <Separator />
+                <Button Content="Simple Read" Margin="5" Padding="5" />
+                <Button Content="Simple Write" Margin="5" Padding="5" />
+                <Button Content="Slider" Margin="5" Padding="5" />
             </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
+            <ContentControl Content="{Binding EditorGridContentControl}" />
         </ScrollViewer>
+
+        <Grid Grid.Column="2" Background="LightCyan">
+            <Label Content="Properties" />
+        </Grid>
     </Grid>
 </UserControl>
