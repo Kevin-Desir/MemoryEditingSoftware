@@ -40,20 +40,53 @@ namespace MemoryEditingSoftware.Editor.Views
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            GridPosition gridPosition = new GridPosition();
-            gridPosition.Direction = GridPositionDirection.Right;
-            gridPosition.ComponentView = this;
+            if (sender is Button button)
+            {
+                GridPosition gridPosition = new GridPosition();
+                switch (button.Name)
+                {
+                    case "top":
+                        gridPosition.Direction = GridPositionDirection.Top;
+                        break;
+                    case "bottom":
+                        gridPosition.Direction = GridPositionDirection.Bottom;
+                        break;
+                    case "left":
+                        gridPosition.Direction = GridPositionDirection.Left;
+                        break;
+                    case "right":
+                        gridPosition.Direction = GridPositionDirection.Right;
+                        break;
+                }
+                gridPosition.ComponentView = this;
 
-            UpdateGridPositionCommand.Execute(gridPosition);
+                UpdateGridPositionCommand.Execute(gridPosition);
+            }
         }
 
-        private void Button_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            GridPosition gridPosition = new GridPosition();
-            gridPosition.Direction = GridPositionDirection.ReverseRight;
-            gridPosition.ComponentView = this;
-
-            UpdateGridPositionCommand.Execute(gridPosition);
+            if (sender is Button button)
+            {
+                GridPosition gridPosition = new GridPosition();
+                gridPosition.ComponentView = this;
+                switch (button.Name)
+                {
+                    case "top":
+                        gridPosition.Direction = GridPositionDirection.ReverseTop;
+                        break;
+                    case "bottom":
+                        gridPosition.Direction = GridPositionDirection.ReverseBottom;
+                        break;
+                    case "left":
+                        gridPosition.Direction = GridPositionDirection.ReverseLeft;
+                        break;
+                    case "right":
+                        gridPosition.Direction = GridPositionDirection.ReverseRight;
+                        break;
+                }
+                UpdateGridPositionCommand.Execute(gridPosition);
+            }
         }
     }
 }

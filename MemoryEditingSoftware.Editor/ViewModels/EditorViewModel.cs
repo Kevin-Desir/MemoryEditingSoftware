@@ -66,7 +66,10 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         {
             Grid grid = (EditorGridContentControl.Content as Grid);
             int index = grid.Children.IndexOf(position.ComponentView);
+            int currentColumn = Grid.GetColumn(grid.Children[index]);
             int currentColumnSpan = Grid.GetColumnSpan(grid.Children[index]);
+            int currentRow = Grid.GetRow(grid.Children[index]);
+            int currentRowSpan = Grid.GetRowSpan(grid.Children[index]);
 
             switch (position.Direction)
             {
@@ -75,6 +78,28 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                     break;
                 case GridPositionDirection.ReverseRight:
                     Grid.SetColumnSpan(grid.Children[index], currentColumnSpan - 1);
+                    break;
+                case GridPositionDirection.Left:
+                    Grid.SetColumn(grid.Children[index], currentColumn - 1);
+                    Grid.SetColumnSpan(grid.Children[index], currentColumnSpan + 1);
+                    break;
+                case GridPositionDirection.ReverseLeft:
+                    Grid.SetColumn(grid.Children[index], currentColumn + 1);
+                    Grid.SetColumnSpan(grid.Children[index], currentColumnSpan - 1);
+                    break;
+                case GridPositionDirection.Top:
+                    Grid.SetRow(grid.Children[index], currentRow - 1);
+                    Grid.SetRowSpan(grid.Children[index], currentRowSpan + 1);
+                    break;
+                case GridPositionDirection.ReverseTop:
+                    Grid.SetRow(grid.Children[index], currentRow + 1);
+                    Grid.SetRowSpan(grid.Children[index], currentRowSpan - 1);
+                    break;
+                case GridPositionDirection.Bottom:
+                    Grid.SetRowSpan(grid.Children[index], currentRowSpan + 1);
+                    break;
+                case GridPositionDirection.ReverseBottom:
+                    Grid.SetRowSpan(grid.Children[index], currentRowSpan - 1);
                     break;
             }
         }

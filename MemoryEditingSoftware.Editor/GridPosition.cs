@@ -2,6 +2,9 @@
 
 namespace MemoryEditingSoftware.Editor
 {
+    /// <summary>
+    /// Position of the graphic component on the editor grid.
+    /// </summary>
     public class GridPosition
     {
         public ComponentView ComponentView;
