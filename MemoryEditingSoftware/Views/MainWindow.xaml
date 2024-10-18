@@ -38,29 +38,50 @@
                 <MenuItem Header="Run" Command="{Binding RunDialogCommand}" />
             </MenuItem>
         </Menu>
-        <ToolBar Grid.Row="1" Height="40" >
+        <ToolBar Grid.Row="1" Height="50" ToolBarTray.IsLocked="True" >
             <Button Command="{Binding ShowNewProjectDialogCommand}">
-                <fa:FontAwesome FontSize="20" Icon="File" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="File" />
+                    <TextBlock Text="New" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding OpenProjectDialogCommand}">
-                <fa:FontAwesome FontSize="20" Icon="FolderOpen" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="FolderOpen" />
+                    <TextBlock Text="Open" />
+                </StackPanel>
             </Button>
             <Separator/>
             <Button  Command="{Binding SaveProjectCommand}">
-                <fa:FontAwesome FontSize="20" Icon="FloppyOutline" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="FloppyOutline" />
+                    <TextBlock Text="Save" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding CloseProjectCommand}">
-                <fa:FontAwesome FontSize="20" Icon="Close" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="Close" />
+                    <TextBlock Text="Close" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding ShowProjectSettingsDialogCommand}">
-                <fa:FontAwesome FontSize="20" Icon="Gear" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="Gear" />
+                    <TextBlock Text="Settings"/>
+                </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding NavigateCommand}" CommandParameter="EditorView" >
-                <fa:FontAwesome FontSize="20" Icon="Code" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="Code" />
+                    <TextBlock Text="Editor" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding RunDialogCommand}" >
-                <fa:FontAwesome FontSize="20" Icon="WindowRestore" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="WindowRestore" />
+                    <TextBlock Text="Run" />
+                </StackPanel>
             </Button>
         </ToolBar>
         <ContentControl Grid.Row="2" prism:RegionManager.RegionName="ContentRegion" Margin="5" />

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware.Run",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware.Tests", "MemoryEditingSoftware.Tests\MemoryEditingSoftware.Tests.csproj", "{2810F31F-4B15-459E-9434-5C715F523034}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryEditingSoftware.UI", "MemoryEditingSoftware.UI\MemoryEditingSoftware.UI.csproj", "{421F45EB-B0A9-4AC1-8495-3487F2074558}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,18 @@ Global
 		{2810F31F-4B15-459E-9434-5C715F523034}.Release|x64.Build.0 = Release|x64
 		{2810F31F-4B15-459E-9434-5C715F523034}.Release|x86.ActiveCfg = Release|Any CPU
 		{2810F31F-4B15-459E-9434-5C715F523034}.Release|x86.Build.0 = Release|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Debug|x64.Build.0 = Debug|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Debug|x86.Build.0 = Debug|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Release|x64.ActiveCfg = Release|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Release|x64.Build.0 = Release|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Release|x86.ActiveCfg = Release|Any CPU
+		{421F45EB-B0A9-4AC1-8495-3487F2074558}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
