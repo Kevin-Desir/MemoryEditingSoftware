@@ -5,11 +5,13 @@ namespace MemoryEditingSoftware.Core.Entities
 {
     public class EditItem
     {
+        //@Editable
         public string ID { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; } = "";
         public string Address { get; set; } = "0x";
         public bool IsRead { get; set; } = false;
         public string Value { get; set; } = "";
+        public VariableTypes VariableType { get; set; } = VariableTypes.vint;
 
         public EditItem()
         {

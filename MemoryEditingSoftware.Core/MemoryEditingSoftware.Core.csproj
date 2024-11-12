@@ -89,6 +89,7 @@
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\SimpleReader.cs" />
     <Compile Include="Entities\SimpleWriter.cs" />
+    <Compile Include="Entities\VariablesTypes.cs" />
     <Compile Include="Events\Events.cs" />
     <Compile Include="ExportFunctions\MemoryAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

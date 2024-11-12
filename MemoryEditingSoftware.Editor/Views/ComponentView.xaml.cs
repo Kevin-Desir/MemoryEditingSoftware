@@ -1,5 +1,6 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -10,27 +11,26 @@ namespace MemoryEditingSoftware.Editor.Views
     /// </summary>
     public partial class ComponentView : UserControl
     {
-        #region Commands 
+        #region Properties
 
-        public DelegateCommand<GridPosition> UpdateGridPositionCommand { get; set; }
+        #endregion
+
+        #region Commands 
 
         #endregion
 
         #region Constructor 
 
-        public ComponentView(EditItem editItem, DelegateCommand<GridPosition> updateGridPositionCommand)
+        public ComponentView(EditItem editItem)
         {
             InitializeComponent();
 
             ComponentContentControl.Content = new SimpleReadView(editItem);
-            UpdateGridPositionCommand = updateGridPositionCommand;
         }
 
         #endregion
 
         #region Private Methods
-
-
 
         #endregion
 
@@ -42,25 +42,23 @@ namespace MemoryEditingSoftware.Editor.Views
         {
             if (sender is Button button)
             {
-                GridPosition gridPosition = new GridPosition();
                 switch (button.Name)
                 {
                     case "top":
-                        gridPosition.Direction = GridPositionDirection.Top;
+                        this.SetValue(Grid.RowProperty, (int) this.GetValue(Grid.RowProperty) - 1);
+                        this.SetValue(Grid.RowSpanProperty, (int)this.GetValue(Grid.RowSpanProperty) + 1);
                         break;
                     case "bottom":
-                        gridPosition.Direction = GridPositionDirection.Bottom;
+                        this.SetValue(Grid.RowSpanProperty, (int) this.GetValue(Grid.RowSpanProperty) + 1);
                         break;
                     case "left":
-                        gridPosition.Direction = GridPositionDirection.Left;
+                        this.SetValue(Grid.ColumnProperty, (int) this.GetValue(Grid.ColumnProperty) - 1);
+                        this.SetValue(Grid.ColumnSpanProperty, (int) this.GetValue(Grid.ColumnSpanProperty) + 1);
                         break;
                     case "right":
-                        gridPosition.Direction = GridPositionDirection.Right;
+                        this.SetValue(Grid.ColumnSpanProperty, (int) this.GetValue(Grid.ColumnSpanProperty) + 1);
                         break;
                 }
-                gridPosition.ComponentView = this;
-
-                UpdateGridPositionCommand.Execute(gridPosition);
             }
         }
 
@@ -68,24 +66,23 @@ namespace MemoryEditingSoftware.Editor.Views
         {
             if (sender is Button button)
             {
-                GridPosition gridPosition = new GridPosition();
-                gridPosition.ComponentView = this;
                 switch (button.Name)
                 {
                     case "top":
-                        gridPosition.Direction = GridPositionDirection.ReverseTop;
+                        this.SetValue(Grid.RowProperty, (int)this.GetValue(Grid.RowProperty) + 1);
+                        this.SetValue(Grid.RowSpanProperty, (int)this.GetValue(Grid.RowSpanProperty) - 1);
                         break;
                     case "bottom":
-                        gridPosition.Direction = GridPositionDirection.ReverseBottom;
+                        this.SetValue(Grid.RowSpanProperty, (int)this.GetValue(Grid.RowSpanProperty) - 1);
                         break;
                     case "left":
-                        gridPosition.Direction = GridPositionDirection.ReverseLeft;
+                        this.SetValue(Grid.ColumnProperty, (int)this.GetValue(Grid.ColumnProperty) + 1);
+                        this.SetValue(Grid.ColumnSpanProperty, (int)this.GetValue(Grid.ColumnSpanProperty) - 1);
                         break;
                     case "right":
-                        gridPosition.Direction = GridPositionDirection.ReverseRight;
+                        this.SetValue(Grid.ColumnSpanProperty, (int)this.GetValue(Grid.ColumnSpanProperty) - 1);
                         break;
                 }
-                UpdateGridPositionCommand.Execute(gridPosition);
             }
         }
     }

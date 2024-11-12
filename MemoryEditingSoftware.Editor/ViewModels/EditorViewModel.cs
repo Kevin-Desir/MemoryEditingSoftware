@@ -25,8 +25,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             set { SetProperty(ref editorGridContentControl, value); } 
         }
 
-        public DelegateCommand<GridPosition> UpdateGridPositionCommand { get; set; }
-
         #endregion
 
         #region Commands
@@ -37,8 +35,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
         public EditorViewModel()
         {
-            UpdateGridPositionCommand = new DelegateCommand<GridPosition>(UpdateGridPosition);
-
             Grid grid = new Grid();
             grid.Background = Brushes.Magenta;
             grid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -49,7 +45,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
 
-            ComponentView componentView = new ComponentView(new EditItem("Address", "name", "value", true), UpdateGridPositionCommand);
+            ComponentView componentView = new ComponentView(new EditItem("Address", "name", "value", true));
             Grid.SetRow(componentView, 1);
             Grid.SetRowSpan(componentView, 1);
 
@@ -58,50 +54,17 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
             grid.Children.Add(componentView);
 
+            ComponentView componentView2 = new ComponentView(new EditItem("Address 5", "name 5", "value 5", true));
+            Grid.SetRow(componentView2, 2);
+            Grid.SetRowSpan(componentView2, 1);
+
+            Grid.SetColumn(componentView2, 2);
+            Grid.SetColumnSpan(componentView2, 1);
+
+            grid.Children.Add(componentView2);
+
             EditorGridContentControl = new ContentControl();
             EditorGridContentControl.Content = grid;
-        }
-
-        private void UpdateGridPosition(GridPosition position)
-        {
-            Grid grid = (EditorGridContentControl.Content as Grid);
-            int index = grid.Children.IndexOf(position.ComponentView);
-            int currentColumn = Grid.GetColumn(grid.Children[index]);
-            int currentColumnSpan = Grid.GetColumnSpan(grid.Children[index]);
-            int currentRow = Grid.GetRow(grid.Children[index]);
-            int currentRowSpan = Grid.GetRowSpan(grid.Children[index]);
-
-            switch (position.Direction)
-            {
-                case GridPositionDirection.Right:
-                    Grid.SetColumnSpan(grid.Children[index], currentColumnSpan + 1);
-                    break;
-                case GridPositionDirection.ReverseRight:
-                    Grid.SetColumnSpan(grid.Children[index], currentColumnSpan - 1);
-                    break;
-                case GridPositionDirection.Left:
-                    Grid.SetColumn(grid.Children[index], currentColumn - 1);
-                    Grid.SetColumnSpan(grid.Children[index], currentColumnSpan + 1);
-                    break;
-                case GridPositionDirection.ReverseLeft:
-                    Grid.SetColumn(grid.Children[index], currentColumn + 1);
-                    Grid.SetColumnSpan(grid.Children[index], currentColumnSpan - 1);
-                    break;
-                case GridPositionDirection.Top:
-                    Grid.SetRow(grid.Children[index], currentRow - 1);
-                    Grid.SetRowSpan(grid.Children[index], currentRowSpan + 1);
-                    break;
-                case GridPositionDirection.ReverseTop:
-                    Grid.SetRow(grid.Children[index], currentRow + 1);
-                    Grid.SetRowSpan(grid.Children[index], currentRowSpan - 1);
-                    break;
-                case GridPositionDirection.Bottom:
-                    Grid.SetRowSpan(grid.Children[index], currentRowSpan + 1);
-                    break;
-                case GridPositionDirection.ReverseBottom:
-                    Grid.SetRowSpan(grid.Children[index], currentRowSpan - 1);
-                    break;
-            }
         }
 
         #endregion

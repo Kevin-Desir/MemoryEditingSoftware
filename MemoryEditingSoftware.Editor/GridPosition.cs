@@ -11,7 +11,7 @@ namespace MemoryEditingSoftware.Editor
         public GridPositionDirection Direction;
     }
 
-    public enum GridPositionDirection 
+    public enum GridPositionDirection
     { 
         Left, Right, Top, Bottom, 
         ReverseLeft, ReverseRight, ReverseTop, ReverseBottom
