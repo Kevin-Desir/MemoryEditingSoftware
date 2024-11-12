@@ -16,7 +16,7 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button x:Name="top" Grid.Column="1" Grid.Row="0" Height="5" Click="Button_Click" MouseRightButtonUp="Button_MouseRightButtonUp" />
+            <Button x:Name="top" Grid.Column="1" Grid.Row="0" Height="5" Click="Button_Click" MouseEnter="top_MouseEnter" MouseLeave="top_MouseLeave" MouseRightButtonUp="Button_MouseRightButtonUp" />
             <Button x:Name="bottom" Grid.Column="1" Grid.Row="2" Height="5" Click="Button_Click" MouseRightButtonUp="Button_MouseRightButtonUp" />
             <Button x:Name="left" Grid.Column="0" Grid.Row="1" Width="5" Click="Button_Click" MouseRightButtonUp="Button_MouseRightButtonUp" />
             <Button x:Name="right" Grid.Column="2" Grid.Row="1" Width="5" Click="Button_Click" MouseRightButtonUp="Button_MouseRightButtonUp" />

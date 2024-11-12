@@ -85,5 +85,15 @@ namespace MemoryEditingSoftware.Editor.Views
                 }
             }
         }
+
+        private void top_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.ScrollN;
+        }
+
+        private void top_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.Cursor = null;
+        }
     }
 }
