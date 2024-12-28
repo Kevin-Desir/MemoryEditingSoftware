@@ -61,14 +61,14 @@ namespace MemoryEditingSoftware.Editor.ViewModels
 
             grid.Children.Add(componentView);
 
-            //ComponentView componentView2 = new ComponentView(new EditItem("Address 5", "name 5", "value 5", true));
-            //Grid.SetRow(componentView2, 2);
-            //Grid.SetRowSpan(componentView2, 1);
+            ComponentView componentView2 = new ComponentView(new EditItem("Address 5", "name 5", "value 5", true));
+            Grid.SetRow(componentView2, 2);
+            Grid.SetRowSpan(componentView2, 1);
 
-            //Grid.SetColumn(componentView2, 2);
-            //Grid.SetColumnSpan(componentView2, 1);
+            Grid.SetColumn(componentView2, 2);
+            Grid.SetColumnSpan(componentView2, 1);
 
-            //grid.Children.Add(componentView2);
+            grid.Children.Add(componentView2);
 
             EditorGridContentControl = new ContentControl();
             EditorGridContentControl.Content = grid;
