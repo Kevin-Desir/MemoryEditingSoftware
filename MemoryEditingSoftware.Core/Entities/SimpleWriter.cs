@@ -1,8 +1,12 @@
-﻿namespace MemoryEditingSoftware.Core.Entities
+﻿using MemoryEditingSoftware.Core.Attributes;
+
+namespace MemoryEditingSoftware.Core.Entities
 {
     public class SimpleWriter : EditItem
     {
+        [EditableProperty]
         public bool IsLoop { get; set; } = false;
+        [EditableProperty]
         public bool IsEnterValue { get; set; } = false;
 
         #region Constructors

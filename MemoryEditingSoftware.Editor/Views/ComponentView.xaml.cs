@@ -14,6 +14,14 @@ namespace MemoryEditingSoftware.Editor.Views
     {
         #region Properties
 
+        private UserControl contentView;
+
+        public UserControl ContentView
+        {
+            get { return contentView; }
+            set { contentView = value; }
+        }
+
         #endregion
 
         #region Commands 
@@ -26,7 +34,9 @@ namespace MemoryEditingSoftware.Editor.Views
         {
             InitializeComponent();
 
-            ComponentContentControl.Content = new SimpleReadView(editItem);
+            ContentView = new SimpleReadView(new SimpleReader(editItem));
+
+            ComponentContentControl.Content = ContentView;
         }
 
         #endregion

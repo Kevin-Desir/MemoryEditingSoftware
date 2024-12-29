@@ -1,4 +1,6 @@
 ﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Attributes;
+using MemoryEditingSoftware.Core.Dialogs;
 using MemoryEditingSoftware.Core.Entities;
 using MemoryEditingSoftware.Editor.Views;
 using Prism.Commands;
@@ -6,8 +8,10 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -24,6 +28,15 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             get { return editorGridContentControl; }
             set { SetProperty(ref editorGridContentControl, value); }
         }
+
+        private ContentControl propertiesContentControl;
+        public ContentControl PropertiesContentControl
+        {
+            get { return propertiesContentControl; }
+            set { SetProperty(ref propertiesContentControl, value); }
+        }
+
+        StackPanel propertiesStackPanel;
 
         private Grid grid;
 
@@ -76,7 +89,21 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             grid.AllowDrop = true;
             grid.Drop += mainGrid_Drop;
             grid.DragOver += mainGrid_DragOver;
+            grid.MouseLeftButtonUp += mainGrid_MouseLeftButtonUp;
 
+            //Grid propGrid1 = new Grid();
+            //propGrid1.ColumnDefinitions.Add(new ColumnDefinition());
+            //propGrid1.ColumnDefinitions.Add(new ColumnDefinition());
+            //Label nameLabel = new Label();
+            //nameLabel.Content = "Name";
+            //TextBox nameTextBlock = new TextBox();
+            //propGrid1.Children.Add(nameLabel);
+            //propGrid1.Children.Add(nameTextBlock);
+            //Grid.SetColumn(nameTextBlock,1);
+            propertiesStackPanel = new StackPanel();
+            //propertiesStackPanel.Children.Add(propGrid1);
+            PropertiesContentControl = new ContentControl();
+            PropertiesContentControl.Content = propertiesStackPanel;           
         }
 
         #endregion
@@ -88,6 +115,27 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         {
             e.Effects = DragDropEffects.Move;
             e.Handled = true;
+        }
+
+        private void mainGrid_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SimpleReader ed = ((e.Source as ComponentView).ContentView as SimpleReadView).SimpleReader;
+
+            var flaggedProperties = typeof(SimpleReader)
+                .GetProperties()
+                .Where(prop => Attribute.IsDefined(prop, typeof(EditableProperty)));
+
+            propertiesStackPanel.Children.Clear();
+
+            foreach (var property in flaggedProperties)
+            {
+                Console.WriteLine($"Property: {property.Name}, Value: {property.GetValue(ed)}");
+                Label label = new Label()
+                {
+                    Content = $"{property.Name} -> {property.GetValue(ed)}"
+                };
+                propertiesStackPanel.Children.Add(label);
+            }
         }
 
         // Handle the drop event

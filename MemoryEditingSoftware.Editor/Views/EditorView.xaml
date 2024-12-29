@@ -16,13 +16,16 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Grid Background="LightCoral" Grid.Column="0">
+        <Grid Background="LightCoral" Width="150" Grid.Column="0">
             <StackPanel Margin="5" >
                 <Label Content="Components" />
                 <Separator />
                 <Button Content="Simple Read" Margin="5" Padding="5" />
                 <Button Content="Simple Write" Margin="5" Padding="5" />
                 <Button Content="Slider" Margin="5" Padding="5" />
+                <Separator />
+                <Button Content="Text" Margin="5" Padding="5" />
+                <Button Content="Image" Margin="5" Padding="5" />
             </StackPanel>
         </Grid>
 
@@ -30,8 +33,15 @@
             <ContentControl Content="{Binding EditorGridContentControl}" />
         </ScrollViewer>
 
-        <Grid Grid.Column="2" Background="LightCyan">
-            <Label Content="Properties" />
+        <Grid Grid.Column="2" Width="200" Background="LightCyan">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Properties" />
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ContentControl Content="{Binding PropertiesContentControl}"/>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>
