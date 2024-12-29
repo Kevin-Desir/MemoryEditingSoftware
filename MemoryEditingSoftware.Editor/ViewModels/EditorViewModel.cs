@@ -36,7 +36,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             set { SetProperty(ref propertiesContentControl, value); }
         }
 
-        StackPanel propertiesStackPanel;
+        private Grid propertyGrid;
 
         private Grid grid;
 
@@ -91,19 +91,11 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             grid.DragOver += mainGrid_DragOver;
             grid.MouseLeftButtonUp += mainGrid_MouseLeftButtonUp;
 
-            //Grid propGrid1 = new Grid();
-            //propGrid1.ColumnDefinitions.Add(new ColumnDefinition());
-            //propGrid1.ColumnDefinitions.Add(new ColumnDefinition());
-            //Label nameLabel = new Label();
-            //nameLabel.Content = "Name";
-            //TextBox nameTextBlock = new TextBox();
-            //propGrid1.Children.Add(nameLabel);
-            //propGrid1.Children.Add(nameTextBlock);
-            //Grid.SetColumn(nameTextBlock,1);
-            propertiesStackPanel = new StackPanel();
-            //propertiesStackPanel.Children.Add(propGrid1);
             PropertiesContentControl = new ContentControl();
-            PropertiesContentControl.Content = propertiesStackPanel;           
+            propertyGrid = new Grid();
+            propertyGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            propertyGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            PropertiesContentControl.Content = propertyGrid;          
         }
 
         #endregion
@@ -125,16 +117,57 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 .GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(EditableProperty)));
 
-            propertiesStackPanel.Children.Clear();
+            propertyGrid.Children.Clear();
+            propertyGrid.RowDefinitions.Clear();
+            int i = 0;
 
             foreach (var property in flaggedProperties)
             {
-                Console.WriteLine($"Property: {property.Name}, Value: {property.GetValue(ed)}");
+                propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto});
                 Label label = new Label()
                 {
-                    Content = $"{property.Name} -> {property.GetValue(ed)}"
+                    Content = property.Name,
                 };
-                propertiesStackPanel.Children.Add(label);
+                Grid.SetColumn(label, 0);
+                Grid.SetRow(label, i);
+                propertyGrid.Children.Add(label);
+
+                if (property.PropertyType == typeof(string))
+                {
+                    TextBox textBox = new TextBox()
+                    {
+                        Text = property.GetValue(ed).ToString(),
+                        VerticalAlignment = VerticalAlignment.Center,
+                    };
+                    Grid.SetColumn(textBox, 1);
+                    Grid.SetRow(textBox, i);
+                    propertyGrid.Children.Add(textBox);
+                }
+                else if (property.PropertyType == typeof(bool))
+                {
+                    ComboBox comboBox = new ComboBox()
+                    {
+                        ItemsSource = new List<string>() { "No", "Yes" },
+                        SelectedIndex = (bool)property.GetValue(ed) == true ? 1 : 0,
+                    };
+                    Grid.SetColumn(comboBox, 1);
+                    Grid.SetRow(comboBox, i);
+                    propertyGrid.Children.Add(comboBox);
+                }
+                else if (property.PropertyType == typeof(VariableTypes))
+                {
+                    ComboBox comboBox = new ComboBox()
+                    {
+                        ItemsSource = Enum.GetValues(typeof(VariableTypes))
+                                      .Cast<VariableTypes>()
+                                      .ToList(),
+                        SelectedItem = (VariableTypes)property.GetValue(ed)
+                    };
+                    Grid.SetColumn(comboBox, 1);
+                    Grid.SetRow(comboBox, i);
+                    propertyGrid.Children.Add(comboBox);
+                }
+                i++;
             }
         }
 

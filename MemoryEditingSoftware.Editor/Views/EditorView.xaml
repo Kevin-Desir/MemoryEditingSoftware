@@ -36,10 +36,17 @@
         <Grid Grid.Column="2" Width="200" Background="LightCyan">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Properties" />
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Label Grid.Row="0" Content="Grid properties" />
+            <StackPanel Grid.Row="1">
+                <Label Content="Rows" />
+                <Label Content="Columns" />
+            </StackPanel>
+            <Label Grid.Row="2" Content="Properties" />
+            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <ContentControl Content="{Binding PropertiesContentControl}"/>
             </ScrollViewer>
         </Grid>
