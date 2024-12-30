@@ -35,7 +35,7 @@ namespace MemoryEditingSoftware.Run.Views
                     else
                     {
                         if (ei is SimpleWriter simpleWriter)
-                        components.Add(new WriteItem(simpleWriter));
+                        components.Add(new WriteItemControl(simpleWriter));
                     }
                 }
 

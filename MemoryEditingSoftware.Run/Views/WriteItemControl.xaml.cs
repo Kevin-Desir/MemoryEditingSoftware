@@ -9,31 +9,32 @@ using System.Windows.Controls;
 namespace MemoryEditingSoftware.Run.Views
 {
     /// <summary>
-    /// Interaction logic for WriteItem.xaml
+    /// Interaction logic for WriteItemView.xaml
     /// </summary>
-    public partial class WriteItem : UserControl
+    public partial class WriteItemControl : UserControl
     {
-        private readonly SimpleWriter editItem;
+        public SimpleWriter SimpleWriter { get; }
         private bool stop = true;
         private int debugcpt = 0;
 
-        public WriteItem(SimpleWriter editItem)
+        public WriteItemControl(SimpleWriter simpleWriter)
         {
             InitializeComponent();
+            
+            SimpleWriter = simpleWriter;
 
-            NameTextBlock.Text = editItem.Name;
-            if (editItem.IsLoop)
+            NameTextBlock.Text = SimpleWriter.Name;
+            if (SimpleWriter.IsLoop)
                 ActivateButton.Content = "Enable";
             else
                 ActivateButton.Content = "Activate";
-            Val.Text = editItem.Value;
+            Val.Text = SimpleWriter.Value;
 
-            if (editItem.IsEnterValue)
+            if (SimpleWriter.IsEnterValue)
                 Val.IsReadOnly = false;
             else
                 Val.IsReadOnly = true;
 
-            this.editItem = editItem;
         }
 
         private void ActivateButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -41,8 +42,8 @@ namespace MemoryEditingSoftware.Run.Views
             // check if in loop mode
             if (ActivateButton.Content.ToString() == "Activate")
             {
-                // check if input from the gui (or from the editItem instance)
-                if (editItem.IsEnterValue)
+                // check if input from the gui (or from the EditItem instance)
+                if (SimpleWriter.IsEnterValue)
                 {
                     // check that the string only contains numbers / digits
                     if (Utilities.IsDigitsOnly(Val.Text))
@@ -51,43 +52,43 @@ namespace MemoryEditingSoftware.Run.Views
                         if (Val.Text.Contains("."))
                         {
                             // DEBUG ONLY
-                            Console.WriteLine(editItem.Address + ": " + (double.Parse(Val.Text)).ToString());
-                            MemoryAccess.WriteDoubleInMemory(editItem.Address, double.Parse(Val.Text));
+                            Console.WriteLine(SimpleWriter.Address + ": " + (double.Parse(Val.Text)).ToString());
+                            MemoryAccess.WriteDoubleInMemory(SimpleWriter.Address, double.Parse(Val.Text));
                         }
                         else
                         {
                             // DEBUG ONLY
-                            Console.WriteLine(editItem.Address + ": " + (int.Parse(Val.Text)).ToString());
-                            MemoryAccess.WriteIntInMemory(editItem.Address, int.Parse(Val.Text));
+                            Console.WriteLine(SimpleWriter.Address + ": " + (int.Parse(Val.Text)).ToString());
+                            MemoryAccess.WriteIntInMemory(SimpleWriter.Address, int.Parse(Val.Text));
                         }
                     }
                 }
-                // use the value from the editItem instance
+                // use the value from the EditItem instance
                 else
                 {
                     // check that the string only contains numbers / digits
-                    if (Utilities.IsDigitsOnly(editItem.Value))
+                    if (Utilities.IsDigitsOnly(SimpleWriter.Value))
                     {
                         // check if double or int
-                        if (editItem.Value.Contains("."))
+                        if (SimpleWriter.Value.Contains("."))
                         {
                             // DEBUG ONLY
-                            Console.WriteLine(editItem.Address + ": " + (double.Parse(editItem.Value)).ToString());
-                            MemoryAccess.WriteDoubleInMemory(editItem.Address, double.Parse(editItem.Value));
+                            Console.WriteLine(SimpleWriter.Address + ": " + (double.Parse(SimpleWriter.Value)).ToString());
+                            MemoryAccess.WriteDoubleInMemory(SimpleWriter.Address, double.Parse(SimpleWriter.Value));
                         }
                         else
                         {
                             // DEBUG ONLY
-                            Console.WriteLine(editItem.Address + ": " + (int.Parse(editItem.Value)).ToString());
-                            MemoryAccess.WriteIntInMemory(editItem.Address, int.Parse(editItem.Value));
+                            Console.WriteLine(SimpleWriter.Address + ": " + (int.Parse(SimpleWriter.Value)).ToString());
+                            MemoryAccess.WriteIntInMemory(SimpleWriter.Address, int.Parse(SimpleWriter.Value));
                         }
                     }
                 }
             }
             else if (ActivateButton.Content.ToString() == "Enable")
             {
-                // check if input from the gui (or from the editItem instance)
-                if (editItem.IsEnterValue)
+                // check if input from the gui (or from the EditItem instance)
+                if (SimpleWriter.IsEnterValue)
                 {
                     // check that the string only contains numbers / digits
                     if (Utilities.IsDigitsOnly(Val.Text))
@@ -112,24 +113,24 @@ namespace MemoryEditingSoftware.Run.Views
                         }
                     }
                 }
-                // use the value from the editItem instance
+                // use the value from the EditItem instance
                 else
                 {
                     // check that the string only contains numbers / digits
-                    if (Utilities.IsDigitsOnly(editItem.Value))
+                    if (Utilities.IsDigitsOnly(SimpleWriter.Value))
                     {
                         // check if double or int 
-                        if (editItem.Value.Contains("."))
+                        if (SimpleWriter.Value.Contains("."))
                         {
                             this.stop = false;
-                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopDouble(double.Parse(editItem.Value)));
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopDouble(double.Parse(SimpleWriter.Value)));
                             ActivateButton.Content = "Disable";
                             Val.IsEnabled = false;
                         }
                         else
                         {
                             this.stop = false;
-                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopInt(int.Parse(editItem.Value)));
+                            ThreadPool.QueueUserWorkItem(_ => EnableWrintingLoopInt(int.Parse(SimpleWriter.Value)));
                             ActivateButton.Content = "Disable";
                             Val.IsEnabled = false;
                         }
@@ -149,12 +150,12 @@ namespace MemoryEditingSoftware.Run.Views
             while (!stop)
             {
                 // DEBUG ONLY
-                Console.WriteLine(editItem.Address + ": " + val.ToString() + "[" + debugcpt++ + "]");
+                Console.WriteLine(SimpleWriter.Address + ": " + val.ToString() + "[" + debugcpt++ + "]");
 
                 // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
                 Thread.Sleep(100);
 
-                MemoryAccess.WriteIntInMemory(editItem.Address, val);
+                MemoryAccess.WriteIntInMemory(SimpleWriter.Address, val);
             }
 
             return false;
@@ -165,12 +166,12 @@ namespace MemoryEditingSoftware.Run.Views
             while (!stop)
             {
                 // DEBUG ONLY
-                Console.WriteLine(editItem.Address + ": " + val.ToString() + "[" + debugcpt++ + "]");
+                Console.WriteLine(SimpleWriter.Address + ": " + val.ToString() + "[" + debugcpt++ + "]");
 
                 // TODO: Would be nice if user can adjust this value from the ui (with a slider for example) and independant
                 Thread.Sleep(100);
 
-                MemoryAccess.WriteDoubleInMemory(editItem.Address, val);
+                MemoryAccess.WriteDoubleInMemory(SimpleWriter.Address, val);
             }
 
             return false;

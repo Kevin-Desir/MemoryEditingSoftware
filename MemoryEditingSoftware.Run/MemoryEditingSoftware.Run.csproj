@@ -88,8 +88,8 @@
     <Compile Include="Views\RunDialog.xaml.cs">
       <DependentUpon>RunDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WriteItem.xaml.cs">
-      <DependentUpon>WriteItem.xaml</DependentUpon>
+    <Compile Include="Views\WriteItemControl.xaml.cs">
+      <DependentUpon>WriteItemControl.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -116,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WriteItem.xaml">
+    <Page Include="Views\WriteItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

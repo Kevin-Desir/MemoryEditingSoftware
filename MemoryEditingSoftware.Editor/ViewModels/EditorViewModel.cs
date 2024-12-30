@@ -3,6 +3,7 @@ using MemoryEditingSoftware.Core.Attributes;
 using MemoryEditingSoftware.Core.Dialogs;
 using MemoryEditingSoftware.Core.Entities;
 using MemoryEditingSoftware.Editor.Views;
+using MemoryEditingSoftware.Run.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -159,21 +160,21 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             {
                 return; // clicked on an unavailable case
             }
-            if ((e.Source as ComponentView).ContentView as SimpleReadView == null)
+            if ((e.Source as ComponentView).ContentView as WriteItemControl == null)
             {
                 return; // clicked on an unavailable case
             }
 
-            SimpleReader ed = ((e.Source as ComponentView).ContentView as SimpleReadView).SimpleReader;
+            SimpleWriter ed = ((e.Source as ComponentView).ContentView as WriteItemControl).SimpleWriter;
 
-            var flaggedProperties = typeof(SimpleReader)
+            var flaggedProperties = typeof(SimpleWriter)
                 .GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(EditableProperty)));
 
             propertyGrid.Children.Clear();
             propertyGrid.RowDefinitions.Clear();
             int i = 0;
-
+            
             foreach (var property in flaggedProperties)
             {
                 propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });

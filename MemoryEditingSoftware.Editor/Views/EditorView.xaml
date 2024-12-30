@@ -11,12 +11,14 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Background="white">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
-        <Grid Background="LightCoral" Width="150" Grid.Column="0">
+        <Grid Background="LightCoral" Grid.Column="0">
             <StackPanel Margin="5" >
                 <Label Content="Components" />
                 <Separator />
@@ -29,11 +31,15 @@
             </StackPanel>
         </Grid>
 
-        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Black" ShowsPreview="True" Width="5"/>
+
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
             <ContentControl Content="{Binding EditorGridContentControl}" />
         </ScrollViewer>
 
-        <StackPanel Grid.Column="2" Width="200" Background="LightCyan">
+        <GridSplitter Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Black" ShowsPreview="True" Width="5" />
+
+        <StackPanel Grid.Column="4" Background="LightCyan">
             <Grid Background="Orange">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

@@ -88,9 +88,6 @@
     <Compile Include="Views\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SimpleReadView.xaml.cs">
-      <DependentUpon>SimpleReadView.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -106,6 +103,10 @@
       <Project>{C0EEF17D-9D2D-4F68-818D-EB3B9C310882}</Project>
       <Name>MemoryEditingSoftware.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MemoryEditingSoftware.Run\MemoryEditingSoftware.Run.csproj">
+      <Project>{93DC4028-9737-484D-A879-A6FDC36952DB}</Project>
+      <Name>MemoryEditingSoftware.Run</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ComponentView.xaml">
@@ -113,10 +114,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SimpleReadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

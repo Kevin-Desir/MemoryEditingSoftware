@@ -1,4 +1,5 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
+using MemoryEditingSoftware.Run.Views;
 using Prism.Commands;
 using System.Collections.Generic;
 using System.Windows;
@@ -34,7 +35,7 @@ namespace MemoryEditingSoftware.Editor.Views
         {
             InitializeComponent();
 
-            ContentView = new SimpleReadView(new SimpleReader(editItem));
+            ContentView = new WriteItemControl(new SimpleWriter(true, true, editItem));
 
             ComponentContentControl.Content = ContentView;
         }
