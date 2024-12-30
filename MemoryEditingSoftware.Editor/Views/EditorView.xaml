@@ -33,22 +33,31 @@
             <ContentControl Content="{Binding EditorGridContentControl}" />
         </ScrollViewer>
 
-        <Grid Grid.Column="2" Width="200" Background="LightCyan">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Grid properties" />
-            <StackPanel Grid.Row="1">
-                <Label Content="Rows" />
-                <Label Content="Columns" />
+        <StackPanel Grid.Column="2" Width="200" Background="LightCyan">
+            <Grid Background="Orange">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Grid properties" />
+                <Label Grid.Row="1" Content="Rows" />
+                <TextBox Text="{Binding RowCount}" Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center" />
+                <Label Grid.Row="2" Content="Columns" />
+                <TextBox Text="{Binding ColumnCount}" Grid.Column="1" Grid.Row="2" VerticalContentAlignment="Center" />
+            </Grid>
+            <Separator/>
+            <StackPanel Background="Green">
+                
+                <Label Grid.Row="2" Content="Properties" />
+                <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ContentControl Content="{Binding PropertiesContentControl}"/>
+                </ScrollViewer>
             </StackPanel>
-            <Label Grid.Row="2" Content="Properties" />
-            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <ContentControl Content="{Binding PropertiesContentControl}"/>
-            </ScrollViewer>
-        </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

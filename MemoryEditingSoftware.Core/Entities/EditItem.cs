@@ -11,11 +11,11 @@ namespace MemoryEditingSoftware.Core.Entities
         public string Name { get; set; } = "";
         [EditableProperty]
         public string Address { get; set; } = "0x";
-        [EditableProperty]
+        [EditableProperty("à supprimer !")]
         public bool IsRead { get; set; } = false;
         [EditableProperty]
         public string Value { get; set; } = "";
-        [EditableProperty]
+        [EditableProperty("Variable type")]
         public VariableTypes VariableType { get; set; } = VariableTypes.vint;
 
         public EditItem()
