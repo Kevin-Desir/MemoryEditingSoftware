@@ -1,5 +1,6 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 

@@ -13,10 +13,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu Height="17" VerticalAlignment="Top">
-            <MenuItem Header="File">
+            <MenuItem Header="_File">
                 <MenuItem Header="New Project" Command="{Binding ShowNewProjectDialogCommand}" />
-                <MenuItem Header="Open Project" Command="{Binding OpenProjectDialogCommand}" />
-                <MenuItem Header="Recent Projects" ItemsSource="{Binding RecentProjects}" >
+                <MenuItem Header="_Open Project" Command="{Binding OpenProjectDialogCommand}" />
+                <MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}" >
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="MenuItem" >
                             <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}, Path=DataContext.OpenRecentProjectCommand}"></Setter>
@@ -26,41 +26,62 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Save Project" Command="{Binding SaveProjectCommand}" />
-                <MenuItem Header="Save Project As" Command="{Binding SaveProjectAsCommand}" />
-                <MenuItem Header="Close Project" Command="{Binding CloseProjectCommand}" />
+                <MenuItem Header="_Save Project As" Command="{Binding SaveProjectAsCommand}" />
+                <MenuItem Header="_Close Project" Command="{Binding CloseProjectCommand}" />
                 <Separator />
-                <MenuItem Header="Project Settings" Command="{Binding ShowProjectSettingsDialogCommand}" />
+                <MenuItem Header="_Project Settings" Command="{Binding ShowProjectSettingsDialogCommand}" />
                 <Separator />
-                <MenuItem Header="Quit" Command="{Binding QuitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                <MenuItem Header="_Quit" Command="{Binding QuitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
             </MenuItem>
-            <MenuItem Header="Navigate">
-                <MenuItem Header="Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
-                <MenuItem Header="Run" Command="{Binding RunDialogCommand}" />
+            <MenuItem Header="_Navigate">
+                <MenuItem Header="_Editor" Command="{Binding NavigateCommand}" CommandParameter="EditorView" />
+                <MenuItem Header="_Run" Command="{Binding RunDialogCommand}" />
             </MenuItem>
         </Menu>
-        <ToolBar Grid.Row="1" Height="40" >
+        <ToolBar Grid.Row="1" Height="50" ToolBarTray.IsLocked="True" >
             <Button Command="{Binding ShowNewProjectDialogCommand}">
-                <fa:FontAwesome FontSize="20" Icon="File" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="File" />
+                    <TextBlock Text="New" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding OpenProjectDialogCommand}">
-                <fa:FontAwesome FontSize="20" Icon="FolderOpen" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="FolderOpen" />
+                    <TextBlock Text="Open" />
+                </StackPanel>
             </Button>
             <Separator/>
             <Button  Command="{Binding SaveProjectCommand}">
-                <fa:FontAwesome FontSize="20" Icon="FloppyOutline" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="FloppyOutline" />
+                    <TextBlock Text="Save" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding CloseProjectCommand}">
-                <fa:FontAwesome FontSize="20" Icon="Close" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="Close" />
+                    <TextBlock Text="Close" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding ShowProjectSettingsDialogCommand}">
-                <fa:FontAwesome FontSize="20" Icon="Gear" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="Gear" />
+                    <TextBlock Text="Settings"/>
+                </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding NavigateCommand}" CommandParameter="EditorView" >
-                <fa:FontAwesome FontSize="20" Icon="Code" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="Code" />
+                    <TextBlock Text="Editor" />
+                </StackPanel>
             </Button>
             <Button Command="{Binding RunDialogCommand}" >
-                <fa:FontAwesome FontSize="20" Icon="WindowRestore" />
+                <StackPanel>
+                    <fa:FontAwesome FontSize="20" Icon="WindowRestore" />
+                    <TextBlock Text="Run" />
+                </StackPanel>
             </Button>
         </ToolBar>
         <ContentControl Grid.Row="2" prism:RegionManager.RegionName="ContentRegion" Margin="5" />

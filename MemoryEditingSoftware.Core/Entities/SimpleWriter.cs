@@ -1,8 +1,12 @@
-﻿namespace MemoryEditingSoftware.Core.Entities
+﻿using MemoryEditingSoftware.Core.Attributes;
+
+namespace MemoryEditingSoftware.Core.Entities
 {
     public class SimpleWriter : EditItem
     {
+        [EditableProperty("One time or Looping")]
         public bool IsLoop { get; set; } = false;
+        [EditableProperty("Will enter a value in execution")]
         public bool IsEnterValue { get; set; } = false;
 
         #region Constructors

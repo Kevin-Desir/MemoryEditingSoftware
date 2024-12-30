@@ -82,6 +82,7 @@ namespace MemoryEditingSoftware.ViewModels
             }
             else
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(RECENT_PROJECTS_FILENAME));
                 File.Create(RECENT_PROJECTS_FILENAME);
             }
         }

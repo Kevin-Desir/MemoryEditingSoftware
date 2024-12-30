@@ -16,10 +16,10 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button Grid.Column="1" Grid.Row="0" Height="5" />
-            <Button Grid.Column="1" Grid.Row="2" Height="5" />
-            <Button Grid.Column="0" Grid.Row="1" Width="5" />
-            <Button Grid.Column="2" Grid.Row="1" Width="5" Click="Button_Click" MouseRightButtonUp="Button_MouseDoubleClick" />
+            <Canvas Background="Red" x:Name="top" Grid.Column="1" Grid.Row="0" Height="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="top_MouseEnter" MouseLeave="cursor_MouseLeave" />
+            <Canvas Background="Red" x:Name="bottom" Grid.Column="1" Grid.Row="2" Height="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="bottom_MouseEnter" MouseLeave="cursor_MouseLeave" />
+            <Canvas Background="Red" x:Name="left" Grid.Column="0" Grid.Row="1" Width="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="left_MouseEnter" MouseLeave="cursor_MouseLeave" />
+            <Canvas Background="Red" x:Name="right" Grid.Column="2" Grid.Row="1" Width="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="right_MouseEnter" MouseLeave="cursor_MouseLeave" />
             <ContentControl Grid.Row="1" Grid.Column="1" x:Name="ComponentContentControl" />
         </Grid>
     </Border>

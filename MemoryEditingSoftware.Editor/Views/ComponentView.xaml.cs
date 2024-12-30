@@ -1,5 +1,7 @@
 ﻿using MemoryEditingSoftware.Core.Entities;
 using Prism.Commands;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -10,27 +12,36 @@ namespace MemoryEditingSoftware.Editor.Views
     /// </summary>
     public partial class ComponentView : UserControl
     {
-        #region Commands 
+        #region Properties
 
-        public DelegateCommand<GridPosition> UpdateGridPositionCommand { get; set; }
+        private UserControl contentView;
+
+        public UserControl ContentView
+        {
+            get { return contentView; }
+            set { contentView = value; }
+        }
+
+        #endregion
+
+        #region Commands 
 
         #endregion
 
         #region Constructor 
 
-        public ComponentView(EditItem editItem, DelegateCommand<GridPosition> updateGridPositionCommand)
+        public ComponentView(EditItem editItem)
         {
             InitializeComponent();
 
-            ComponentContentControl.Content = new SimpleReadView(editItem);
-            UpdateGridPositionCommand = updateGridPositionCommand;
+            ContentView = new SimpleReadView(new SimpleReader(editItem));
+
+            ComponentContentControl.Content = ContentView;
         }
 
         #endregion
 
         #region Private Methods
-
-
 
         #endregion
 
@@ -38,22 +49,38 @@ namespace MemoryEditingSoftware.Editor.Views
 
         #endregion
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void top_MouseEnter(object sender, MouseEventArgs e)
         {
-            GridPosition gridPosition = new GridPosition();
-            gridPosition.Direction = GridPositionDirection.Right;
-            gridPosition.ComponentView = this;
-
-            UpdateGridPositionCommand.Execute(gridPosition);
+            this.Cursor = Cursors.ScrollNS;
         }
 
-        private void Button_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void left_MouseEnter(object sender, MouseEventArgs e)
         {
-            GridPosition gridPosition = new GridPosition();
-            gridPosition.Direction = GridPositionDirection.ReverseRight;
-            gridPosition.ComponentView = this;
+            this.Cursor = Cursors.ScrollWE;
+        }
 
-            UpdateGridPositionCommand.Execute(gridPosition);
+        private void right_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.ScrollWE;
+        }
+
+        private void bottom_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.ScrollNS;
+        }
+
+        private void cursor_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.Cursor = null;
+        }
+
+        // Handle the start of the drag operation
+        private void Canvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Canvas element)
+            {
+                DragDrop.DoDragDrop(element, element, DragDropEffects.Move);
+            }
         }
     }
 }

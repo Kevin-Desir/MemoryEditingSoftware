@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MemoryEditingSoftware.Core.Attributes;
+using Newtonsoft.Json;
 using System;
 
 namespace MemoryEditingSoftware.Core.Entities
@@ -6,10 +7,16 @@ namespace MemoryEditingSoftware.Core.Entities
     public class EditItem
     {
         public string ID { get; set; } = Guid.NewGuid().ToString();
+        [EditableProperty]
         public string Name { get; set; } = "";
+        [EditableProperty]
         public string Address { get; set; } = "0x";
+        [EditableProperty("à supprimer !")]
         public bool IsRead { get; set; } = false;
+        [EditableProperty]
         public string Value { get; set; } = "";
+        [EditableProperty("Variable type")]
+        public VariableTypes VariableType { get; set; } = VariableTypes.vint;
 
         public EditItem()
         {
