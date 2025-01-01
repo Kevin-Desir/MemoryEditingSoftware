@@ -20,7 +20,7 @@
             <Canvas Background="Red" x:Name="bottom" Grid.Column="1" Grid.Row="2" Height="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="bottom_MouseEnter" MouseLeave="cursor_MouseLeave" />
             <Canvas Background="Red" x:Name="left" Grid.Column="0" Grid.Row="1" Width="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="left_MouseEnter" MouseLeave="cursor_MouseLeave" />
             <Canvas Background="Red" x:Name="right" Grid.Column="2" Grid.Row="1" Width="5" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" MouseEnter="right_MouseEnter" MouseLeave="cursor_MouseLeave" />
-            <ContentControl Grid.Row="1" Grid.Column="1" IsEnabled="False" x:Name="ComponentContentControl" />
+            <ContentControl Grid.Row="1" Grid.Column="1" IsEnabled="True" PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown" x:Name="ComponentContentControl" />
         </Grid>
     </Border>
 </UserControl>

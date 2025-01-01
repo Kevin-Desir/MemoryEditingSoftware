@@ -101,14 +101,6 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             _oldColumnCount = ColumnCount;
 
             grid.Background = Brushes.Magenta;
-            //for (int i = 0; i < RowCount; i++)
-            //{
-            //    grid.RowDefinitions.Add(new RowDefinition());
-            //}
-            //for (int i = 0; i < ColumnCount; i++)
-            //{
-            //    grid.ColumnDefinitions.Add(new ColumnDefinition());
-            //}
 
             ComponentView componentView = new ComponentView(new EditItem("Address", "name", "value", true));
             Grid.SetRow(componentView, 1);
@@ -158,135 +150,185 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         {
             if (e.Source as ComponentView == null)
             {
+                propertyGrid.Children.Clear();
+                propertyGrid.RowDefinitions.Clear();
                 return; // clicked on an unavailable case
             }
             if ((e.Source as ComponentView).ContentView as WriteItemControl == null)
             {
+                propertyGrid.Children.Clear();
+                propertyGrid.RowDefinitions.Clear();
                 return; // clicked on an unavailable case
-            }
-
-            SimpleWriter ed = ((e.Source as ComponentView).ContentView as WriteItemControl).SimpleWriter;
-
-            var flaggedProperties = typeof(SimpleWriter)
-                .GetProperties()
-                .Where(prop => Attribute.IsDefined(prop, typeof(EditableProperty)));
-
-            propertyGrid.Children.Clear();
-            propertyGrid.RowDefinitions.Clear();
-            int i = 0;
-            
-            foreach (var property in flaggedProperties)
-            {
-                propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-                var attribute = (EditableProperty)Attribute.GetCustomAttribute(property, typeof(EditableProperty));
-                string displayName = attribute?.Name ?? property.Name;
-
-                Label label = new Label()
-                {
-                    Content = displayName,
-                };
-                Grid.SetColumn(label, 0);
-                Grid.SetRow(label, i);
-                propertyGrid.Children.Add(label);
-
-                if (property.PropertyType == typeof(string))
-                {
-                    TextBox textBox = new TextBox()
-                    {
-                        Text = property.GetValue(ed).ToString(),
-                        VerticalAlignment = VerticalAlignment.Center,
-                    };
-                    Grid.SetColumn(textBox, 1);
-                    Grid.SetRow(textBox, i);
-                    propertyGrid.Children.Add(textBox);
-                }
-                else if (property.PropertyType == typeof(bool))
-                {
-                    ComboBox comboBox = new ComboBox()
-                    {
-                        ItemsSource = new List<string>() { "No", "Yes" },
-                        SelectedIndex = (bool)property.GetValue(ed) == true ? 1 : 0,
-                    };
-                    Grid.SetColumn(comboBox, 1);
-                    Grid.SetRow(comboBox, i);
-                    propertyGrid.Children.Add(comboBox);
-                }
-                else if (property.PropertyType == typeof(VariableTypes))
-                {
-                    ComboBox comboBox = new ComboBox()
-                    {
-                        ItemsSource = Enum.GetValues(typeof(VariableTypes))
-                                      .Cast<VariableTypes>()
-                                      .ToList(),
-                        SelectedItem = (VariableTypes)property.GetValue(ed)
-                    };
-                    Grid.SetColumn(comboBox, 1);
-                    Grid.SetRow(comboBox, i);
-                    propertyGrid.Children.Add(comboBox);
-                }
-                i++;
             }
         }
 
         // Handle the drop event
         private void mainGrid_Drop(object sender, DragEventArgs e)
         {
-            Canvas draggedElement = e.Data.GetData(typeof(Canvas)) as Canvas;
-
-            if (draggedElement == null)
-                return;
-
-            ComponentView componentView = ((draggedElement.Parent as Grid).Parent as Border).Parent as ComponentView;
-
-
-            // Get the mouse position and calculate the target grid cell
-            var position = e.GetPosition(grid);
-
-            int targetRow = GetRowFromPosition(position.Y);
-            int targetColumn = GetColumnFromPosition(position.X);
-            int currentRow = (int)componentView.GetValue(Grid.RowProperty);
-            int currentRowSpan = (int)componentView.GetValue(Grid.RowSpanProperty);
-            int currentColumn = (int)componentView.GetValue(Grid.ColumnProperty);
-            int currentColumnSpan = (int)componentView.GetValue(Grid.ColumnSpanProperty);
-
-            if (targetRow >= 0 && targetColumn >= 0)
+            if (e.Data.GetData(typeof(Canvas)) != null)
             {
-                switch (draggedElement.Name)
+                Canvas draggedElement = e.Data.GetData(typeof(Canvas)) as Canvas;
+
+                if (draggedElement == null)
+                    return;
+
+                ComponentView componentView = ((draggedElement.Parent as Grid).Parent as Border).Parent as ComponentView;
+
+
+                // Get the mouse position and calculate the target grid cell
+                var position = e.GetPosition(grid);
+
+                int targetRow = GetRowFromPosition(position.Y);
+                int targetColumn = GetColumnFromPosition(position.X);
+                int currentRow = (int)componentView.GetValue(Grid.RowProperty);
+                int currentRowSpan = (int)componentView.GetValue(Grid.RowSpanProperty);
+                int currentColumn = (int)componentView.GetValue(Grid.ColumnProperty);
+                int currentColumnSpan = (int)componentView.GetValue(Grid.ColumnSpanProperty);
+
+                if (targetRow >= 0 && targetColumn >= 0)
                 {
-                    case "top":
-                        if (targetRow <= currentRowSpan)
-                        {
-                            componentView.SetValue(Grid.RowSpanProperty, currentRow + currentRowSpan - targetRow);
-                            componentView.SetValue(Grid.RowProperty, targetRow);
-                        }
-                        break;
-                    case "bottom":
-                        if (targetRow >= currentRow)
-                        {
-                            componentView.SetValue(Grid.RowSpanProperty, targetRow - currentRow + 1);
-                        }
-                        break;
-                    case "left":
-                        if (targetColumn <= currentColumnSpan)
-                        {
-                            componentView.SetValue(Grid.ColumnSpanProperty, currentColumn + currentColumnSpan - targetColumn);
-                            componentView.SetValue(Grid.ColumnProperty, targetColumn);
-                        }
-                        break;
-                    case "right":
-                        if (targetColumn >= currentColumn)
-                        {
-                            componentView.SetValue(Grid.ColumnSpanProperty, targetColumn - currentColumn + 1);
-                        }
-                        break;
+                    switch (draggedElement.Name)
+                    {
+                        case "top":
+                            if (targetRow <= currentRowSpan)
+                            {
+                                componentView.SetValue(Grid.RowSpanProperty, currentRow + currentRowSpan - targetRow);
+                                componentView.SetValue(Grid.RowProperty, targetRow);
+                            }
+                            break;
+                        case "bottom":
+                            if (targetRow >= currentRow)
+                            {
+                                componentView.SetValue(Grid.RowSpanProperty, targetRow - currentRow + 1);
+                            }
+                            break;
+                        case "left":
+                            if (targetColumn <= currentColumnSpan)
+                            {
+                                componentView.SetValue(Grid.ColumnSpanProperty, currentColumn + currentColumnSpan - targetColumn);
+                                componentView.SetValue(Grid.ColumnProperty, targetColumn);
+                            }
+                            break;
+                        case "right":
+                            if (targetColumn >= currentColumn)
+                            {
+                                componentView.SetValue(Grid.ColumnSpanProperty, targetColumn - currentColumn + 1);
+                            }
+                            break;
+                    }
                 }
+
+                Console.WriteLine($"Row = {componentView.GetValue(Grid.RowProperty)}\tRowSpan = {componentView.GetValue(Grid.RowSpanProperty)}\n" +
+                    $"Column = {componentView.GetValue(Grid.ColumnProperty)} + ColumnSpan = {componentView.GetValue(Grid.ColumnSpanProperty)}");
+
+                draggedElement = null; // Clear the reference
             }
+            else if (e.Data.GetData(typeof(ContentControl)) != null)
+            {
+                ContentControl draggedElement = e.Data.GetData(typeof(ContentControl)) as ContentControl;
 
-            Console.WriteLine($"Row = {componentView.GetValue(Grid.RowProperty)}\tRowSpan = {componentView.GetValue(Grid.RowSpanProperty)}\n" +
-                $"Column = {componentView.GetValue(Grid.ColumnProperty)} + ColumnSpan = {componentView.GetValue(Grid.ColumnSpanProperty)}");
+                if (draggedElement == null)
+                    return;
 
-            draggedElement = null; // Clear the reference
+                ComponentView componentView = ((draggedElement.Parent as Grid).Parent as Border).Parent as ComponentView;
+                
+                if (componentView == e.Source as ComponentView)
+                {
+                    // show the properties (when the user clicks)
+                    if (e.Source as ComponentView == null)
+                    {
+                        propertyGrid.Children.Clear();
+                        propertyGrid.RowDefinitions.Clear();
+                        return; // clicked on an unavailable case
+                    }
+                    if ((e.Source as ComponentView).ContentView as WriteItemControl == null)
+                    {
+                        propertyGrid.Children.Clear();
+                        propertyGrid.RowDefinitions.Clear();
+                        return; // clicked on an unavailable case
+                    }
+
+                    SimpleWriter ed = ((e.Source as ComponentView).ContentView as WriteItemControl).SimpleWriter;
+
+                    var flaggedProperties = typeof(SimpleWriter)
+                        .GetProperties()
+                        .Where(prop => Attribute.IsDefined(prop, typeof(EditableProperty)));
+
+                    propertyGrid.Children.Clear();
+                    propertyGrid.RowDefinitions.Clear();
+                    int i = 0;
+
+                    foreach (var property in flaggedProperties)
+                    {
+                        propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                        var attribute = (EditableProperty)Attribute.GetCustomAttribute(property, typeof(EditableProperty));
+                        string displayName = attribute?.Name ?? property.Name;
+
+                        Label label = new Label()
+                        {
+                            Content = displayName,
+                        };
+                        Grid.SetColumn(label, 0);
+                        Grid.SetRow(label, i);
+                        propertyGrid.Children.Add(label);
+
+                        if (property.PropertyType == typeof(string))
+                        {
+                            TextBox textBox = new TextBox()
+                            {
+                                Text = property.GetValue(ed).ToString(),
+                                VerticalAlignment = VerticalAlignment.Center,
+                            };
+                            Grid.SetColumn(textBox, 1);
+                            Grid.SetRow(textBox, i);
+                            propertyGrid.Children.Add(textBox);
+                        }
+                        else if (property.PropertyType == typeof(bool))
+                        {
+                            ComboBox comboBox = new ComboBox()
+                            {
+                                ItemsSource = new List<string>() { "No", "Yes" },
+                                SelectedIndex = (bool)property.GetValue(ed) == true ? 1 : 0,
+                            };
+                            Grid.SetColumn(comboBox, 1);
+                            Grid.SetRow(comboBox, i);
+                            propertyGrid.Children.Add(comboBox);
+                        }
+                        else if (property.PropertyType == typeof(VariableTypes))
+                        {
+                            ComboBox comboBox = new ComboBox()
+                            {
+                                ItemsSource = Enum.GetValues(typeof(VariableTypes))
+                                              .Cast<VariableTypes>()
+                                              .ToList(),
+                                SelectedItem = (VariableTypes)property.GetValue(ed)
+                            };
+                            Grid.SetColumn(comboBox, 1);
+                            Grid.SetRow(comboBox, i);
+                            propertyGrid.Children.Add(comboBox);
+                        }
+                        i++;
+                    }
+                }
+                else if (e.Source as ComponentView == null)
+                {
+                    // drop the element (when the user do a drag and drop)
+                    // Get the mouse position and calculate the target grid cell
+                    var position = e.GetPosition(grid);
+
+                    int targetRow = GetRowFromPosition(position.Y);
+                    int targetColumn = GetColumnFromPosition(position.X);
+
+                    componentView.SetValue(Grid.ColumnProperty, targetColumn);
+                    componentView.SetValue(Grid.RowProperty, targetRow);
+                    componentView.SetValue(Grid.ColumnSpanProperty, 1);
+                    componentView.SetValue(Grid.RowSpanProperty, 1);
+
+                    draggedElement = null; // Clear the reference
+                }
+                // otherwise, we are trying to drop on another cell that is already occupied
+            }
         }
 
         // Get the row index based on the Y-coordinate

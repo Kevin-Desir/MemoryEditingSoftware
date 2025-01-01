@@ -82,6 +82,10 @@ namespace MemoryEditingSoftware.Editor.Views
             {
                 DragDrop.DoDragDrop(element, element, DragDropEffects.Move);
             }
+            else if (sender is ContentControl contentControl)
+            {
+                DragDrop.DoDragDrop(contentControl, contentControl, DragDropEffects.Move);
+            }
         }
     }
 }
