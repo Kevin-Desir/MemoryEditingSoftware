@@ -359,6 +359,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                         Padding = new Thickness(5),
                         Background = new SolidColorBrush(Colors.Green),
                         Foreground = new SolidColorBrush(Colors.White),
+                        IsEnabled = false
                     };
                     Grid.SetColumn(validatePropertiesButton, 1);
                     Grid.SetRow(validatePropertiesButton, i);
