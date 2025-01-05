@@ -2,7 +2,9 @@
 using MemoryEditingSoftware.Core.Attributes;
 using MemoryEditingSoftware.Core.Dialogs;
 using MemoryEditingSoftware.Core.Entities;
+using MemoryEditingSoftware.Editor.Controls;
 using MemoryEditingSoftware.Editor.Views;
+using MemoryEditingSoftware.Run.Controls;
 using MemoryEditingSoftware.Run.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -15,6 +17,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MemoryEditingSoftware.Editor.ViewModels
@@ -42,6 +45,16 @@ namespace MemoryEditingSoftware.Editor.ViewModels
         {
             get { return propertiesContentControl; }
             set { SetProperty(ref propertiesContentControl, value); }
+        }
+
+        /// <summary>
+        /// Content control that displays the list of components available that the user can drop on the grid to add a new component.
+        /// </summary>
+        private ContentControl componentsAvailableContentControl;
+        public ContentControl ComponentsAvailableContentControl
+        {
+            get { return componentsAvailableContentControl; }
+            set { SetProperty(ref componentsAvailableContentControl, value); }
         }
 
         /// <summary>
@@ -100,7 +113,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             ColumnCount = 5;
             _oldColumnCount = ColumnCount;
 
-            grid.Background = Brushes.Magenta;
+            grid.Background = Brushes.DarkSlateGray;
 
             ComponentView componentView = new ComponentView(new EditItem("Address", "name", "value", true));
             Grid.SetRow(componentView, 1);
@@ -133,6 +146,26 @@ namespace MemoryEditingSoftware.Editor.ViewModels
             propertyGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             propertyGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             PropertiesContentControl.Content = propertyGrid;
+
+            ComponentsAvailableContentControl = new ContentControl();
+            StackPanel availableComponentsStackPannel = new StackPanel();
+            ComponentsAvailableContentControl.Content = availableComponentsStackPannel;
+            IEnumerable<Type> droppableViews = Assembly.GetAssembly(typeof(WriteItemControl))
+            .GetTypes()
+            .Where(type => type.GetCustomAttributes(typeof(DroppableView), false).Any());
+
+            foreach (var type in droppableViews)
+            {
+                var attribute = (DroppableView)type.GetCustomAttribute(typeof(DroppableView));
+                //object subObject = Activator.CreateInstance(attribute.ObjectType);
+                //object instance = Activator.CreateInstance(type, subObject);
+                Console.WriteLine($"Class: {type.Name}, ObjectType: {attribute.ObjectType}");
+                string displayName = attribute?.Name ?? type.Name;
+                DroppableButton button = new DroppableButton(displayName, type, attribute.ObjectType);
+                button.PreviewMouseLeftButtonDown += Button_PreviewMouseLeftButtonDown;
+
+                availableComponentsStackPannel.Children.Add(button);
+            }
         }
 
         #endregion
@@ -231,7 +264,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                     return;
 
                 ComponentView componentView = ((draggedElement.Parent as Grid).Parent as Border).Parent as ComponentView;
-                
+
                 if (componentView == e.Source as ComponentView)
                 {
                     // show the properties (when the user clicks)
@@ -241,23 +274,30 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                         propertyGrid.RowDefinitions.Clear();
                         return; // clicked on an unavailable case
                     }
-                    if ((e.Source as ComponentView).ContentView as WriteItemControl == null)
+                    if ((e.Source as ComponentView).ContentView as IComponentControl == null)
                     {
                         propertyGrid.Children.Clear();
                         propertyGrid.RowDefinitions.Clear();
                         return; // clicked on an unavailable case
                     }
 
-                    SimpleWriter ed = ((e.Source as ComponentView).ContentView as WriteItemControl).SimpleWriter;
+                    object ed = ((e.Source as ComponentView).ContentView as IComponentControl).MainObject;
+                    Type mainObjectType = ed.GetType();
 
-                    var flaggedProperties = typeof(SimpleWriter)
+                    var flaggedProperties = mainObjectType
                         .GetProperties()
                         .Where(prop => Attribute.IsDefined(prop, typeof(EditableProperty)));
 
                     propertyGrid.Children.Clear();
                     propertyGrid.RowDefinitions.Clear();
-                    int i = 0;
 
+                    propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    Label propertyLabel = new Label() { Content = "Properties" };
+                    Grid.SetColumn(propertyLabel, 0);
+                    Grid.SetRow(propertyLabel, 0);
+                    propertyGrid.Children.Add(propertyLabel);
+
+                    int i = 1;
                     foreach (var property in flaggedProperties)
                     {
                         propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
@@ -310,6 +350,19 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                         }
                         i++;
                     }
+
+                    propertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    Button validatePropertiesButton = new Button()
+                    {
+                        Content = "Validate",
+                        Margin = new Thickness(5),
+                        Padding = new Thickness(5),
+                        Background = new SolidColorBrush(Colors.Green),
+                        Foreground = new SolidColorBrush(Colors.White),
+                    };
+                    Grid.SetColumn(validatePropertiesButton, 1);
+                    Grid.SetRow(validatePropertiesButton, i);
+                    propertyGrid.Children.Add(validatePropertiesButton);
                 }
                 else if (e.Source as ComponentView == null)
                 {
@@ -328,6 +381,27 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                     draggedElement = null; // Clear the reference
                 }
                 // otherwise, we are trying to drop on another cell that is already occupied
+            }
+            else if (e.Data.GetData(typeof(DroppableButton)) != null)
+            {
+                DroppableButton draggedElement = e.Data.GetData(typeof(DroppableButton)) as DroppableButton;
+                object subObject = Activator.CreateInstance(draggedElement.ObjectType);
+                object instance = Activator.CreateInstance(draggedElement.DroppableViewType, subObject);
+
+                // Get the mouse position and calculate the target grid cell
+                var position = e.GetPosition(grid);
+
+                int targetRow = GetRowFromPosition(position.Y);
+                int targetColumn = GetColumnFromPosition(position.X);
+
+                ComponentView componentView = new ComponentView(instance as UserControl);
+                Grid.SetRow(componentView, targetRow);
+                Grid.SetRowSpan(componentView, 1);
+
+                Grid.SetColumn(componentView, targetColumn);
+                Grid.SetColumnSpan(componentView, 1);
+
+                grid.Children.Add(componentView);
             }
         }
 
@@ -393,6 +467,19 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                 }
             }
             _oldColumnCount = newColumnCount;
+        }
+
+        // Handle the start of the drag operation
+        private void Button_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Canvas element)
+            {
+                DragDrop.DoDragDrop(element, element, DragDropEffects.Move);
+            }
+            else if (sender is ContentControl contentControl)
+            {
+                DragDrop.DoDragDrop(contentControl, contentControl, DragDropEffects.Move);
+            }
         }
 
         #endregion

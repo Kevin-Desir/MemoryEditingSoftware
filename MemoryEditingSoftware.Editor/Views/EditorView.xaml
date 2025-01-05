@@ -18,18 +18,19 @@
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
-        <Grid Background="LightCoral" Grid.Column="0">
-            <StackPanel Margin="5" >
-                <Label Content="Components" />
+        <StackPanel Background="LightCoral" Grid.Column="0">
+            <Label Content="Components" />
+            <StackPanel Margin="5" Visibility="Collapsed" >
                 <Separator />
                 <Button Content="Simple Read" Margin="5" Padding="5" />
                 <Button Content="Simple Write" Margin="5" Padding="5" />
                 <Button Content="Slider" Margin="5" Padding="5" />
                 <Separator />
-                <Button Content="Text" Margin="5" Padding="5" />
-                <Button Content="Image" Margin="5" Padding="5" />
+                <Button Content="Text" Name="Text" Margin="5" Padding="5"  />
+                <Button Content="Image" Name="Image" Margin="5" Padding="5" />
             </StackPanel>
-        </Grid>
+            <ContentControl Content="{Binding ComponentsAvailableContentControl}" />
+        </StackPanel>
 
         <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Black" ShowsPreview="True" Width="5"/>
 
@@ -58,8 +59,6 @@
             </Grid>
             <Separator/>
             <StackPanel Background="Green">
-                
-                <Label Grid.Row="2" Content="Properties" />
                 <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <ContentControl Content="{Binding PropertiesContentControl}"/>
                 </ScrollViewer>

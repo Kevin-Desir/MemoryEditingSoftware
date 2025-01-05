@@ -67,6 +67,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ComponentControl.cs" />
     <Compile Include="RunModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -82,8 +83,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\RunDialogViewModel.cs" />
-    <Compile Include="Views\ReadItem.xaml.cs">
-      <DependentUpon>ReadItem.xaml</DependentUpon>
+    <Compile Include="Views\ReadItemControl.xaml.cs">
+      <DependentUpon>ReadItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RunDialog.xaml.cs">
       <DependentUpon>RunDialog.xaml</DependentUpon>
@@ -108,7 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ReadItem.xaml">
+    <Page Include="Views\ReadItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -126,8 +127,6 @@
       <Version>8.1.97</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

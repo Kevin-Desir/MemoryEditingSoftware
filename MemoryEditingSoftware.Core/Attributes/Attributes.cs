@@ -12,4 +12,16 @@ namespace MemoryEditingSoftware.Core.Attributes
             Name = name;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    public class DroppableView : Attribute
+    {
+        public Type ObjectType { get; }
+        public string Name { get; }
+        public DroppableView(Type objectType, string name = null)
+        {
+            ObjectType = objectType;
+            Name = name;
+        }
+    }
 }

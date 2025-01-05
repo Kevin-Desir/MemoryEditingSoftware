@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MemoryEditingSoftware.Editor.Views
 {
@@ -11,7 +13,5 @@ namespace MemoryEditingSoftware.Editor.Views
         {
             InitializeComponent();
         }
-
-
     }
 }

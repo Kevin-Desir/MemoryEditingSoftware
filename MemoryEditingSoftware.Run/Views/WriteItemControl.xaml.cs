@@ -1,6 +1,8 @@
 ﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Attributes;
 using MemoryEditingSoftware.Core.Business;
 using MemoryEditingSoftware.Core.Entities;
+using MemoryEditingSoftware.Run.Controls;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -11,17 +13,21 @@ namespace MemoryEditingSoftware.Run.Views
     /// <summary>
     /// Interaction logic for WriteItemView.xaml
     /// </summary>
-    public partial class WriteItemControl : UserControl
+    [DroppableView(typeof(SimpleWriter), "Simple write")]
+    public partial class WriteItemControl : UserControl, IComponentControl
     {
         public SimpleWriter SimpleWriter { get; }
         private bool stop = true;
         private int debugcpt = 0;
+
+        public object MainObject { get; }
 
         public WriteItemControl(SimpleWriter simpleWriter)
         {
             InitializeComponent();
             
             SimpleWriter = simpleWriter;
+            MainObject = SimpleWriter;
 
             NameTextBlock.Text = SimpleWriter.Name;
             if (SimpleWriter.IsLoop)
@@ -35,6 +41,10 @@ namespace MemoryEditingSoftware.Run.Views
             else
                 Val.IsReadOnly = true;
 
+        }
+        public object GetMainObject()
+        {
+            return SimpleWriter;
         }
 
         private void ActivateButton_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -30,7 +30,10 @@ namespace MemoryEditingSoftware.Run.Views
                 {
                     if (ei.IsRead)
                     {
-                        components.Add(new ReadItem(ei));
+                        if (ei is SimpleReader simpleReader)
+                        {
+                        components.Add(new ReadItemControl(simpleReader));
+                        }
                     }
                     else
                     {

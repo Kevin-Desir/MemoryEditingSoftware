@@ -1,5 +1,7 @@
 ﻿using MemoryEditingSoftware.Core;
+using MemoryEditingSoftware.Core.Attributes;
 using MemoryEditingSoftware.Core.Entities;
+using MemoryEditingSoftware.Run.Controls;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -9,15 +11,23 @@ using System.Windows.Controls;
 namespace MemoryEditingSoftware.Run.Views
 {
     /// <summary>
-    /// Interaction logic for ReadItem.xaml
+    /// Interaction logic for ReadItemControl.xaml
     /// </summary>
-    public partial class ReadItem : UserControl
+    [DroppableView(typeof(SimpleReader), "Simple read")]
+    public partial class ReadItemControl : UserControl, IComponentControl
     {
-        public ReadItem(EditItem editItem)
+        public SimpleReader SimpleReader { get; set; }
+
+        public object MainObject { get; }
+
+        public ReadItemControl(SimpleReader simpleReader)
         {
             InitializeComponent();
 
-            name.Text = editItem.Name;
+            SimpleReader = simpleReader;
+            MainObject = SimpleReader;
+
+            name.Text = simpleReader.Name;
             val.Text = "No value received / Wrong format, please check address via editor";
 
             // DEBUG ONLY, to be uncommented before commit
@@ -25,17 +35,22 @@ namespace MemoryEditingSoftware.Run.Views
             {
                 if (val.Text.Contains("."))
                 {
-                    ThreadPool.QueueUserWorkItem(_ => StartReadingDouble(val, editItem.Address));
+                    ThreadPool.QueueUserWorkItem(_ => StartReadingDouble(val, simpleReader.Address));
                 }
                 else
                 {
-                    ThreadPool.QueueUserWorkItem(_ => StartReadingInt(val, editItem.Address));
+                    ThreadPool.QueueUserWorkItem(_ => StartReadingInt(val, simpleReader.Address));
                 }
             }
             catch (Exception) { }
 
 
 
+        }
+
+        public object GetMainObject()
+        {
+            return SimpleReader;
         }
 
         // 2 separate methods for double or int to make the parsing only once instead of 

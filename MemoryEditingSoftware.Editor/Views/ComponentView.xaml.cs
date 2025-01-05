@@ -40,6 +40,15 @@ namespace MemoryEditingSoftware.Editor.Views
             ComponentContentControl.Content = ContentView;
         }
 
+        public ComponentView(UserControl control)
+        {
+            InitializeComponent();
+
+            ContentView = control;
+
+            ComponentContentControl.Content = ContentView;
+        }
+
         #endregion
 
         #region Private Methods

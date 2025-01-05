@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MemoryEditingSoftware.Run.Views.ReadItem"
+﻿<UserControl x:Class="MemoryEditingSoftware.Run.Views.ReadItemControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MemoryEditingSoftware.Run.Views"
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="250">
-    <Grid Margin="0 0 0 20" Background="SkyBlue">
+    <Grid Margin="0 0 0 20" Background="SkyBlue" IsEnabled="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
