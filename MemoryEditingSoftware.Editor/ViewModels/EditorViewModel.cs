@@ -223,7 +223,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                     switch (draggedElement.Name)
                     {
                         case "top":
-                            if (targetRow <= currentRowSpan)
+                            if (targetRow <= currentRow + currentRowSpan - 1)
                             {
                                 componentView.SetValue(Grid.RowSpanProperty, currentRow + currentRowSpan - targetRow);
                                 componentView.SetValue(Grid.RowProperty, targetRow);
@@ -236,7 +236,7 @@ namespace MemoryEditingSoftware.Editor.ViewModels
                             }
                             break;
                         case "left":
-                            if (targetColumn <= currentColumnSpan)
+                            if (targetColumn <= currentColumn + currentColumnSpan - 1)
                             {
                                 componentView.SetValue(Grid.ColumnSpanProperty, currentColumn + currentColumnSpan - targetColumn);
                                 componentView.SetValue(Grid.ColumnProperty, targetColumn);

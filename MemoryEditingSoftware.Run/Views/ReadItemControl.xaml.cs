@@ -48,11 +48,6 @@ namespace MemoryEditingSoftware.Run.Views
 
         }
 
-        public object GetMainObject()
-        {
-            return SimpleReader;
-        }
-
         // 2 separate methods for double or int to make the parsing only once instead of 
         // continually in the threads
         private static void StartReadingDouble(TextBox val, string address)

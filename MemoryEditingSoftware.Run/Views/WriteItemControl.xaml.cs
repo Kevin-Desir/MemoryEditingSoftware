@@ -42,10 +42,6 @@ namespace MemoryEditingSoftware.Run.Views
                 Val.IsReadOnly = true;
 
         }
-        public object GetMainObject()
-        {
-            return SimpleWriter;
-        }
 
         private void ActivateButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
